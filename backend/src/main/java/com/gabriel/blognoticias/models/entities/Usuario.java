@@ -2,6 +2,7 @@ package com.gabriel.blognoticias.models.entities;
 
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -13,6 +14,9 @@ public class Usuario {
 
   @Column(unique = true)
   private String nome;
+
+  @OneToMany(mappedBy = "autor")
+  private List<Post> postList;
 
   public Usuario() {}
 

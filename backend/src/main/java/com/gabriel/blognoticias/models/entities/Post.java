@@ -14,7 +14,8 @@ public class Post {
   private String conteudo;
   private String linkImagem;
 
-  @OneToOne
+  @ManyToOne
+  @JoinColumn(name = "usuario_id", nullable = false)
   private Usuario autor;
 
   public Post() {}
