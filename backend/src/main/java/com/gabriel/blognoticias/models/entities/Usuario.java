@@ -1,7 +1,9 @@
 package com.gabriel.blognoticias.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,7 +18,8 @@ public class Usuario {
   private String nome;
 
   @OneToMany(mappedBy = "autor")
-  private List<Post> postList;
+  @JsonIgnore
+  private List<Post> postList = new ArrayList<>();
 
   public Usuario() {}
 
@@ -39,5 +42,9 @@ public class Usuario {
 
   public void setNome(String nome) {
     this.nome = nome;
+  }
+
+  public List<Post> getPostList() {
+    return postList;
   }
 }
