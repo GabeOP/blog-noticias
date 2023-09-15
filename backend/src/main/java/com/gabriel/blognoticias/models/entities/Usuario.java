@@ -18,6 +18,8 @@ public class Usuario {
   @Column(unique = true)
   private String nome;
 
+  private String senha;
+
   private Cargo cargo = Cargo.COMUM;
 
   @OneToMany(mappedBy = "autor")
@@ -26,9 +28,10 @@ public class Usuario {
 
   public Usuario() {}
 
-  public Usuario(UUID id, String nome) {
+  public Usuario(UUID id, String nome, String senha) {
     this.id = id;
     this.nome = nome;
+    this.senha = senha;
   }
 
   public UUID getId() {
@@ -45,6 +48,14 @@ public class Usuario {
 
   public void setNome(String nome) {
     this.nome = nome;
+  }
+
+  public String getSenha() {
+    return senha;
+  }
+
+  public void setSenha(String senha) {
+    this.senha = senha;
   }
 
   public List<Post> getPostList() {
