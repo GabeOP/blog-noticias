@@ -19,18 +19,21 @@ public class UsuarioController {
     this.service = service;
   }
 
+  @CrossOrigin(origins = "*")
   @GetMapping
   public ResponseEntity<List<UsuarioDTO>> getAll() {
     List<UsuarioDTO> response = service.getAll();
     return ResponseEntity.status(HttpStatus.OK).body(response);
   }
 
+  @CrossOrigin(origins = "*")
   @GetMapping("/{nome}")
   public ResponseEntity<UsuarioDTO> getByNome(@PathVariable String nome) {
     UsuarioDTO response = service.findByNome(nome);
     return ResponseEntity.status(HttpStatus.OK).body(response);
   }
 
+  @CrossOrigin(origins = "*")
   @PostMapping
   public ResponseEntity<String> criaUsuario(@RequestBody Usuario usuario) {
     service.criaUsuario(usuario);

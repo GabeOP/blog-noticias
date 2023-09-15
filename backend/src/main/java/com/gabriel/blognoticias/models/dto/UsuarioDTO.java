@@ -35,9 +35,9 @@ public class UsuarioDTO {
     this.nome = nome;
   }
 
-  public List<Post> getPostList() {
-    return postList;
-  }
+//  public List<Post> getPostList() {
+//    return postList;
+//  }
 
   public void setPostList(List<Post> postList) {
     this.postList = postList;

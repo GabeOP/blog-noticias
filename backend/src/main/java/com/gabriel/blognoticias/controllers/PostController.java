@@ -21,12 +21,14 @@ public class PostController {
     this.service = service;
   }
 
+  @CrossOrigin(origins = "*")
   @GetMapping
   public ResponseEntity<List<PostDTO>> getAll() {
     List<PostDTO> response = service.getAll();
     return ResponseEntity.status(HttpStatus.OK).body(response);
   }
 
+  @CrossOrigin(origins = "*")
   @PostMapping
   public ResponseEntity<String> criarPost(@RequestBody Post post) {
     service.criarPost(post);
