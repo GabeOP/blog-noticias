@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UsuarioService {
@@ -19,8 +20,10 @@ public class UsuarioService {
     this.modelMapper = modelMapper;
   }
 
-  public List<Usuario> getAll() {
-    return repository.findAll();
+  public List<UsuarioDTO> getAll() {
+    List<UsuarioDTO> response = repository.findAll()
+            .stream().map(x -> modelMapper.map(x, UsuarioDTO.class)).collect(Collectors.toList());
+    return response;
   }
 
   public UsuarioDTO findByNome(String nome) {

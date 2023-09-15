@@ -20,8 +20,8 @@ public class UsuarioController {
   }
 
   @GetMapping
-  public ResponseEntity<List<Usuario>> getAll() {
-    List<Usuario> response = service.getAll();
+  public ResponseEntity<List<UsuarioDTO>> getAll() {
+    List<UsuarioDTO> response = service.getAll();
     return ResponseEntity.status(HttpStatus.OK).body(response);
   }
 
