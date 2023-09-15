@@ -1,7 +1,9 @@
 package com.gabriel.blognoticias.controllers;
 
+import com.gabriel.blognoticias.models.dto.PostDTO;
 import com.gabriel.blognoticias.models.entities.Post;
 import com.gabriel.blognoticias.services.PostService;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,14 +15,15 @@ import java.util.List;
 public class PostController {
 
   private PostService service;
+  private ModelMapper modelMapper;
 
   public PostController(PostService service) {
     this.service = service;
   }
 
   @GetMapping
-  public ResponseEntity<List<Post>> getAll() {
-    List<Post> response = service.getAll();
+  public ResponseEntity<List<PostDTO>> getAll() {
+    List<PostDTO> response = service.getAll();
     return ResponseEntity.status(HttpStatus.OK).body(response);
   }
 

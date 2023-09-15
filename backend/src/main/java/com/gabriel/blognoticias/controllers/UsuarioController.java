@@ -1,5 +1,6 @@
 package com.gabriel.blognoticias.controllers;
 
+import com.gabriel.blognoticias.models.dto.UsuarioDTO;
 import com.gabriel.blognoticias.models.entities.Usuario;
 import com.gabriel.blognoticias.services.UsuarioService;
 import org.springframework.http.HttpStatus;
@@ -25,8 +26,8 @@ public class UsuarioController {
   }
 
   @GetMapping("/{nome}")
-  public ResponseEntity<Usuario> getByNome(@PathVariable String nome) {
-    Usuario response = service.findByNome(nome);
+  public ResponseEntity<UsuarioDTO> getByNome(@PathVariable String nome) {
+    UsuarioDTO response = service.findByNome(nome);
     return ResponseEntity.status(HttpStatus.OK).body(response);
   }
 
