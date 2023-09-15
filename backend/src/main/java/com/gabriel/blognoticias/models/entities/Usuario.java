@@ -1,6 +1,7 @@
 package com.gabriel.blognoticias.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.gabriel.blognoticias.enums.Cargo;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ public class Usuario {
 
   @Column(unique = true)
   private String nome;
+
+  private Cargo cargo = Cargo.COMUM;
 
   @OneToMany(mappedBy = "autor")
   @JsonIgnore
@@ -46,5 +49,13 @@ public class Usuario {
 
   public List<Post> getPostList() {
     return postList;
+  }
+
+  public Cargo getCargo() {
+    return cargo;
+  }
+
+  public void setCargo(Cargo cargo) {
+    this.cargo = cargo;
   }
 }
