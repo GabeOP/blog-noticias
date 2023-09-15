@@ -2,6 +2,7 @@ package com.gabriel.blognoticias.services;
 
 import com.gabriel.blognoticias.models.dto.UsuarioDTO;
 import com.gabriel.blognoticias.models.entities.Usuario;
+import com.gabriel.blognoticias.models.exception.NaoEncontradoException;
 import com.gabriel.blognoticias.repositories.UsuarioRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,8 @@ public class UsuarioService {
   }
 
   public UsuarioDTO findByNome(String nome) {
-    Usuario response = repository.findByNome(nome);
+    Usuario response = repository.findByNome(nome)
+            .orElseThrow(() -> new NaoEncontradoException("[ERRO] Usuário não encontrado"));
     return modelMapper.map(response, UsuarioDTO.class);
   }
 
