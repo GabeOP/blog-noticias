@@ -4,12 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../css/cadastro.css">
 </head>
 <body>
     <main>
-          <input type="text" name="nome" id="nomeUsuario">
-          <input type="password" name="senha" id="senhaUsuario">
-          <input type="submit" id="btnRegistrar" value="Cadastrar">
+        <div>
+            <h1>Página de cadastro</h1>
+        </div>
+        <div id="form">
+            <label for="nome">Nome do usuário</label>
+            <input type="text" name="nome" id="nomeUsuario" placeholder="Digite um nome de usuário">
+            <label for="senha">Senha</label>
+            <input type="password" name="senha" id="senhaUsuario" placeholder="Insira a sua senha">
+            <input type="submit" id="btnRegistrar" value="Cadastrar">
+        </div>
       </main>
 
       <script src="../scripts/cadastro.js"></script>
