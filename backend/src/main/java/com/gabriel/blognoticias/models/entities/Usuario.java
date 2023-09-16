@@ -3,6 +3,7 @@ package com.gabriel.blognoticias.models.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gabriel.blognoticias.enums.Cargo;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +17,10 @@ public class Usuario {
   private UUID id;
 
   @Column(unique = true)
+  @NotBlank
   private String nome;
 
+  @NotBlank
   private String senha;
 
   private Cargo cargo = Cargo.COMUM;

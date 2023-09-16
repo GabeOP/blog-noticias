@@ -15,6 +15,6 @@ public class CampoNaoPreenchidoExceptionHandler {
   @ResponseBody
   @ExceptionHandler(CampoNaoPreenchidoException.class)
   public ErrorDTO handler(CampoNaoPreenchidoException ex) {
-    return new ErrorDTO(ex.getMessage());
+    return new ErrorDTO("Preencha todos os campos.");
   }
 }
