@@ -45,3 +45,7 @@ main div {
 #conteudo {
     font-size: 1.1rem;
 }
+
+#autor {
+    text-align: start;
+}

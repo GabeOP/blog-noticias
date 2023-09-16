@@ -24,10 +24,15 @@ fetch("http://localhost:8080/post")
         conteudo.id = "conteudo";
         conteudo.innerHTML = item.conteudo;
 
+        const autor = document.createElement("span");
+        autor.id = "autor";
+        autor.innerHTML = "Autor: " + item.autor.nome;
+
         container.appendChild(div);
         div.appendChild(titulo);
         div.appendChild(img);
         div.appendChild(conteudo);
+        div.appendChild(autor);
 
         // Adiciona a tag span dentro da div
         // div.appendChild(span);
