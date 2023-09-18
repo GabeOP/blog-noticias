@@ -6,15 +6,16 @@
 }
 
 body {
-    background-color: rgb(124, 124, 124);
+    background-color: rgb(244, 244, 244);
 }
 
 header {
-    background-color: rgb(212, 212, 212);
+    background-color: rgb(59, 89, 152);
     display: flex;
     justify-content: space-around;
     align-items: center;
     padding-block: 20px;
+    color: white;
 }
 
 main {
@@ -33,6 +34,11 @@ main div {
     width: 200px;
 }
 
+#post {
+    border: 2px solid black;
+    border-radius: 2px;
+}
+
 #titulo {
     font-size: 2rem;
 }
@@ -48,4 +54,5 @@ main div {
 
 #autor {
     text-align: start;
+    font-weight: bold;
 }

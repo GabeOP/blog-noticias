@@ -10,14 +10,7 @@ const container = document.getElementById("container");
 if(!localStorage.getItem("nome")) {
     window.location.href = "../pages/login.html"
 }
-
-fetch("http://localhost:8080/usuario")
-.then(x => x.json())
-.then(res => {
-
-    localStorage.getItem("nome");
-    nomeUsuario.innerHTML = localStorage.getItem("nome");
-})
+nomeUsuario.innerHTML = localStorage.getItem("nome");
 
 fetch("http://localhost:8080/post")
 .then(x => x.json())
@@ -26,6 +19,7 @@ fetch("http://localhost:8080/post")
         console.log(item);
 
         const div = document.createElement("div");
+        div.id = "post"
 
         const titulo = document.createElement("span");
         titulo.innerHTML = item.titulo;

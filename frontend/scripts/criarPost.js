@@ -2,6 +2,12 @@ const inputTitulo = document.getElementById("titulo");
 const inputImagem = document.getElementById("imagem");
 const inputConteudo = document.getElementById("conteudo");
 const btnCriarPost = document.getElementById("btnCriarPost");
+const nomeUsuario = document.getElementById("nomeUsuario");
+
+if(!localStorage.getItem("nome")) {
+    window.location.href = "../pages/login.html"
+}
+nomeUsuario.innerHTML = localStorage.getItem("nome");
 
 btnCriarPost.addEventListener("click", (e) => {
     e.preventDefault();
