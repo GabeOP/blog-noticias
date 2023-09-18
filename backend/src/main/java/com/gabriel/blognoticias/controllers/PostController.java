@@ -1,7 +1,6 @@
 package com.gabriel.blognoticias.controllers;
 
 import com.gabriel.blognoticias.models.dto.PostDTO;
-import com.gabriel.blognoticias.models.entities.Post;
 import com.gabriel.blognoticias.services.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -30,7 +29,7 @@ public class PostController {
 
   @CrossOrigin(origins = "*")
   @PostMapping
-  public ResponseEntity<String> criarPost(@RequestBody Post post) {
+  public ResponseEntity<String> criarPost(@RequestBody PostDTO post) {
     service.criarPost(post);
     return ResponseEntity.status(HttpStatus.CREATED).body("Postagem criada");
   }

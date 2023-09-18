@@ -26,9 +26,7 @@ public class PostService {
             .stream().map(x -> modelMapper.map(x, PostDTO.class)).collect(Collectors.toList());
     return response;
   }
-  public void criarPost(Post post) {
-    repository.save(post);
+  public void criarPost(PostDTO postdto) {
+    repository.save(modelMapper.map(postdto, Post.class));
   }
-
-
 }

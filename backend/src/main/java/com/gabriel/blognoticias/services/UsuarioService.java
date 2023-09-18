@@ -35,13 +35,11 @@ public class UsuarioService {
     return modelMapper.map(response, UsuarioDTO.class);
   }
 
-  public void criaUsuario(Usuario usuario) {
+  public void criaUsuario(UsuarioDTO usuariodto) {
     try {
-      repository.save(usuario);
+      repository.save(modelMapper.map(usuariodto, Usuario.class));
     }catch(TransactionSystemException ex) {
       throw new CampoNaoPreenchidoException(ex.getMessage());
     }
   }
-
-
 }
