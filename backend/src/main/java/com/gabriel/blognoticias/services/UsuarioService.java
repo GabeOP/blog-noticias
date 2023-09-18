@@ -2,12 +2,12 @@ package com.gabriel.blognoticias.services;
 
 import com.gabriel.blognoticias.models.dto.UsuarioDTO;
 import com.gabriel.blognoticias.models.entities.Usuario;
-import com.gabriel.blognoticias.models.exception.CampoNaoPreenchidoException;
+import com.gabriel.blognoticias.models.exception.JaCadastradoException;
 import com.gabriel.blognoticias.models.exception.NaoEncontradoException;
 import com.gabriel.blognoticias.repositories.UsuarioRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.TransactionSystemException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,8 +38,8 @@ public class UsuarioService {
   public void criaUsuario(UsuarioDTO usuariodto) {
     try {
       repository.save(modelMapper.map(usuariodto, Usuario.class));
-    }catch(TransactionSystemException ex) {
-      throw new CampoNaoPreenchidoException(ex.getMessage());
+    }catch(DataIntegrityViolationException ex) {
+      throw new JaCadastradoException(ex.getMessage());
     }
   }
 }
