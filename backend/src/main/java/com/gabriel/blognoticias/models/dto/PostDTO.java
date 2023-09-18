@@ -1,5 +1,7 @@
 package com.gabriel.blognoticias.models.dto;
 
+import com.gabriel.blognoticias.models.entities.Usuario;
+
 import java.util.UUID;
 
 public class PostDTO {
@@ -7,11 +9,11 @@ public class PostDTO {
   private String titulo;
   private String conteudo;
   private String linkImagem;
-  private UsuarioDTO autor;
+  private Usuario autor;
 
   public PostDTO() {}
 
-  public PostDTO(UUID id, String titulo, String conteudo, String linkImagem, UsuarioDTO autor) {
+  public PostDTO(UUID id, String titulo, String conteudo, String linkImagem, Usuario autor) {
     this.id = id;
     this.titulo = titulo;
     this.conteudo = conteudo;
@@ -51,11 +53,11 @@ public class PostDTO {
     this.linkImagem = linkImagem;
   }
 
-  public UsuarioDTO getAutor() {
+  public Usuario getAutor() {
     return autor;
   }
 
-  public void setAutor(UsuarioDTO autor) {
+  public void setAutor(Usuario autor) {
     this.autor = autor;
   }
 }
