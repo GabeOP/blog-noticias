@@ -4,14 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <link rel="stylesheet" href="../css/cadastro.css">
 </head>
 <body>
     <main>
-      <form>
+      <div>
+        <h1>Página de login</h1>
+      </div>
+      <div id="form">
+        <label for="nome">Nome do usuário</label>
         <input type="text" name="nomeUsuario" id="nomeUsuario" placeholder="Nome de usuário">
+        <label for="senha">Senha</label>
         <input type="password" name="senhaUsuario" id="senhaUsuario" placeholder="Senha">
-        <input type="submit" id="btnEntrar" value="Entrar">
-      </form>
+        <input type="button" id="btnEntrar" value="Entrar">
+      </div>
+
+      <div>
+        <p>Não possui uma conta? <a href="../pages/cadastro.html">clique aqui</a></p>
+      </div>
     </main>
 
     <script src="../scripts/login.js"></script>

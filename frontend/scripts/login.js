@@ -12,18 +12,24 @@ btnEntrar.addEventListener("click", (e) => {
     })
     .then(res => res.json())
     .then(x => {
-        console.log(x[0].nome);
 
+        x.forEach(element => {
 
-        if(x[0].nome !== nomeUsuario.value) {
-            alert("Usuário inexistente");
-            return;
-        }
-    
-        localStorage.setItem("nome", x[0].nome);
-        localStorage.setItem("id", x[0].id);
+            console.log(element.nome);
+            if(element.nome == nomeUsuario.value) {
+                alert("Login realizado com sucesso.");
 
-        window.location.href = "index.html";
+                localStorage.setItem("nome", element.nome);
+                localStorage.setItem("id", element.id);
+
+                window.location.href = "../pages/index.html"
+            }else {
+                alert("Usuário inexistente.")
+            }
+
+        });
+
+        
     })
 })
 

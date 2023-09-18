@@ -1,8 +1,23 @@
 const titulo = document.getElementById("titulo");
 const conteudo = document.getElementById("conteudo");
+const btnSair = document.getElementById("btnSair");
+const nomeUsuario = document.getElementById("nomeUsuario");
 
 //Representa a tag main do HTML
 const container = document.getElementById("container");
+
+
+if(!localStorage.getItem("nome")) {
+    window.location.href = "../pages/login.html"
+}
+
+fetch("http://localhost:8080/usuario")
+.then(x => x.json())
+.then(res => {
+
+    localStorage.getItem("nome");
+    nomeUsuario.innerHTML = localStorage.getItem("nome");
+})
 
 fetch("http://localhost:8080/post")
 .then(x => x.json())
@@ -33,14 +48,9 @@ fetch("http://localhost:8080/post")
         div.appendChild(img);
         div.appendChild(conteudo);
         div.appendChild(autor);
-
-        // Adiciona a tag span dentro da div
-        // div.appendChild(span);
-
-        // Adiciona a div ao contêiner
-        //container.appendChild(div);
     });
-    // titulo.innerHTML = res[0].titulo
-    // conteudo.innerHTML = res[0].conteudo
-})
+});
 
+btnSair.addEventListener("click", () => {
+    localStorage.clear();
+})
