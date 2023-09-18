@@ -1,0 +1,35 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+body {
+    background-color: rgb(124, 124, 124);
+}
+
+header {
+    background-color: rgb(212, 212, 212);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-block: 20px;
+}
+
+#container-post {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    height: 300px;
+    padding: 20px;
+}
+
+#container-post input {
+    width: 80%;
+    margin-top: 10px;
+}

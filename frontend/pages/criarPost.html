@@ -4,13 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../css/criarPost.css">
 </head>
 <body>
-    <input type="text" name="titulo" id="titulo" placeholder="Título da postagem">
-    <input type="text" name="imagem" id="imagem" placeholder="URL da imagem">
-    <input type="text" name="conteudo" id="conteudo" placeholder="Conteúdo da postagem">
-    <input type="button" value="Criar post" id="btnCriarPost">
+    <header>
+        <h1>Criando postagem</h1>
 
+        <div id="usuario-container">
+            <span>Você está conectado(a) como: </span>
+            <span id="nomeUsuario"></span>
+            <a href="./index.html"><input type="button" value="Página inicial"></a>
+        </div>
+    </header>
+    <div id="container-post">
+        <h2>Insira as informações da postagem</h2>
+        <input type="text" name="titulo" id="titulo" placeholder="Título da postagem">
+        <input type="text" name="imagem" id="imagem" placeholder="URL da imagem">
+        <input type="text" name="conteudo" id="conteudo" placeholder="Conteúdo da postagem">
+        <input type="button" value="Criar post" id="btnCriarPost">
+    </div>
     <script src="../scripts/criarPost.js"></script>
 </body>
 </html>
