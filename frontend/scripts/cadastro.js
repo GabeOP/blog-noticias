@@ -25,7 +25,7 @@ btnRegistrar.addEventListener("click", (e) => {
         }
 
         alert("Usuário criado.");
-        window.location.replace("https://www.google.com/")
+        window.location.replace("../pages/login")
 
     })
 })

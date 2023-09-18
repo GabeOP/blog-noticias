@@ -1,5 +1,5 @@
 const nomeUsuario = document.getElementById("nomeUsuario");
-if(!sessionStorage.getItem("nome")) {
+if(!localStorage.getItem("nome")) {
     window.location.href = "../pages/cadastro.html"
 }
 fetch("http://localhost:8080/usuario")
@@ -7,7 +7,7 @@ fetch("http://localhost:8080/usuario")
 .then(res => {
 
 
-    sessionStorage.setItem("nome", res[0].nome);
+    localStorage.setItem("nome", res[0].nome);
 
-    nomeUsuario.innerHTML = sessionStorage.getItem("nome");
+    nomeUsuario.innerHTML = localStorage.getItem("nome");
 })
