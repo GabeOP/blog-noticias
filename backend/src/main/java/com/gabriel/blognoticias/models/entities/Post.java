@@ -1,6 +1,7 @@
 package com.gabriel.blognoticias.models.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.UUID;
 
@@ -10,8 +11,14 @@ public class Post {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
+
+  @NotBlank
   private String titulo;
+
+  @NotBlank
   private String conteudo;
+
+  @NotBlank
   private String linkImagem;
 
   @ManyToOne

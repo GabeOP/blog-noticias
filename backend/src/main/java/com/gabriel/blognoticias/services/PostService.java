@@ -2,9 +2,11 @@ package com.gabriel.blognoticias.services;
 
 import com.gabriel.blognoticias.models.dto.PostDTO;
 import com.gabriel.blognoticias.models.entities.Post;
+import com.gabriel.blognoticias.models.exception.CampoNaoPreenchidoException;
 import com.gabriel.blognoticias.repositories.PostRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionSystemException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +28,12 @@ public class PostService {
             .stream().map(x -> modelMapper.map(x, PostDTO.class)).collect(Collectors.toList());
     return response;
   }
+
   public void criarPost(PostDTO postdto) {
-    repository.save(modelMapper.map(postdto, Post.class));
+    try {
+      repository.save(modelMapper.map(postdto, Post.class));
+    }catch(TransactionSystemException ex) {
+      throw new CampoNaoPreenchidoException(ex.getMessage());
+    }
   }
 }
