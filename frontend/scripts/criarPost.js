@@ -14,7 +14,8 @@ btnCriarPost.addEventListener("click", (e) => {
 
     const data = {
         autor: {
-            id: localStorage.getItem("id")
+            //id: localStorage.getItem("id")
+            id: "609a00c7-29e9-445a-96d7-bfddf8f4ba5d"
         },
         titulo: inputTitulo.value,
         linkImagem: inputImagem.value,
@@ -24,7 +25,8 @@ btnCriarPost.addEventListener("click", (e) => {
     fetch("http://localhost:8080/post", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + localStorage.getItem("token")
         },
         body: JSON.stringify(data)
     })

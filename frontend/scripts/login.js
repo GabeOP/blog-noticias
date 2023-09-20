@@ -1,35 +1,34 @@
 const nomeUsuario = document.getElementById("nomeUsuario");
+const senhaUsuario = document.getElementById("senhaUsuario");
 const btnEntrar = document.getElementById("btnEntrar");
 
 btnEntrar.addEventListener("click", (e) => {
     e.preventDefault()
+
+    const data = {
+        nome: nomeUsuario.value,
+        senha: senhaUsuario.value
+    }
  
-    fetch("http://localhost:8080/usuario", {
-        method: "GET",
+    fetch("http://localhost:8080/usuario/login", {
+        method: "POST",
         headers: {
             "Content-Type": "application/json"
-        }
+        },
+        body: JSON.stringify(data)
     })
-    .then(res => res.json())
+    .then(y => y.text())
     .then(x => {
+        if(x == ""){
+            alert("Falha no login.")
+            return;
+        }
 
-        x.forEach(element => {
+        localStorage.setItem("nome", data.nome);
+        localStorage.setItem("token", x)
 
-            console.log(element.nome);
-            if(element.nome == nomeUsuario.value) {
-                alert("Login realizado com sucesso.");
-
-                localStorage.setItem("nome", element.nome);
-                localStorage.setItem("id", element.id);
-
-                window.location.href = "../pages/index.html"
-            }else {
-                alert("Usuário inexistente.")
-            }
-
-        });
-
-        
+        window.location.href = "../pages/index.html"
     })
 })
+
 
