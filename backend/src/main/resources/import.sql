@@ -1,0 +1,1 @@
+INSERT INTO usuario(cargo, id, nome, senha) VALUES(1, '609a00c7-29e9-445a-96d7-bfddf8f4ba5d', 'adm', '$2a$10$Qk3T8YQeUv/VdIORNNwfJOtp57H/XUO2eNvB2dG8mL8JO9oS2eBQK')
