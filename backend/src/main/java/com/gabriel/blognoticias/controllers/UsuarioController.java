@@ -56,4 +56,12 @@ public class UsuarioController {
     var token = tokenService.generateToken((Usuario)auth.getPrincipal());
     return ResponseEntity.ok().body(token);
   }
+
+  @CrossOrigin(origins = "*")
+  @PostMapping("/auth")
+  public ResponseEntity auth(@RequestBody String token) {
+    tokenService.validateToken(token);
+
+    return ResponseEntity.ok().build();
+  }
 }
