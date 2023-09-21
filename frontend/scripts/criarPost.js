@@ -9,6 +9,30 @@ if(!localStorage.getItem("nome")) {
 }
 nomeUsuario.innerHTML = localStorage.getItem("nome");
 
+  async function verificarToken() {
+    const response = await fetch("http://localhost:8080/usuario/auth", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": "Bearer " + localStorage.getItem("token")
+        },
+        body: JSON.stringify(localStorage.getItem("token"))
+    })
+    .then(x => {
+        console.log(x)
+        if(!x.ok) {
+            console.error('Acesso não autorizado.');
+            window.location.href = '../pages/index.html';
+            return;
+        }
+        console.log("Acesso permitido")
+    })
+
+  }
+
+  window.onload = verificarToken;
+
+
 btnCriarPost.addEventListener("click", (e) => {
     e.preventDefault();
 
@@ -30,5 +54,7 @@ btnCriarPost.addEventListener("click", (e) => {
         },
         body: JSON.stringify(data)
     })
+    .then(x => x.text())
+    .then(y => alert(y))
 })
 

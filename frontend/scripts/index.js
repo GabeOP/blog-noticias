@@ -1,6 +1,7 @@
 const titulo = document.getElementById("titulo");
 const conteudo = document.getElementById("conteudo");
 const btnSair = document.getElementById("btnSair");
+const btnCriarPost = document.getElementById("btnCriarPost");
 const nomeUsuario = document.getElementById("nomeUsuario");
 
 //Representa a tag main do HTML
@@ -10,6 +11,10 @@ if(!localStorage.getItem("nome")) {
     window.location.href = "../pages/login.html"
 }
 nomeUsuario.innerHTML = localStorage.getItem("nome");
+
+if(localStorage.getItem("nome") !== "adm") {
+    btnCriarPost.remove()
+}
 
 fetch("http://localhost:8080/post", {
     method: "GET",
@@ -21,7 +26,7 @@ fetch("http://localhost:8080/post", {
     if(!x.ok) {
         localStorage.clear();
         alert("Sessão expirada.");
-
+        
         window.location.href = "../pages/login.html";
     }
     return x.json();

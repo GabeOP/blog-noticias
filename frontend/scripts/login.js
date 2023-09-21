@@ -24,6 +24,7 @@ btnEntrar.addEventListener("click", (e) => {
             return;
         }
 
+        console.log(x)
         localStorage.setItem("nome", data.nome);
         localStorage.setItem("token", x)
 
