@@ -2,7 +2,10 @@ const nomeUsuario = document.getElementById("nomeUsuario");
 const senhaUsuario = document.getElementById("senhaUsuario");
 const btnRegistrar = document.getElementById("btnRegistrar");
 
-
+if(sessionStorage.getItem("token")) {
+    window.location.href = "../pages/index.html"
+}
+    
 btnRegistrar.addEventListener("click", async(e) => {
     e.preventDefault();
 

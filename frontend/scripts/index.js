@@ -7,24 +7,24 @@ const nomeUsuario = document.getElementById("nomeUsuario");
 //Representa a tag main do HTML
 const container = document.getElementById("container");
 
-if(!localStorage.getItem("nome")) {
+if(!sessionStorage.getItem("nome")) {
     window.location.href = "../pages/login.html"
 }
-nomeUsuario.innerHTML = localStorage.getItem("nome");
+nomeUsuario.innerHTML = sessionStorage.getItem("nome");
 
-if(localStorage.getItem("nome") !== "adm") {
+if(sessionStorage.getItem("nome") !== "adm") {
     btnCriarPost.remove()
 }
 
 fetch("http://localhost:8080/post", {
     method: "GET",
     headers: {
-        "Authorization": "Bearer " + localStorage.getItem("token")
+        "Authorization": "Bearer " + sessionStorage.getItem("token")
     }
 })
 .then((x) => {
     if(!x.ok) {
-        localStorage.clear();
+        sessionStorage.clear();
         alert("Sessão expirada.");
         
         window.location.href = "../pages/login.html";
@@ -64,5 +64,5 @@ fetch("http://localhost:8080/post", {
 });
 
 btnSair.addEventListener("click", () => {
-    localStorage.clear();
+    sessionStorage.clear();
 })

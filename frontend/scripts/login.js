@@ -2,6 +2,10 @@ const nomeUsuario = document.getElementById("nomeUsuario");
 const senhaUsuario = document.getElementById("senhaUsuario");
 const btnEntrar = document.getElementById("btnEntrar");
 
+if(sessionStorage.getItem("token")) {
+    window.location.href = "../pages/index.html"
+}
+
 btnEntrar.addEventListener("click", (e) => {
     e.preventDefault()
 
@@ -25,8 +29,8 @@ btnEntrar.addEventListener("click", (e) => {
         }
 
         console.log(x)
-        localStorage.setItem("nome", data.nome);
-        localStorage.setItem("token", x)
+        sessionStorage.setItem("nome", data.nome);
+        sessionStorage.setItem("token", x)
 
         window.location.href = "../pages/index.html"
     })
