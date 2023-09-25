@@ -1,0 +1,21 @@
+version: '3'
+services:      
+  banco_blog:
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_DB=banco_blog
+    ports: 
+      - "5433:5432"
+
+  springboot:
+    build:
+      dockerfile: ./docker/springboot.dockerfile
+      context: .
+    image: appspring
+    container_name: appspring
+    ports:
+      - "8080:8080"
+    depends_on:
+      - "banco_blog"
