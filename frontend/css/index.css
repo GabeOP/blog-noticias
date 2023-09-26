@@ -34,6 +34,22 @@ main div {
     width: 200px;
 }
 
+#btnCriarPost {
+    background-color: rgb(151, 151, 151);
+}
+
+#btnSair {
+    background-color: rgb(231, 0, 0);
+}
+
+#btnCriarPost, #btnSair {
+    cursor: pointer;
+    color: white;
+    border: none;
+    padding: 2px 16px;
+    border-radius: 2px;
+}
+
 #post {
     border: 2px solid black;
     border-radius: 2px;
