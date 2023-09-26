@@ -1,6 +1,7 @@
 package com.gabriel.blognoticias.services;
 
 import com.gabriel.blognoticias.models.dto.UsuarioDTO;
+import com.gabriel.blognoticias.models.dto.UsuarioResponseDTO;
 import com.gabriel.blognoticias.models.entities.Usuario;
 import com.gabriel.blognoticias.models.exception.JaCadastradoException;
 import com.gabriel.blognoticias.repositories.UsuarioRepository;
@@ -26,17 +27,16 @@ public class UsuarioService implements UserDetailsService {
     this.modelMapper = modelMapper;
   }
 
-  public List<UsuarioDTO> getAll() {
-    List<UsuarioDTO> response = repository.findAll()
-            .stream().map(x -> modelMapper.map(x, UsuarioDTO.class)).collect(Collectors.toList());
+  public List<UsuarioResponseDTO> getAll() {
+    List<UsuarioResponseDTO> response = repository.findAll()
+            .stream().map(x -> modelMapper.map(x, UsuarioResponseDTO.class)).collect(Collectors.toList());
     return response;
   }
 
-//  public UsuarioDTO findByNome(String nome) {
-//    Usuario response = repository.findByNome(nome)
-//            .orElseThrow(() -> new NaoEncontradoException("[ERRO] Usuário não encontrado"));
-//    return modelMapper.map(response, UsuarioDTO.class);
-//  }
+  public UsuarioDTO findByNome(String nome) {
+    Usuario response = (Usuario) repository.findByNome(nome);
+    return modelMapper.map(response, UsuarioDTO.class);
+  }
 
   public void criaUsuario(UsuarioDTO usuariodto) {
     try {
@@ -45,6 +45,14 @@ public class UsuarioService implements UserDetailsService {
     }catch(DataIntegrityViolationException ex) {
       throw new JaCadastradoException(ex.getMessage());
     }
+  }
+
+  public void editaCargoUsuario(UsuarioDTO usuario) {
+    Usuario response = (Usuario) repository.findByNome(usuario.getNome());
+
+    response.setCargo(usuario.getCargo());
+
+    repository.save(response);
   }
 
   @Override
