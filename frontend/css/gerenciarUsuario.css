@@ -1,0 +1,80 @@
+header {
+    flex-direction: column;
+}
+
+#wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    border: 2px solid black;
+    padding: 10px;
+}
+
+#usuario {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    width: 100%
+}
+
+#infosUsuario {
+    display: flex;
+}
+
+#infosUsuario p {
+    margin-right: 3px;
+    font-weight: bolder;
+    text-transform: uppercase;
+}
+
+#wrapNome, #wrapCargo {
+    display: flex;
+    align-items: center;
+}
+
+#wrapCargo p:nth-child(2) {
+    font-weight: normal;
+}
+
+#nomeUsuarioInput {
+    font-size: 1.2rem;
+    border: none;
+    background-color: transparent;
+}
+
+#btnEditarCargo {
+    background-color: rgb(116, 148, 216);
+    color: white;
+    border: 1px solid black;
+    border-radius: 2px;
+    padding: 2px 9px;
+}
+
+#btnExcluirUsuario {
+    background-color: red;
+    color: white;
+    border: 1px solid black;
+    border-radius: 2px;
+    padding: 0 2px;
+}
+
+#botoes {
+    display: flex;
+    gap: 8px;
+}
+#btnConfirmar {
+    display: flex;
+    align-self: flex-end;
+    margin-top: 1rem;
+    padding: 3px 8px;
+}
