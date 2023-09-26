@@ -12,7 +12,7 @@ if(!sessionStorage.getItem("nome")) {
 }
 nomeUsuario.innerHTML = sessionStorage.getItem("nome");
 
-if(sessionStorage.getItem("nome") !== "adm") {
+if(sessionStorage.getItem("cargo") !== "ADM") {
     btnCriarPost.remove()
 }
 

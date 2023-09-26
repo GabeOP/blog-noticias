@@ -21,16 +21,17 @@ btnEntrar.addEventListener("click", (e) => {
         },
         body: JSON.stringify(data)
     })
-    .then(y => y.text())
+    .then(y => y.json())
     .then(x => {
         if(x == ""){
             alert("Falha no login.")
             return;
         }
 
-        console.log(x)
-        sessionStorage.setItem("nome", data.nome);
-        sessionStorage.setItem("token", x)
+        sessionStorage.setItem("id", x.id);
+        sessionStorage.setItem("nome", x.nome);
+        sessionStorage.setItem("cargo", x.cargo);
+        sessionStorage.setItem("token", x.token)
 
         window.location.href = "../pages/index.html"
     })

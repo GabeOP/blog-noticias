@@ -19,7 +19,7 @@ btnCriarPost.addEventListener("click", (e) => {
 
     const data = {
         autor: {
-            id: "609a00c7-29e9-445a-96d7-bfddf8f4ba5d"
+            id: sessionStorage.getItem("id")
         },
         titulo: inputTitulo.value,
         linkImagem: inputImagem.value,
