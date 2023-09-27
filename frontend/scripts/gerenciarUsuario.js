@@ -1,6 +1,7 @@
 const container = document.getElementById("continer");
 const wrap = document.getElementById("wrap");
 const btnConfirmar = document.getElementById("btnConfirmar");
+const btnEditarCargo = document.getElementById("btnEditarCargo");
 
 if(!sessionStorage.getItem("token")) {
     window.location.href = "../pages/login.html"
@@ -8,16 +9,16 @@ if(!sessionStorage.getItem("token")) {
 //Você está conectado como: 
 nomeUsuario.innerHTML = sessionStorage.getItem("nome");
 
-function listaUsuarios() {
+async function listaUsuarios() {
 
- fetch("http://localhost:8080/usuario", {
+ await fetch("http://localhost:8080/usuario", {
     method: "GET",
     headers: {
         "Authorization": "Bearer " + sessionStorage.getItem("token")
     }
 })
 .then(x => x.json())
-.then(res => {
+.then(async res => {
     res.forEach(element => {
         
         if(element.nome === "adm" || element.nome === sessionStorage.getItem("nome")) {
@@ -57,6 +58,7 @@ function listaUsuarios() {
         const btnEditarCargo = document.createElement("button");
         btnEditarCargo.innerHTML = "Alterar cargo";
         btnEditarCargo.id = "btnEditarCargo";
+        btnEditarCargo.className = element.nome;
 
         const btnExcluirUsuario = document.createElement("button");
         btnExcluirUsuario.innerHTML = "Excluir";
@@ -79,28 +81,50 @@ function listaUsuarios() {
         div.appendChild(infosUsuario);
         div.appendChild(botoes);
 
+        
+        btnEditarCargo.addEventListener("click", async (e) => {
+            e.preventDefault();
+
+            const usuario = await buscaUsuario(btnEditarCargo.classList.value);
+
+            if(usuario.cargo === "COMUM") {
+                usuario.cargo = "ADM";
+            }else {
+                usuario.cargo = "COMUM"
+            }
+
+            if(!confirm("Tem certeza que deseja alterar o cargo do usuário " + usuario.nome + " para " + usuario.cargo + "?")){
+                return;
+            }
+
+            const data = {
+                nome: usuario.nome,
+                cargo: usuario.cargo
+            }
+
+            fetch("http://localhost:8080/usuario", {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + sessionStorage.getItem("token")    
+                },
+                body: JSON.stringify(data)
+            })
+        })
     });
 })
 }
 
 window.onload = listaUsuarios;
 
-btnConfirmar.addEventListener("click", (e) => {
-    e.preventDefault();
-
-    const data = {
-        nome: inputNomeUsuario.value,
-        cargo: cargoUsuario.value 
-    }
-
-    console.log(data);
-
-    fetch("http://localhost:8080/usuario", {
-        method: "PATCH",
+async function buscaUsuario(nome) {
+    return await fetch("http://localhost:8080/usuario/"+nome, {
+        method: "GET",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": "Bearer " + sessionStorage.getItem("token")    
-        },
-        body: JSON.stringify(data)
+            "Authorization": "Bearer " + sessionStorage.getItem("token")   
+        }
     })
-})
+    .then(x => x.json())
+    .then(y => y)
+}
