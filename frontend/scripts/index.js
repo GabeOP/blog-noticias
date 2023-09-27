@@ -2,6 +2,7 @@ const titulo = document.getElementById("titulo");
 const conteudo = document.getElementById("conteudo");
 const btnSair = document.getElementById("btnSair");
 const btnCriarPost = document.getElementById("btnCriarPost");
+const btnGerenciar = document.getElementById("btnGerenciar");
 const nomeUsuario = document.getElementById("nomeUsuario");
 
 //Representa a tag main do HTML
@@ -13,7 +14,8 @@ if(!sessionStorage.getItem("nome")) {
 nomeUsuario.innerHTML = sessionStorage.getItem("nome");
 
 if(sessionStorage.getItem("cargo") !== "ADM") {
-    btnCriarPost.remove()
+    btnCriarPost.remove();
+    btnGerenciar.remove();
 }
 
 fetch("http://localhost:8080/post", {
