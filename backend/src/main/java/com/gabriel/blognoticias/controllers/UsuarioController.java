@@ -45,8 +45,8 @@ public class UsuarioController {
   @CrossOrigin(origins = "*")
   @PostMapping
   public ResponseEntity<String> criaUsuario(@RequestBody UsuarioDTO usuario) {
-    service.criaUsuario(usuario);
-    return ResponseEntity.status(HttpStatus.CREATED).body("Usuário criado.");
+    String response = service.criaUsuario(usuario);
+    return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
 
   @CrossOrigin(origins = "*")

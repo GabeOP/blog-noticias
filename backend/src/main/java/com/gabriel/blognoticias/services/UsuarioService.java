@@ -4,6 +4,7 @@ import com.gabriel.blognoticias.models.dto.UsuarioDTO;
 import com.gabriel.blognoticias.models.dto.UsuarioResponseDTO;
 import com.gabriel.blognoticias.models.entities.Usuario;
 import com.gabriel.blognoticias.models.exception.JaCadastradoException;
+import com.gabriel.blognoticias.models.exception.NaoEncontradoException;
 import com.gabriel.blognoticias.repositories.UsuarioRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -35,13 +36,19 @@ public class UsuarioService implements UserDetailsService {
 
   public UsuarioDTO findByNome(String nome) {
     Usuario response = (Usuario) repository.findByNome(nome);
+
+    if(response == null) {
+      throw new NaoEncontradoException("Usuário não encontrado");
+    }
+
     return modelMapper.map(response, UsuarioDTO.class);
   }
 
-  public void criaUsuario(UsuarioDTO usuariodto) {
+  public String criaUsuario(UsuarioDTO usuariodto) {
     try {
       usuariodto.setSenha(new BCryptPasswordEncoder().encode(usuariodto.getSenha()));
       repository.save(modelMapper.map(usuariodto, Usuario.class));
+      return "Usuário cadastrado com sucesso";
     }catch(DataIntegrityViolationException ex) {
       throw new JaCadastradoException(ex.getMessage());
     }
