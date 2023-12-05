@@ -1,8 +1,11 @@
 package com.gabriel.blognoticias.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -22,17 +25,22 @@ public class Post {
   private String linkImagem;
 
   @ManyToOne
-  @JoinColumn(name="usuario_id", nullable = false)
+  @JoinColumn(name = "usuario_id", nullable = false)
   private Usuario autor;
+
+  @OneToMany(mappedBy = "postagem_id")
+  @JsonIgnore
+  private List<Comentario> comentarioList = new ArrayList<>();
 
   public Post() {}
 
-  public Post(UUID id, String titulo, String conteudo, String linkImagem, Usuario autor) {
+  public Post(UUID id, String titulo, String conteudo, String linkImagem, Usuario autor, List<Comentario> comentarioList) {
     this.id = id;
     this.titulo = titulo;
     this.conteudo = conteudo;
     this.linkImagem = linkImagem;
     this.autor = autor;
+    this.comentarioList = comentarioList;
   }
 
   public UUID getId() {
@@ -73,5 +81,13 @@ public class Post {
 
   public void setAutor(Usuario autor) {
     this.autor = autor;
+  }
+
+  public List<Comentario> getComentarioList() {
+    return comentarioList;
+  }
+
+  public void setComentarioList(List<Comentario> comentarioList) {
+    this.comentarioList = comentarioList;
   }
 }
