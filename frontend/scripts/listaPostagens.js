@@ -42,9 +42,10 @@ export async function listaPostagens() {
             autor.innerHTML = "Autor: " + item.autor.nome;
 
             if(sessionStorage.getItem("cargo") === "ADM") {
-                const botaoGerenciarPost = document.createElement("button");
+                const botaoGerenciarPost = document.createElement("a");
                 botaoGerenciarPost.id = "botaoGerenciarPost";
                 botaoGerenciarPost.innerHTML = "Gerenciar";
+                botaoGerenciarPost.setAttribute("href", `../pages/postagem.html?id=${item.id}`);
                 containerInfos.appendChild(botaoGerenciarPost);
             }
 
