@@ -11,7 +11,11 @@ main {
     display: flex;
     flex-direction: column;
     text-align: center;
-    width: 200px;
+    width: 500px;
+    height: 500px;
+    gap: 16px;
+    border: 2px solid black;
+    border-radius: 2px;
 }
 
 #btnCriarPost, #btnGerenciar {
@@ -28,11 +32,6 @@ main {
     color: white;
     border: none;
     padding: 2px 16px;
-    border-radius: 2px;
-}
-
-#post {
-    border: 2px solid black;
     border-radius: 2px;
 }
 
@@ -55,9 +54,20 @@ main {
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
+    margin-top: 60px;
 }
 
 #autor {
     text-align: start;
     font-weight: bold;
+}
+
+#titulo {
+    white-space: nowrap; /* Impede que o texto quebre em várias linhas */
+    overflow: hidden; /* Esconde o conteúdo que ultrapassa a largura da div */
+    text-overflow: ellipsis; /* Adiciona reticências (...) para indicar mais texto */
+}
+#conteudo {
+    overflow: hidden; /* Esconde o conteúdo que ultrapassa a largura da div */
+    text-overflow: ellipsis; /* Adiciona reticências (...) para indicar mais texto */
 }
