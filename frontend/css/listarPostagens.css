@@ -4,7 +4,7 @@ main {
     flex-wrap: wrap;
 }
 
-main div {
+#post {
     margin-top: 20px;
     background-color: rgb(212, 212, 212);
     padding: 10px;
@@ -47,6 +47,14 @@ main div {
 
 #conteudo {
     font-size: 1.1rem;
+}
+
+#containerInfos {
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
 }
 
 #autor {
