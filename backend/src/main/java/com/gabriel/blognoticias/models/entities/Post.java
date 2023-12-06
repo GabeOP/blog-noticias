@@ -16,9 +16,11 @@ public class Post {
   private UUID id;
 
   @NotBlank
+  @Lob
   private String titulo;
 
   @NotBlank
+  @Lob
   private String conteudo;
 
   @NotBlank
