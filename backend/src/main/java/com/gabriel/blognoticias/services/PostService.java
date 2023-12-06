@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,6 +29,11 @@ public class PostService {
     List<PostDTO> response = repository.findAll()
             .stream().map(x -> modelMapper.map(x, PostDTO.class)).collect(Collectors.toList());
     return response;
+  }
+
+  public Post getById(UUID id) {
+    Optional<Post> response = repository.findById(id);
+    return response.get();
   }
 
   public void criarPost(PostDTO postdto) {

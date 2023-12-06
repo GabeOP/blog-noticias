@@ -33,6 +33,7 @@ public class SecurityConfigurations {
                     .requestMatchers(HttpMethod.GET, "/usuario").hasRole("ADMIN")
                     .requestMatchers("/usuario/auth").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST, "/post").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/post/{id}").permitAll()
                     .requestMatchers(HttpMethod.PATCH, "/usuario").hasRole("ADMIN")
                     .anyRequest().authenticated()
             )
