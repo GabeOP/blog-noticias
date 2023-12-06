@@ -15,7 +15,7 @@ public class Comentario {
 
   @ManyToOne
   @JoinColumn(name = "postagem_id", nullable = false)
-  private UUID postagem_id;
+  private Post postagem_id;
 
   private Usuario autorComentario;
 
@@ -26,7 +26,7 @@ public class Comentario {
 
   public Comentario() {}
 
-  public Comentario(UUID id, UUID postagem_id, Usuario autorComentario, String comentario, Date dataComentario) {
+  public Comentario(UUID id, Post postagem_id, Usuario autorComentario, String comentario, Date dataComentario) {
     this.id = id;
     this.postagem_id = postagem_id;
     this.autorComentario = autorComentario;
@@ -42,11 +42,11 @@ public class Comentario {
     this.id = id;
   }
 
-  public UUID getPostagem_id() {
+  public Post getPostagem_id() {
     return postagem_id;
   }
 
-  public void setPostagem_id(UUID postagem_id) {
+  public void setPostagem_id(Post postagem_id) {
     this.postagem_id = postagem_id;
   }
 
