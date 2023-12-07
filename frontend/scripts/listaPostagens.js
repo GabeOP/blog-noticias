@@ -9,7 +9,7 @@ export async function listaPostagens() {
         if(!x.ok) {
             sessionStorage.clear();
             alert("Sessão expirada.");
-            
+            console.log(x)
             window.location.href = "../pages/login.html";
         }
         return x.json();
@@ -41,13 +41,16 @@ export async function listaPostagens() {
             autor.id = "autor";
             autor.innerHTML = "Autor: " + item.autor.nome;
 
+            const botaoGerenciarPost = document.createElement("a");
+            botaoGerenciarPost.id = "botaoGerenciarPost";
+            botaoGerenciarPost.innerHTML = "Ler mais...";
+
             if(sessionStorage.getItem("cargo") === "ADM") {
-                const botaoGerenciarPost = document.createElement("a");
-                botaoGerenciarPost.id = "botaoGerenciarPost";
                 botaoGerenciarPost.innerHTML = "Gerenciar";
-                botaoGerenciarPost.setAttribute("href", `../pages/postagem.html?id=${item.id}`);
-                containerInfos.appendChild(botaoGerenciarPost);
             }
+            
+            botaoGerenciarPost.setAttribute("href", `../pages/postagem.html?id=${item.id}`);
+            containerInfos.appendChild(botaoGerenciarPost);
 
             container.appendChild(div);
             div.appendChild(titulo);
