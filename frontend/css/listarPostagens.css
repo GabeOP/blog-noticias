@@ -12,7 +12,7 @@ main {
     flex-direction: column;
     text-align: center;
     width: 500px;
-    height: 500px;
+    height: 540px;
     gap: 16px;
     border: 2px solid black;
     border-radius: 2px;
@@ -46,6 +46,7 @@ main {
 
 #conteudo {
     font-size: 1.1rem;
+    height: 100px;
 }
 
 #containerInfos {
@@ -54,7 +55,7 @@ main {
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
-    margin-top: 60px;
+    margin-top: 20px;
 }
 
 #autor {

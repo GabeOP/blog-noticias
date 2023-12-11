@@ -22,7 +22,7 @@ export async function listaPostagens() {
             const div = document.createElement("div");
             div.id = "post"
 
-            const titulo = document.createElement("span");
+            const titulo = document.createElement("p");
             titulo.innerHTML = item.titulo;
             titulo.id = "titulo";
 
@@ -30,7 +30,7 @@ export async function listaPostagens() {
             img.id = "img";
             img.src = item.linkImagem;
 
-            const conteudo = document.createElement("span");
+            const conteudo = document.createElement("p");
             conteudo.id = "conteudo";
             conteudo.innerHTML = item.conteudo;
 
