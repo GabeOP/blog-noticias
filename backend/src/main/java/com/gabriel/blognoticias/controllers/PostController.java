@@ -13,6 +13,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/post")
+@CrossOrigin(origins = "http://127.0.0.1:5500/")
 public class PostController {
 
   private PostService service;
@@ -22,21 +23,18 @@ public class PostController {
     this.service = service;
   }
 
-  @CrossOrigin(origins = "*")
   @GetMapping
   public ResponseEntity<List<PostDTO>> getAll() {
     List<PostDTO> response = service.getAll();
     return ResponseEntity.status(HttpStatus.OK).body(response);
   }
 
-  @CrossOrigin(origins = "*")
   @GetMapping("/{id}")
   public ResponseEntity<Post> getById(@PathVariable UUID id) {
     Post response = service.getById(id);
     return ResponseEntity.status(HttpStatus.OK).body(response);
   }
 
-  @CrossOrigin(origins = "*")
   @PostMapping
   public ResponseEntity<String> criarPost(@RequestBody PostDTO post) {
     service.criarPost(post);

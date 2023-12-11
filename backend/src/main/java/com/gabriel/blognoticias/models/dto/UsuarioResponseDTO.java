@@ -1,7 +1,6 @@
 package com.gabriel.blognoticias.models.dto;
 
 import com.gabriel.blognoticias.enums.Cargo;
-import com.gabriel.blognoticias.models.entities.Post;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +10,7 @@ public class UsuarioResponseDTO {
   private UUID id;
   private String nome;
   private Cargo cargo = Cargo.COMUM;
-  private List<Post> postList = new ArrayList<>();
+  private List<Post2DTO> postList = new ArrayList<>();
 
   public UsuarioResponseDTO() {}
 
@@ -36,11 +35,11 @@ public class UsuarioResponseDTO {
     this.nome = nome;
   }
 
-//  public List<Post> getPostList() {
-//    return postList;
-//  }
+  public List<Post2DTO> getPostList() {
+    return postList;
+  }
 
-  public void setPostList(List<Post> postList) {
+  public void setPostList(List<Post2DTO> postList) {
     this.postList = postList;
   }
 

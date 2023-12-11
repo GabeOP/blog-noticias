@@ -16,11 +16,11 @@ public class Post {
   private UUID id;
 
   @NotBlank
-  @Lob
+  @Column(columnDefinition="TEXT")
   private String titulo;
 
   @NotBlank
-  @Lob
+  @Column(columnDefinition="TEXT")
   private String conteudo;
 
   @NotBlank

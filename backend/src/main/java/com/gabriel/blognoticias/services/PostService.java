@@ -4,6 +4,7 @@ import com.gabriel.blognoticias.models.dto.PostDTO;
 import com.gabriel.blognoticias.models.entities.Post;
 import com.gabriel.blognoticias.models.exception.CampoNaoPreenchidoException;
 import com.gabriel.blognoticias.repositories.PostRepository;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
@@ -36,6 +37,7 @@ public class PostService {
     return response.get();
   }
 
+  @Transactional
   public void criarPost(PostDTO postdto) {
     try {
       repository.save(modelMapper.map(postdto, Post.class));
