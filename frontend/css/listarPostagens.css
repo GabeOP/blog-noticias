@@ -1,8 +1,10 @@
-main {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
+#container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    justify-items: center;
+    gap: 30px;
 }
+
 
 #post {
     margin-top: 20px;
