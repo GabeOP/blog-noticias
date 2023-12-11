@@ -16,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/usuario")
+@CrossOrigin(origins = "http://127.0.0.1:5500/")
 public class UsuarioController {
 
   private UsuarioService service;
@@ -28,42 +29,37 @@ public class UsuarioController {
     this.tokenService = tokenService;
   }
 
-  @CrossOrigin(origins = "*")
   @GetMapping
   public ResponseEntity<List<UsuarioResponseDTO>> getAll() {
     List<UsuarioResponseDTO> response = service.getAll();
     return ResponseEntity.status(HttpStatus.OK).body(response);
   }
 
-  @CrossOrigin(origins = "*")
   @GetMapping("/{nome}")
-  public ResponseEntity<UsuarioDTO> getByNome(@PathVariable String nome) {
-    UsuarioDTO response = service.findByNome(nome);
+  public ResponseEntity<UsuarioResponseDTO> getByNome(@PathVariable String nome) {
+    UsuarioResponseDTO response = service.findByNome(nome);
     return ResponseEntity.status(HttpStatus.OK).body(response);
   }
 
-  @CrossOrigin(origins = "*")
   @PostMapping
   public ResponseEntity<String> criaUsuario(@RequestBody UsuarioDTO usuario) {
     String response = service.criaUsuario(usuario);
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
 
-  @CrossOrigin(origins = "*")
   @PatchMapping
   public ResponseEntity editaCargoUsuario(@RequestBody UsuarioDTO usuario) {
     service.editaCargoUsuario(usuario);
     return ResponseEntity.status(HttpStatus.OK).body("Sucesso.");
   }
 
-  @CrossOrigin(origins = "*")
   @PostMapping("/login")
   public ResponseEntity login(@RequestBody UsuarioDTO data) {
     var senhaDoUsuario = new UsernamePasswordAuthenticationToken(data.getNome(), data.getSenha());
     var auth = this.authenticationManager.authenticate(senhaDoUsuario);
     var token = tokenService.generateToken((Usuario)auth.getPrincipal());
 
-    ResponseEntity<UsuarioDTO> dto = this.getByNome(data.getNome());
+    ResponseEntity<UsuarioResponseDTO> dto = this.getByNome(data.getNome());
 
     return ResponseEntity.ok().body(new LoginResponseDTO(
             token,
@@ -72,7 +68,6 @@ public class UsuarioController {
             dto.getBody().getCargo()));
   }
 
-  @CrossOrigin(origins = "*")
   @PostMapping("/auth")
   public ResponseEntity auth(@RequestHeader(value = "Authorization") String token) {
     tokenService.validateToken(token);

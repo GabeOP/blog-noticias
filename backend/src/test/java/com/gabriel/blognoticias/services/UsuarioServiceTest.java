@@ -68,7 +68,7 @@ public class UsuarioServiceTest {
     when(repository.findByNome(any())).thenReturn(usuario);
     when(modelMapper.map(any(), any())).thenReturn(usuarioDTO);
 
-    UsuarioDTO response = service.findByNome(any());
+    UsuarioResponseDTO response = service.findByNome(any());
 
     assertEquals(response.getClass(), UsuarioDTO.class);
     assertEquals(response.getNome(), NOME);

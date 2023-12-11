@@ -34,14 +34,14 @@ public class UsuarioService implements UserDetailsService {
     return response;
   }
 
-  public UsuarioDTO findByNome(String nome) {
-    Usuario response = (Usuario) repository.findByNome(nome);
+  public UsuarioResponseDTO findByNome(String nome) {
+    UserDetails response = repository.findByNome(nome);
 
     if(response == null) {
       throw new NaoEncontradoException("Usuário não encontrado");
     }
 
-    return modelMapper.map(response, UsuarioDTO.class);
+    return modelMapper.map(response, UsuarioResponseDTO.class);
   }
 
   public String criaUsuario(UsuarioDTO usuariodto) {
