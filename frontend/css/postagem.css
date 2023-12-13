@@ -6,35 +6,33 @@
     margin-bottom: 100px;
 }
 
-
-#container div:nth-child(1) {
+#wrapPost {
     max-width: 80%;
     margin-top: 60px;
 }
 
-#container div:nth-child(1) h1 {
+#titulo {
     font-size: 4rem;
 }
 
-#container div:nth-child(1) p {
-    margin-top: 20px;
+#autor {
     font-size: 1.5rem;
 }
 
-#container div:nth-child(2) {
+#divMain {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 30px;
 }
 
-#container div:nth-child(2) img {
+#divMain img {
     width: 700px;
     border-radius: 10px;
 }
 
-#container div:nth-child(2) p{
+#conteudo {
     font-size: 1.5rem;
-    max-width: 600px;
+    max-width: 900px;
     color: #333;
 }
