@@ -13,6 +13,7 @@ const id = params.get('id');
 nomeUsuario.innerHTML = sessionStorage.getItem("nome");
 
 const container = document.getElementById("container");
+const wrapPost = document.getElementById("wrapPost");
 
 fetch("http://localhost:8080/post/" + id, {
     method: "GET",
@@ -25,14 +26,11 @@ fetch("http://localhost:8080/post/" + id, {
     document.title = res.titulo;
     console.log(res)
     
-    const div = document.createElement("div");
-    div.id = "post";
-
     const divTitulo = document.createElement("div");
-    div.id = "divTitulo";
+    divTitulo.id = "divTitulo";
 
     const divMain = document.createElement("div");
-    div.id = "divMain";
+    divMain.id = "divMain";
 
     const titulo = document.createElement("h1");
     titulo.innerHTML = res.titulo;
@@ -50,8 +48,26 @@ fetch("http://localhost:8080/post/" + id, {
     conteudo.id = "conteudo";
     conteudo.innerHTML = res.conteudo;
 
+    //Parte da div que cria a área dos comentários
+    const divComentario = document.createElement("div");
+    divComentario.id = "divListaComentario";
+
+    res.comentarioList.forEach((item, index) => {
+        console.log(item);
+    })
+
+    const autorComentario = document.createElement("p");
+    autorComentario.id = "autorComentario";
+
+    const textoComentario = document.createElement("p");
+    textoComentario.id = "textoComentario";
+
+    const dataComentario = document.createElement("p");
+    dataComentario.id = "dataComentario";
+
     container.appendChild(divTitulo);
     container.appendChild(divMain);
+    container.appendChild(divComentario);
 
     divTitulo.appendChild(titulo);
     divTitulo.appendChild(autor);
@@ -59,4 +75,10 @@ fetch("http://localhost:8080/post/" + id, {
     divMain.appendChild(img);
     divMain.appendChild(conteudo);
 
+    wrapPost.appendChild(divTitulo);
+    wrapPost.appendChild(divMain);
+    
+    divComentario.appendChild(autorComentario);
+    divComentario.appendChild(textoComentario);
+    divComentario.appendChild(dataComentario);
 })
