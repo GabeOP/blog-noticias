@@ -33,7 +33,7 @@ btnEntrar.addEventListener("click", (e) => {
         sessionStorage.setItem("cargo", x.cargo);
         sessionStorage.setItem("token", x.token)
 
-        window.location.href = "../pages/index.html"
+        window.location.href = "../../index.html"
     })
 })
 

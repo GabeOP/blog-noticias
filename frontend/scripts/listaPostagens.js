@@ -47,7 +47,7 @@ export async function listaPostagens() {
                 botaoGerenciarPost.innerHTML = "Gerenciar";
             }
             
-            botaoGerenciarPost.setAttribute("href", `../pages/postagem.html?id=${item.id}`);
+            botaoGerenciarPost.setAttribute("href", `./frontend/pages/postagem.html?id=${item.id}`);
             containerInfos.appendChild(botaoGerenciarPost);
 
             container.appendChild(div);

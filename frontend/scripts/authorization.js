@@ -8,7 +8,7 @@ export async function verificarToken() {
         })
         .then(x => {
             if(!x.ok) {
-                window.location.href = '../pages/index.html';
+                window.location.href =  "../../index.html";
                 return;
             }
         })
