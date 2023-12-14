@@ -9,7 +9,6 @@ export async function listaPostagens() {
         if(!x.ok) {
             sessionStorage.clear();
             alert("Sessão expirada.");
-            console.log(x)
             window.location.href = "../pages/login.html";
         }
         return x.json();
@@ -17,7 +16,6 @@ export async function listaPostagens() {
     .then(res => {
 
         res.forEach((item, index) => {
-            console.log(item);
 
             const div = document.createElement("div");
             div.id = "post"

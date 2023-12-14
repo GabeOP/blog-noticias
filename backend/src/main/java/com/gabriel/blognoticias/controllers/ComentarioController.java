@@ -13,27 +13,24 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/comentario")
-@CrossOrigin(origins = "http://127.0.0.1:5500/")
+@CrossOrigin(origins = "*")
 public class ComentarioController {
 
   @Autowired
   private ComentarioService service;
 
-  @CrossOrigin(origins = "*")
   @GetMapping
   public ResponseEntity<List<ComentarioDTO>> getAll() {
     List<ComentarioDTO> response = service.getAll();
     return ResponseEntity.status(HttpStatus.OK).body(response);
   }
 
-  @CrossOrigin(origins = "*")
   @GetMapping("/{id}")
   public ResponseEntity<Comentario> getById(@PathVariable UUID id) {
     Comentario response = service.getById(id);
     return ResponseEntity.status(HttpStatus.OK).body(response);
   }
 
-  @CrossOrigin(origins = "*")
   @PostMapping
   public ResponseEntity<String> criarComentario(@RequestBody Comentario comentario) {
     service.criarComentario(comentario);

@@ -24,7 +24,6 @@ fetch("http://localhost:8080/post/" + postagem_id, {
 .then(res => res.json())
 .then(res => {
     document.title = res.titulo;
-    console.log(res)
     
     const divTitulo = document.createElement("div");
     divTitulo.id = "divTitulo";
@@ -49,6 +48,7 @@ fetch("http://localhost:8080/post/" + postagem_id, {
     conteudo.innerHTML = res.conteudo;
 
     const listaComentario = document.getElementById("listaComentario");
+    
     //Parte da div que cria a área dos comentários
     res.comentarioList.forEach((item, index) => {
 

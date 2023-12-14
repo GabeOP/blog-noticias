@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/post")
-@CrossOrigin(origins = "http://127.0.0.1:5500/")
+@CrossOrigin(origins = "*")
 public class PostController {
 
   private PostService service;

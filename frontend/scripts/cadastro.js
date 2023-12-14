@@ -21,8 +21,6 @@ btnRegistrar.addEventListener("click", async(e) => {
         body: JSON.stringify(data)
     })
     .then(res => {
-        console.log(res);
-        console.log(data);
         if(!res.ok) {
             alert("Preencha todos os campos.")
             return;
