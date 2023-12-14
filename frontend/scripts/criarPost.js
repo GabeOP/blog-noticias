@@ -26,7 +26,7 @@ btnCriarPost.addEventListener("click", (e) => {
         conteudo: inputConteudo.value
     }
 
-    fetch("http://localhost:8080/post", {
+    fetch("https://api-blog-xn32.onrender.com/post", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

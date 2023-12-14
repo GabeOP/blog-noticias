@@ -11,7 +11,7 @@ nomeUsuario.innerHTML = sessionStorage.getItem("nome");
 
 async function listaUsuarios() {
 
- await fetch("http://localhost:8080/usuario", {
+ await fetch("https://api-blog-xn32.onrender.com/usuario", {
     method: "GET",
     headers: {
         "Authorization": "Bearer " + sessionStorage.getItem("token")
@@ -102,7 +102,7 @@ async function listaUsuarios() {
                 cargo: usuario.cargo
             }
 
-            fetch("http://localhost:8080/usuario", {
+            fetch("https://api-blog-xn32.onrender.com/usuario", {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
@@ -118,7 +118,7 @@ async function listaUsuarios() {
 window.onload = listaUsuarios;
 
 async function buscaUsuario(nome) {
-    return await fetch("http://localhost:8080/usuario/"+nome, {
+    return await fetch("https://api-blog-xn32.onrender.com/usuario/"+nome, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

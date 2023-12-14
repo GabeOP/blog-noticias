@@ -14,7 +14,7 @@ btnComentar.addEventListener("click", (e) => {
         comentario: boxComentario.value,
     }
 
-    fetch("http://localhost:8080/comentario", {
+    fetch("https://api-blog-xn32.onrender.com/comentario", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -30,7 +30,7 @@ btnComentar.addEventListener("click", (e) => {
 
 });
 
-fetch("http://localhost:8080/comentario", {
+fetch("https://api-blog-xn32.onrender.com/comentario", {
     method: "GET",
     headers: {
         "Authorization": "Bearer " + sessionStorage.getItem("token")

@@ -15,7 +15,7 @@ nomeUsuario.innerHTML = sessionStorage.getItem("nome");
 const container = document.getElementById("container");
 const wrapPost = document.getElementById("wrapPost");
 
-fetch("http://localhost:8080/post/" + postagem_id, {
+fetch("https://api-blog-xn32.onrender.com/post/" + postagem_id, {
     method: "GET",
     headers: {
         "Authorization": "Bearer " + sessionStorage.getItem("token")

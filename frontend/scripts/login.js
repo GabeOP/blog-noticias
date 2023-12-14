@@ -14,7 +14,7 @@ btnEntrar.addEventListener("click", (e) => {
         senha: senhaUsuario.value
     }
  
-    fetch("http://localhost:8080/usuario/login", {
+    fetch("https://api-blog-xn32.onrender.com/usuario/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

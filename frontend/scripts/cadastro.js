@@ -13,7 +13,7 @@ btnRegistrar.addEventListener("click", async(e) => {
         nome: nomeUsuario.value,
         senha: senhaUsuario.value
     }
-    await fetch("http://localhost:8080/usuario", {
+    await fetch("https://api-blog-xn32.onrender.com/usuario", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

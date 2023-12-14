@@ -1,5 +1,5 @@
 export async function listaPostagens() {
-        await fetch("http://localhost:8080/post", {
+        await fetch("https://api-blog-xn32.onrender.com/post", {
         method: "GET",
         headers: {
             "Authorization": "Bearer " + sessionStorage.getItem("token")
