@@ -35,6 +35,7 @@ public class SecurityConfigurations {
                     .requestMatchers(HttpMethod.POST, "/post").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.GET, "/post/{id}").permitAll()
                     .requestMatchers(HttpMethod.PATCH, "/usuario").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.POST, "/comentario").permitAll()
                     .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                     .anyRequest().authenticated()
             )

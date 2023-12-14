@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-public class Usuario implements UserDetails {
+  public class Usuario implements UserDetails {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
@@ -32,6 +32,10 @@ public class Usuario implements UserDetails {
   @OneToMany(mappedBy = "autor")
   @JsonIgnore
   private List<Post> postList = new ArrayList<>();
+
+  @OneToMany(mappedBy = "autorComentario")
+  @JsonIgnore
+  private List<Comentario> comentarioList = new ArrayList<>();
 
   public Usuario() {}
 
@@ -75,6 +79,10 @@ public class Usuario implements UserDetails {
 
   public void setCargo(Cargo cargo) {
     this.cargo = cargo;
+  }
+
+  public List<Comentario> getComentarioList() {
+    return comentarioList;
   }
 
   @Override

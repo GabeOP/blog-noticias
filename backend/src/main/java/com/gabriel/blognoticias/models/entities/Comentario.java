@@ -1,5 +1,6 @@
 package com.gabriel.blognoticias.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
@@ -13,10 +14,13 @@ public class Comentario {
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
+  @JsonBackReference
   @ManyToOne
   @JoinColumn(name = "postagem_id", nullable = false)
   private Post postagem_id;
 
+  @ManyToOne
+  @JoinColumn(name = "usuario_id", nullable = false)
   private Usuario autorComentario;
 
   @NotBlank
@@ -26,12 +30,11 @@ public class Comentario {
 
   public Comentario() {}
 
-  public Comentario(UUID id, Post postagem_id, Usuario autorComentario, String comentario, Date dataComentario) {
+  public Comentario(UUID id, Post postagem_id, Usuario autorComentario, String comentario) {
     this.id = id;
     this.postagem_id = postagem_id;
     this.autorComentario = autorComentario;
     this.comentario = comentario;
-    this.dataComentario = dataComentario;
   }
 
   public UUID getId() {

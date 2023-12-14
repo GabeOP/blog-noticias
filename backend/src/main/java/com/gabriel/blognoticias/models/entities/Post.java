@@ -1,6 +1,6 @@
 package com.gabriel.blognoticias.models.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
@@ -30,8 +30,8 @@ public class Post {
   @JoinColumn(name = "usuario_id", nullable = false)
   private Usuario autor;
 
+  @JsonManagedReference
   @OneToMany(mappedBy = "postagem_id")
-  @JsonIgnore
   private List<Comentario> comentarioList = new ArrayList<>();
 
   public Post() {}
