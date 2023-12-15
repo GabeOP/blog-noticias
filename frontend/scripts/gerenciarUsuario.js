@@ -4,7 +4,7 @@ const btnConfirmar = document.getElementById("btnConfirmar");
 const btnEditarCargo = document.getElementById("btnEditarCargo");
 
 if(!sessionStorage.getItem("token")) {
-    window.location.href = "../pages/login.html"
+    window.location.href = "../pages/index.html"
 }
 //Você está conectado como: 
 nomeUsuario.innerHTML = sessionStorage.getItem("nome");

@@ -27,7 +27,7 @@ btnRegistrar.addEventListener("click", async(e) => {
         }
 
         alert("Usuário criado.");
-        window.location.replace("../pages/login.html")
+        window.location.replace("../pages/index.html")
 
     })
 })

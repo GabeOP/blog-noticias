@@ -5,7 +5,7 @@ const btnCriarPost = document.getElementById("btnCriarPost");
 const nomeUsuario = document.getElementById("nomeUsuario");
 
 if(!sessionStorage.getItem("token")) {
-    window.location.href = "../pages/login.html"
+    window.location.href = "../pages/index.html"
 }
 //Você está conectado como: 
 nomeUsuario.innerHTML = sessionStorage.getItem("nome");

@@ -5,7 +5,7 @@ const nomeUsuario = document.getElementById("nomeUsuario");
 
 
 if(!sessionStorage.getItem("nome")) {
-    window.location.href = "../pages/login.html"
+    window.location.href = "../pages/index.html"
 }
 nomeUsuario.innerHTML = sessionStorage.getItem("nome");
 

@@ -9,7 +9,7 @@ export async function listaPostagens() {
         if(!x.ok) {
             sessionStorage.clear();
             alert("Sessão expirada.");
-            window.location.href = "../pages/login.html";
+            window.location.href = "../pages/index.html";
         }
         return x.json();
     })
