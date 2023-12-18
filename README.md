@@ -10,6 +10,27 @@ criar postagens para todos os usuários cadastrados.
 - Docker
 - PostgreSQL
 
+# Como executar
+O Front-end está configurado para consumir a API que está deployada. Caso desejar usar localmente, terá que alterar nos 
+arquivos JS para "localhost:8080".
+
+Caso você use a API que já está configurada, pode ser que demore um pouco na primeira requisição pois o deploy é a opção
+grátis do Render.com.
+
+### Rodando a aplicação inteira localmente com Docker
+- Clone o repositório na sua máquina
+- Na pasta backend/src/main/resources, clique no arquivo "application.properties"
+- Retire os comentários das configurações do banco de dados local e comente as configurações do banco de dados do Render
+- Abra o terminal, entre na pasta raiz do projeto onde está o arquivo docker-compose.yml
+- Digite o comando "docker-compose up"
+- Na pasta frontend/pages abra o arquivo index.html
+- Faça o login com o nome de usuário "adm" e senha "123456"
+
+### Rodando localmente apenas o Front-end e API no Render.com
+- Clone o repositório na sua máquina
+- Na pasta frontend/pages abra o arquivo index.html
+- Faça o login com o nome de usuário "adm" e senha "123456"
+
 # Imagens do projeto
 
 <div align="center">
