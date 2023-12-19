@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { PostCard } from "../PostCard/PostCard";
+import { PostCard } from "../../components/PostCard/PostCard";
 import API from "../../axios/config";
 
-export const PostList = () => {
+export function Home() {
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
 

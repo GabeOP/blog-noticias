@@ -10,7 +10,7 @@ export function PostCard ({titulo, imagem, conteudo, autor}) {
             <p id="conteudo">{conteudo}</p>
             <div id="containerInfos">
                 <span id="autor">Autor: {autor}</span>
-                <Router><Link to="./frontend/pages/login.html">Ler mais...</Link></Router>
+                <Link to="./frontend/pages/login.html">Ler mais...</Link>
             </div>
         </div>
     )

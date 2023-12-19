@@ -8,7 +8,6 @@ export const Header = ({ pageTitle }) => {
     const isAdmin = sessionStorage.getItem('cargo');
 
     return (
-        <Router>
             <header>
                 <h1>{ pageTitle } Teste</h1>
 
@@ -26,6 +25,5 @@ export const Header = ({ pageTitle }) => {
                     </nav>
                 </div>
             </header>
-        </Router>
     );
 }
