@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import { Formulario } from '../../components/Formulario/Formulario';
+import { Link } from 'react-router-dom';
+import "./Cadastro.css"
 
 export function PaginaCadastro() {
   const handleCadastroSubmit = async (dados) => {
@@ -13,9 +15,12 @@ export function PaginaCadastro() {
   };
 
   return (
-    <div>
-      <h2>Cadastro</h2>
-      <Formulario onSubmit={handleCadastroSubmit} buttonText="Cadastrar" />
+    <div id='container'>
+      <div>
+        <h2>Cadastro</h2>
+        <Formulario onSubmit={handleCadastroSubmit} buttonText="Cadastrar" />
+      </div>
+      <p>Já está cadastrado? <Link to="/login">Faça o login aqui</Link></p>
     </div>
   );
 };
