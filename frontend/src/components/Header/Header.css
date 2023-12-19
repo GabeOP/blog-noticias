@@ -1,0 +1,38 @@
+header {
+    background-color: rgb(59, 89, 152);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-block: 20px;
+    color: white;
+}
+
+header div {
+    display: flex;
+}
+
+#usuario-container {
+    display: flex;
+    gap: 10px;
+}
+
+#btnCriarPost, #btnGerenciar {
+    background-color: rgb(94, 185, 64);
+    text-transform: uppercase;
+}
+
+#btnSair {
+    background-color: rgb(231, 0, 0);
+}
+
+#btnCriarPost, #btnGerenciar, #btnSair {
+    cursor: pointer;
+    color: white;
+    border: none;
+    padding: 2px 16px;
+    border-radius: 2px;
+}
+
+#titulo {
+    font-size: 2rem;
+}
