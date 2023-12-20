@@ -4,6 +4,11 @@ import "./Header.css"
 
 export const Header = () => {
 
+    const handleLogout = () => {
+        sessionStorage.clear();
+        location.href="/login"
+    }
+
     const nomeUsuario = sessionStorage.getItem('nome');
     const isAdmin = sessionStorage.getItem('cargo');
 
@@ -22,7 +27,7 @@ export const Header = () => {
                             </>
                         ) : null}
                         <Link to="/" id='btnPagInicial'>Página inicial</Link>
-                        <Link to="/login" onClick={location.reload} id="btnSair">Sair</Link>
+                        <Link id="btnSair" onClick={handleLogout}> Sair</Link>
                     </nav>
                 </div>
             </header>
