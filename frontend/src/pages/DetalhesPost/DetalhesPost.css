@@ -1,0 +1,86 @@
+#container-detalhes-post { 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 100px;
+}
+
+#wrap-detalhes-post {
+    max-width: 80%;
+    margin-top: 60px;
+}
+
+#titulo-detalhes-post {
+    font-size: 4rem;
+}
+
+#autor-detalhes-post {
+    font-size: 1.5rem;
+}
+
+#divMain-detalhes-post {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+#divMain-detalhes-post img {
+    width: 700px;
+    max-height: 500px;
+    border-radius: 10px;
+}
+
+#conteudo-detalhes-post {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+#wrap-comentarios {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+#boxComentario {
+    width: 800px;
+    min-width: 300px;
+    max-width: 800px;
+    min-height: 120px;
+    max-height: 200px;
+    font-size: 1.4rem;
+    padding-inline: 10px;
+}
+
+#btnComentar {
+    width: 80px;
+    height: 30px;
+    font-size: 1rem;
+}
+
+#autorComentario {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+#textoComentario {
+    font-size: 1.6rem;
+}
+
+#listaComentario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    min-width: 50%;
+}
+
+#wrapComentario {
+    background-color: rgb(220, 220, 220);
+    width: 50%;
+    padding: 10px;
+    border-radius: 10px;
+    overflow-wrap: break-word;
+}
