@@ -23,6 +23,7 @@ export function Home() {
             {data.map((item) => (
                 <PostCard
                     key={item.id}
+                    id={item.id}
                     titulo={item.title}
                     conteudo={item.description}
                     autor={item.category}

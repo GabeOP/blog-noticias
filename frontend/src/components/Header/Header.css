@@ -11,6 +11,10 @@ header div {
     display: flex;
 }
 
+#h1-header {
+    color: white;
+}
+
 #usuario-container {
     display: flex;
     gap: 10px;
@@ -21,11 +25,15 @@ header div {
     text-transform: uppercase;
 }
 
+#btnPagInicial {
+    background-color: rgb(130, 145, 182);
+}
+
 #btnSair {
     background-color: rgb(231, 0, 0);
 }
 
-#btnCriarPost, #btnGerenciar, #btnSair {
+#btnCriarPost, #btnGerenciar, #btnSair, #btnPagInicial {
     cursor: pointer;
     color: white;
     border: none;

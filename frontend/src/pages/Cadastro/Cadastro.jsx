@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { Formulario } from '../../components/Formulario/Formulario';
+import { Formulario } from '../../components/FormularioUsuario/Formulario';
 import { Link } from 'react-router-dom';
 import "./Cadastro.css"
 
@@ -15,7 +15,7 @@ export function PaginaCadastro() {
   };
 
   return (
-    <div id='container'>
+    <div id='form-container'>
       <div>
         <h2>Cadastro</h2>
         <Formulario onSubmit={handleCadastroSubmit} buttonText="Cadastrar" />

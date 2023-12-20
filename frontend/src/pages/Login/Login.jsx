@@ -1,5 +1,5 @@
 import React from 'react';
-import { Formulario } from '../../components/Formulario/Formulario';
+import { Formulario } from '../../components/FormularioUsuario/Formulario';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -14,7 +14,7 @@ export default function PaginaLogin() {
   };
 
   return (
-    <div id='container'>
+    <div id='form-container'>
       <div>
         <h2>Login</h2>
         <Formulario onSubmit={handleLoginSubmit} buttonText="Login" />

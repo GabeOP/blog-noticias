@@ -1,7 +1,7 @@
 import "./PostCard.css"
 import { Link, BrowserRouter as Router } from 'react-router-dom'
 
-export function PostCard ({titulo, imagem, conteudo, autor}) {
+export function PostCard ({id, titulo, imagem, conteudo, autor}) {
     return(
 
         <div id="post">
@@ -10,7 +10,7 @@ export function PostCard ({titulo, imagem, conteudo, autor}) {
             <p id="conteudo">{conteudo}</p>
             <div id="containerInfos">
                 <span id="autor">Autor: {autor}</span>
-                <Link to="./frontend/pages/login.html">Ler mais...</Link>
+                <Link to={"/post?id="+id}>Ler mais...</Link>
             </div>
         </div>
     )
