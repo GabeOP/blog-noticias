@@ -17,8 +17,8 @@ export const Header = () => {
                     <nav id="usuario-container">
                         {isAdmin ? (
                             <>
-                                <Link to="./frontend/pages/criarPost.html" id="btnCriarPost">Criar post</Link>
-                                <Link to="./frontend/pages/gerenciarUsuarios.html" id="btnGerenciar">Gerenciar</Link>
+                                <Link to="/adm/criar-post" id="btnCriarPost">Criar post</Link>
+                                <Link to="#" id="btnGerenciar">Gerenciar</Link>
                             </>
                         ) : null}
                         <Link to="/" id='btnPagInicial'>Página inicial</Link>
