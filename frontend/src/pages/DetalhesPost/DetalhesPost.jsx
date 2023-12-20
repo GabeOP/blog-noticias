@@ -6,6 +6,7 @@ export function DetalhesPost() {
 
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
+    const [comentario, setComentario] = useState('');
 
     // Obtém a string de consulta da URL
     const queryString = window.location.search;
@@ -15,6 +16,34 @@ export function DetalhesPost() {
 
     // Obtém o valor do parâmetro 'id'
     const postagem_id = params.get('id');
+
+    const handleComentSubmit = async (e) => {
+        e.preventDefault();
+    
+        const postData = {
+            postagem_id: {
+                id: postagem_id
+            },
+            autorComentario: {
+                id: sessionStorage.getItem("id")
+            },
+            comentario: comentario
+        }
+
+        const config = {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
+            },
+          };
+
+        try {
+            await API.post("/comentario", postData, config)
+          setComentario('');
+        } catch (error) {
+          console.error('Erro ao enviar formulário:', error);
+        }
+      };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -43,8 +72,12 @@ export function DetalhesPost() {
             </div>
 
             <div id="wrap-comentarios">
-                <textarea name='comentario' id='boxComentario' placeholder='Escreva o seu comentário...'></textarea>
-                <input type="button" value="Comentar" id='btnComentar' />
+
+                <form onSubmit={handleComentSubmit}>
+                    <textarea id='boxComentario' placeholder='Escreva o seu comentário...' onChange={(e) => setComentario(e.target.value)}></textarea>
+                    <button type="submit" id='btnComentar'>Comentar</button>
+                </form>
+
                 <h2>Comentários</h2>
                 <div id="listaComentario">
                     <div id='wrapComentario'>
