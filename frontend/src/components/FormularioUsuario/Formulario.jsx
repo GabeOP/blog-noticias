@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import "./Formulario.css"
 
 export function Formulario({ onSubmit, buttonText }) {
   const [nome, setNome] = useState('');
