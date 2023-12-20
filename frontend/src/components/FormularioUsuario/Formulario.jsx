@@ -18,16 +18,16 @@ export function Formulario({ onSubmit, buttonText }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form id="form-usuario" onSubmit={handleSubmit}>
       <label>
-        Nome:
-        <input type="nome" value={nome} onChange={(e) => setNome(e.target.value)} />
+        Nome do usuário
+        <input placeholder='Digite o nome de usuário' type="nome" value={nome} onChange={(e) => setNome(e.target.value)} />
       </label>
       <label>
-        Senha:
-        <input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} />
+        Senha
+        <input placeholder='Digite a sua senha' type="password" value={senha} onChange={(e) => setSenha(e.target.value)} />
       </label>
-      <button type="submit">{buttonText}</button>
+      <button id='btnForm' type="submit">{buttonText}</button>
     </form>
   );
 };

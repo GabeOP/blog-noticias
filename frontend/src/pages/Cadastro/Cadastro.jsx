@@ -16,11 +16,15 @@ export function PaginaCadastro() {
 
   return (
     <div id='form-container'>
-      <div>
+      <div id='h2-form'>
         <h2>Cadastro</h2>
+      </div>
+      <div>
         <Formulario onSubmit={handleCadastroSubmit} buttonText="Cadastrar" />
       </div>
-      <p>Já está cadastrado? <Link to="/login">Faça o login aqui</Link></p>
+      <div>
+        <p>Já está cadastrado? <Link to="/login">Faça o login aqui</Link></p>
+      </div>
     </div>
   );
 };

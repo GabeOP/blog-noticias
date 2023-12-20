@@ -15,11 +15,15 @@ export default function PaginaLogin() {
 
   return (
     <div id='form-container'>
-      <div>
+      <div id='h2-form'>
         <h2>Login</h2>
+      </div>
+      <div>
         <Formulario onSubmit={handleLoginSubmit} buttonText="Login" />
       </div>
-      <p>Não possui cadastro? <Link to="/cadastro">Registre-se aqui</Link></p>
+      <div>
+        <p>Não possui cadastro? <Link to="/cadastro">Registre-se aqui</Link></p>
+      </div>
     </div>
   );
 };
