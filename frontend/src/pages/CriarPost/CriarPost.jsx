@@ -51,7 +51,7 @@ export function CriarPost() {
                 <label htmlFor="imagem">Imagem:</label>
                 <input
                     type="text"
-                    name="imagem"
+                    name="linkImagem"
                     placeholder='Cole a URL da imagem'
                     onChange={(e) => setImagem(e.target.value)}
                 />
