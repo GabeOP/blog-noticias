@@ -5,10 +5,12 @@ export function PostCard ({id, titulo, imagem, conteudo, autor}) {
     return(
 
         <div id="post">
-            <p id="titulo">{titulo}</p>
-            <img src={imagem} id="img" alt="" />
-            <p id="conteudo">{conteudo}</p>
+            <div id="post-imagem">
+                <img src={imagem} alt="" />
+            </div>
             <div id="containerInfos">
+                <p id="titulo">{titulo}</p>
+                <p id="conteudo">{conteudo}</p>
                 <span id="autor">Autor: {autor}</span>
                 <Link to={"/post?id="+id}>Ler mais...</Link>
             </div>

@@ -1,0 +1,29 @@
+#wrap-home {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    padding: 50px;
+}
+
+#container-lista-post {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    justify-items: center;
+    gap: 30px;
+}
+
+#container-home-infos {
+    width: 300px;
+    height: 800px;
+    background-color:  rgb(217, 217, 217);;
+}
+
+@media screen and (max-width: 1500px) {
+    #wrap-home {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 80px;
+    }
+}

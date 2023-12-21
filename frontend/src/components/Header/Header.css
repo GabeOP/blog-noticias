@@ -45,3 +45,9 @@ header div {
 #titulo {
     font-size: 2rem;
 }
+
+@media screen and (max-width: 642px) {
+    #h1-header, header div span {
+        display: none;
+    }
+}

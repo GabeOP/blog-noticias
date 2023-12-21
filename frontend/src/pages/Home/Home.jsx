@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { PostCard } from "../../components/PostCard/PostCard";
 import API from "../../axios/config";
+import "./Home.css"
 
 export function Home() {
     const [data, setData] = useState([]);
@@ -27,17 +28,23 @@ export function Home() {
     }, []);
 
     return (
-        <div id="container">
-            {data.map((item) => (
-                <PostCard
-                    key={item.id}
-                    id={item.id}
-                    titulo={item.titulo}
-                    conteudo={item.conteudo}
-                    autor={item.autor.nome}
-                    imagem={item.linkImagem}
-                />
-            ))}
+        <div id="wrap-home">
+            <div id="container-lista-post">
+                {data.map((item) => (
+                    <PostCard
+                        key={item.id}
+                        id={item.id}
+                        titulo={item.titulo}
+                        conteudo={item.conteudo}
+                        autor={item.autor.nome}
+                        imagem={item.linkImagem}
+                    />
+                ))}
+            </div>
+
+            <div id="container-home-infos">
+                
+            </div>
         </div>
     );
 };
