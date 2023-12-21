@@ -20,7 +20,7 @@ export const Header = () => {
                     <span>Seja bem-vindo(a), {nomeUsuario}</span>
 
                     <nav id="usuario-container">
-                        {isAdmin ? (
+                        {isAdmin === 'ADM' ? (
                             <>
                                 <Link to="/adm/criar-post" id="btnCriarPost">Criar post</Link>
                                 <Link to="#" id="btnGerenciar">Gerenciar</Link>

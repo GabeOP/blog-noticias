@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-    baseURL: "https://fakestoreapi.com"
+    baseURL: "https://api-blog-xn32.onrender.com"
 })
 
 export default API

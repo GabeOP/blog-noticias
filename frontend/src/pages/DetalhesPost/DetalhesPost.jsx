@@ -17,9 +17,32 @@ export function DetalhesPost() {
     // Obtém o valor do parâmetro 'id'
     const postagem_id = params.get('id');
 
+    function refreshPage() {
+        window.location.reload();
+    }
+
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
+        },
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await API.get(`/post/${postagem_id}`, config);
+                setData(response.data);
+            } catch (error) {
+                setError(error.message);
+            }
+        };
+        fetchData();
+    }, []);
+
     const handleComentSubmit = async (e) => {
         e.preventDefault();
-    
+
         const postData = {
             postagem_id: {
                 id: postagem_id
@@ -30,44 +53,26 @@ export function DetalhesPost() {
             comentario: comentario
         }
 
-        const config = {
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
-            },
-          };
-
         try {
             await API.post("/comentario", postData, config)
-          setComentario('');
+            setComentario('');
         } catch (error) {
-          console.error('Erro ao enviar formulário:', error);
+            console.error('Erro ao enviar formulário:', error);
         }
-      };
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await API.get("/products/" + postagem_id);
-                setData(response.data);
-            } catch (error) {
-                setError(error.message);
-            }
-        };
-        fetchData();
-    }, []);
+    };
 
     return (
         <div id='container-detalhes-post'>
 
+            {console.log(data)}
             <div id='wrap-detalhes-post'>
                 <div id="divTitulo-detalhes-post">
-                    <h1 id='titulo-detalhes-post'>{data.title}</h1>
-                    <p id='autor-detalhes-post'>Por <b>{data.category}</b></p>
+                    <h1 id='titulo-detalhes-post'>{data.titulo}</h1>
+                    <p id='autor-detalhes-post'>Por <b>{data.autor && data.autor.nome}</b></p>
                 </div>
                 <div id="divMain-detalhes-post">
-                    <img id='imagem-detalhes-post' src={data.image} alt="" />
-                    <p id='conteudo-detalhes-post'>{data.description}</p>
+                    <img id='imagem-detalhes-post' src={data.imagem} alt="" />
+                    <p id='conteudo-detalhes-post'>{data.conteudo}</p>
                 </div>
             </div>
 
@@ -75,20 +80,21 @@ export function DetalhesPost() {
 
                 <form onSubmit={handleComentSubmit}>
                     <textarea id='boxComentario' placeholder='Escreva o seu comentário...' onChange={(e) => setComentario(e.target.value)}></textarea>
-                    <button type="submit" id='btnComentar'>Comentar</button>
+                    <button type="submit" onClick={refreshPage} id='btnComentar'>Comentar</button>
                 </form>
 
                 <h2>Comentários</h2>
-                <div id="listaComentario">
-                    <div id='wrapComentario'>
-                        <p id="autorComentario">autor aqui</p>
-                        <p id="textoComentario">
-                            Lorem ipsum, dolor sit amet consectetur 
-                            adipisicing elit. Dolore labore doloribus saepe repudiandae perspiciatis
-                            id dicta atque autem fuga amet natus voluptatibus hic at porro ipsa sunt, facilis harum quia!
-                        </p>
+                {data.comentarioList && data.comentarioList.length > 0 && (
+                    <div id="listaComentario">
+                        {
+                            data.comentarioList.map((item, index) => (
+                                <div key={index} id='wrapComentario'>
+                                    <p id="autorComentario">{item.autorComentario.nome}</p>
+                                    <p id="textoComentario">{item.comentario}</p>
+                                </div>
+                        ))}
                     </div>
-                </div>
+                )}
             </div>
         </div>
     )

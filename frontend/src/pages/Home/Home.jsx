@@ -8,8 +8,16 @@ export function Home() {
 
     useEffect(() => {
         const fetchData = async () => {
+
+            const config = {
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
+                },
+              };
+
             try {
-                const response = await API.get("/products");
+                const response = await API.get("/post", config);
                 setData(response.data);
             } catch (error) {
                 setError(error.message);
@@ -24,10 +32,10 @@ export function Home() {
                 <PostCard
                     key={item.id}
                     id={item.id}
-                    titulo={item.title}
-                    conteudo={item.description}
-                    autor={item.category}
-                    imagem={item.image}
+                    titulo={item.titulo}
+                    conteudo={item.conteudo}
+                    autor={item.autor.nome}
+                    imagem={item.imagem}
                 />
             ))}
         </div>

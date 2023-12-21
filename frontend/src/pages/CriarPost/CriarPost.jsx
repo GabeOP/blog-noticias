@@ -16,7 +16,7 @@ export function CriarPost() {
                 id: sessionStorage.getItem("id")
             },
             titulo: titulo,
-            imagem: imagem,
+            linkImagem: imagem,
             conteudo: conteudo
         }
 
@@ -28,8 +28,8 @@ export function CriarPost() {
           };
 
         try {
-            const response = await API.post("/post", dados);
-            console.log('Dados enviados com sucesso:', response.data, config);
+            const response = await API.post("/post", dados, config);
+            alert(response.data)
         } catch (error) {
             console.error('Erro ao enviar dados:', error);
         }
