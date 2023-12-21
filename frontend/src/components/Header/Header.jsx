@@ -4,6 +4,10 @@ import "./Header.css"
 
 export const Header = () => {
 
+    if(!sessionStorage.getItem("nome")) {
+        window.location.href = "/login"
+    }
+
     const handleLogout = () => {
         sessionStorage.clear();
         location.href="/login"
