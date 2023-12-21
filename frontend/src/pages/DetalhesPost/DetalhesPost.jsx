@@ -71,7 +71,7 @@ export function DetalhesPost() {
                     <p id='autor-detalhes-post'>Por <b>{data.autor && data.autor.nome}</b></p>
                 </div>
                 <div id="divMain-detalhes-post">
-                    <img id='imagem-detalhes-post' src={data.imagem} alt="" />
+                    <img id='imagem-detalhes-post' src={data.linkImagem} alt="" />
                     <p id='conteudo-detalhes-post'>{data.conteudo}</p>
                 </div>
             </div>

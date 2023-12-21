@@ -35,7 +35,7 @@ export function Home() {
                     titulo={item.titulo}
                     conteudo={item.conteudo}
                     autor={item.autor.nome}
-                    imagem={item.imagem}
+                    imagem={item.linkImagem}
                 />
             ))}
         </div>
