@@ -10,7 +10,7 @@ public class UsuarioResponseDTO {
   private UUID id;
   private String nome;
   private Cargo cargo = Cargo.COMUM;
-  private List<Post2DTO> postList = new ArrayList<>();
+  private List<PostUserDTO> postList = new ArrayList<>();
 
   public UsuarioResponseDTO() {}
 
@@ -35,11 +35,11 @@ public class UsuarioResponseDTO {
     this.nome = nome;
   }
 
-  public List<Post2DTO> getPostList() {
+  public List<PostUserDTO> getPostList() {
     return postList;
   }
 
-  public void setPostList(List<Post2DTO> postList) {
+  public void setPostList(List<PostUserDTO> postList) {
     this.postList = postList;
   }
 

@@ -26,7 +26,7 @@ public class Post {
   @NotBlank
   private String linkImagem;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "usuario_id", nullable = false)
   private Usuario autor;
 

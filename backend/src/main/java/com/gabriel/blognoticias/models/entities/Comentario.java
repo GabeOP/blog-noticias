@@ -15,7 +15,7 @@ public class Comentario {
   private UUID id;
 
   @JsonBackReference
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "postagem_id", nullable = false)
   private Post postagem_id;
 
