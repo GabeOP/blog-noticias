@@ -17,6 +17,7 @@ function AppRoutes() {
           {showHeader && <Header />}
             <Routes>
                 <Route path='/' element={<Home />}></Route>
+                <Route path="/page/:pageNumber" element={<Home/>} />
                 <Route path="/login" element={<PaginaLogin />}></Route>
                 <Route path="/cadastro" element={<PaginaCadastro />}></Route>
                 <Route path="/post" element={<DetalhesPost />}></Route>

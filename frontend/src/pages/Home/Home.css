@@ -16,7 +16,16 @@
 #container-home-infos {
     width: 300px;
     height: 800px;
-    background-color:  rgb(217, 217, 217);;
+    background-color:  rgb(217, 217, 217);
+}
+
+#btnProxPag {
+    padding: 10px 26px;
+    font-size: 1.3rem;
+    border: none;
+    box-shadow: 0 0px 10px 1px rgba(0, 0, 0, 0.129);
+    background-color: rgb(255, 255, 255);
+    cursor: pointer;
 }
 
 @media screen and (max-width: 1500px) {
