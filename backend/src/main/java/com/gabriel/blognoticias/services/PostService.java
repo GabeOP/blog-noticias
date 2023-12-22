@@ -6,13 +6,13 @@ import com.gabriel.blognoticias.models.exception.CampoNaoPreenchidoException;
 import com.gabriel.blognoticias.repositories.PostRepository;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class PostService {
@@ -26,10 +26,9 @@ public class PostService {
   }
 
 
-  public List<PostDTO> getAll() {
-    List<PostDTO> response = repository.findAll()
-            .stream().map(x -> modelMapper.map(x, PostDTO.class)).collect(Collectors.toList());
-    return response;
+  public Page<PostDTO> getAll(Pageable pageable) {
+    return repository.findAll(pageable)
+            .map(x -> modelMapper.map(x, PostDTO.class));
   }
 
   public Post getById(UUID id) {
