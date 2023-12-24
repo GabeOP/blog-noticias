@@ -49,6 +49,8 @@ export function Home() {
           />
         ))}
 
+        {console.log(data)}
+
         {data.length > 4 && (
           <button id="btnProxPag" onClick={handleShowMore}>Próxima página</button>
         )}

@@ -64,7 +64,6 @@ export function DetalhesPost() {
     return (
         <div id='container-detalhes-post'>
 
-            {console.log(data)}
             <div id='wrap-detalhes-post'>
                 <div id="divTitulo-detalhes-post">
                     <h1 id='titulo-detalhes-post'>{data.titulo}</h1>
