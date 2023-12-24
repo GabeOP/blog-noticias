@@ -1,6 +1,7 @@
 package com.gabriel.blognoticias.services;
 
 import com.gabriel.blognoticias.models.dto.PostDTO;
+import com.gabriel.blognoticias.models.dto.PostDetailsDTO;
 import com.gabriel.blognoticias.models.entities.Post;
 import com.gabriel.blognoticias.models.exception.CampoNaoPreenchidoException;
 import com.gabriel.blognoticias.repositories.PostRepository;
@@ -31,9 +32,9 @@ public class PostService {
             .map(x -> modelMapper.map(x, PostDTO.class));
   }
 
-  public Post getById(UUID id) {
+  public PostDetailsDTO getById(UUID id) {
     Optional<Post> response = repository.findById(id);
-    return response.get();
+    return modelMapper.map(response.get(), PostDetailsDTO.class);
   }
 
   @Transactional

@@ -1,7 +1,7 @@
 package com.gabriel.blognoticias.controllers;
 
 import com.gabriel.blognoticias.models.dto.PostDTO;
-import com.gabriel.blognoticias.models.entities.Post;
+import com.gabriel.blognoticias.models.dto.PostDetailsDTO;
 import com.gabriel.blognoticias.services.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -32,8 +32,8 @@ public class PostController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Post> getById(@PathVariable UUID id) {
-    Post response = service.getById(id);
+  public ResponseEntity<PostDetailsDTO> getById(@PathVariable UUID id) {
+    PostDetailsDTO response = service.getById(id);
     return ResponseEntity.status(HttpStatus.OK).body(response);
   }
 
