@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.gabriel.blognoticias.models.entities.Usuario;
+import com.gabriel.blognoticias.models.exception.TokenExpiradoException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -43,11 +44,11 @@ public class TokenService {
               .verify(token)
               .getSubject();
     }catch(JWTVerificationException ex) {
-      return "";
+      throw new TokenExpiradoException("Sessão expirada. Realize o login novamente.");
     }
   }
   private Instant genExpirationDate() {
-    return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
+    return LocalDateTime.now().plusHours(1).toInstant(ZoneOffset.of("-03:00"));
   }
 }
 
