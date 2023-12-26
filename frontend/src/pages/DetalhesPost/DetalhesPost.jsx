@@ -57,7 +57,8 @@ export function DetalhesPost() {
             await API.post("/comentario", postData, config)
             setComentario('');
         } catch (error) {
-            console.error('Erro ao enviar formulário:', error);
+            alert("Sessão expirada.")
+            window.location.href = "/login"
         }
     };
 

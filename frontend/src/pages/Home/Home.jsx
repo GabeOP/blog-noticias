@@ -24,6 +24,8 @@ export function Home() {
         setData(response.data);
       } catch (error) {
         setError(error.message);
+        alert("Sessão expirada.")
+        window.location.href = "/login"
       }
     };
 

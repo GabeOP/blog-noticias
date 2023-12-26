@@ -31,7 +31,8 @@ export function CriarPost() {
             const response = await API.post("/post", dados, config);
             alert(response.data)
         } catch (error) {
-            console.error('Erro ao enviar dados:', error);
+            alert("Sessão expirada.")
+            window.location.href = "/login"
         }
     };
 
