@@ -101,9 +101,11 @@ export function DetalhesPost() {
                                 <div key={index} id='wrapComentario'>
                                     <p id="autorComentario">{item.autorComentario.nome}</p>
                                     <p id="textoComentario">{item.comentario}</p>
-                                    {(item.autorComentario.id === sessionStorage.getItem('id') || sessionStorage.getItem("id") === "609a00c7-29e9-445a-96d7-bfddf8f4ba5d") && (
-                                        <button onClick={() => deletarComentario(item.id)}>Deletar</button>
-                                    )}
+                                    <div id='wrapOpcoesComentario'>
+                                        {(item.autorComentario.id === sessionStorage.getItem('id') || sessionStorage.getItem("id") === "609a00c7-29e9-445a-96d7-bfddf8f4ba5d") && (
+                                            <button id='btnDeletarComentario' onClick={() => deletarComentario(item.id)}>Deletar</button>
+                                        )}
+                                    </div>
                                 </div>
                             ))
                         }

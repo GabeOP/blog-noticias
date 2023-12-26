@@ -54,10 +54,28 @@
     padding-inline: 10px;
 }
 
+#wrapOpcoesComentario {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
 #btnComentar {
     width: 80px;
     height: 30px;
     font-size: 1rem;
+}
+
+#btnDeletarComentario {
+    background-color: red;
+    border-radius: 3px;
+    border: none;
+    padding: 5px;
+    color: white;
+    justify-self: flex-start;
+    cursor: pointer;
 }
 
 #autorComentario {
