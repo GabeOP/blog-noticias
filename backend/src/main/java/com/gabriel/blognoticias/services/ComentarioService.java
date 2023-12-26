@@ -33,4 +33,9 @@ public class ComentarioService {
   public void criarComentario(Comentario comentario) {
     repository.save(comentario);
   }
+
+  public void excluirComentario(UUID id) {
+    Comentario comentario = repository.findById(id).get();
+    repository.delete(comentario);
+  }
 }

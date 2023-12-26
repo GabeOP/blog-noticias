@@ -36,4 +36,10 @@ public class ComentarioController {
     service.criarComentario(comentario);
     return ResponseEntity.status(HttpStatus.CREATED).body("Comentário criado com sucesso");
   }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<String> deletarComentario(@PathVariable UUID id) {
+    service.excluirComentario(id);
+    return ResponseEntity.status(HttpStatus.OK).body("Comentário excluído.");
+  }
 }

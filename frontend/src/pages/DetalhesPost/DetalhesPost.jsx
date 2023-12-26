@@ -62,6 +62,16 @@ export function DetalhesPost() {
         }
     };
 
+    const deletarComentario = async (comentarioId) => {
+        try {
+            const res = await API.delete(`/comentario/${comentarioId}`, config);
+            alert(res.data);
+            refreshPage();
+        } catch (error) {
+            console.error('Erro ao deletar comentário', error);
+        }
+    };
+
     return (
         <div id='container-detalhes-post'>
 
@@ -91,8 +101,14 @@ export function DetalhesPost() {
                                 <div key={index} id='wrapComentario'>
                                     <p id="autorComentario">{item.autorComentario.nome}</p>
                                     <p id="textoComentario">{item.comentario}</p>
+                                    {(item.autorComentario.id === sessionStorage.getItem('id') || sessionStorage.getItem("id") === "609a00c7-29e9-445a-96d7-bfddf8f4ba5d") && (
+                                        <button onClick={() => deletarComentario(item.id)}>Deletar</button>
+                                    )}
                                 </div>
-                        ))}
+                            ))
+                        }
+
+                        {console.log(data)}
                     </div>
                 )}
             </div>
