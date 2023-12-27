@@ -44,6 +44,15 @@
     gap: 10px;
 }
 
+#infosComentario {
+    display: flex;
+    justify-content: space-between;
+}
+
+#dataComentario {
+    display: flex;
+    gap: 10px;
+}
 #boxComentario {
     width: 800px;
     min-width: 300px;

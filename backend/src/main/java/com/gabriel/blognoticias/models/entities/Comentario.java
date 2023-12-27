@@ -3,8 +3,9 @@ package com.gabriel.blognoticias.models.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -25,8 +26,9 @@ public class Comentario {
 
   @NotBlank
   private String comentario;
-  private Date dataComentario;
 
+  @DateTimeFormat(pattern = "dd/MM/yyyy")
+  LocalDateTime dataComentario = LocalDateTime.now();
 
   public Comentario() {}
 
@@ -69,11 +71,11 @@ public class Comentario {
     this.comentario = comentario;
   }
 
-  public Date getDataComentario() {
+  public LocalDateTime getDataComentario() {
     return dataComentario;
   }
 
-  public void setDataComentario(Date dataComentario) {
+  public void setDataComentario(LocalDateTime dataComentario) {
     this.dataComentario = dataComentario;
   }
 }

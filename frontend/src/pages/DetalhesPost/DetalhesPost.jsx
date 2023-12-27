@@ -96,10 +96,23 @@ export function DetalhesPost() {
                 <h2>Comentários</h2>
                 {data.comentarioList && data.comentarioList.length > 0 && (
                     <div id="listaComentario">
-                        {
-                            data.comentarioList.map((item, index) => (
+                        {data.comentarioList.map((item, index) => {
+
+                            const dataHora = (item.dataComentario).split("T");
+                            const dataSplit = dataHora[0].split("-");
+                            const horaSplit = dataHora[1].split(".")[0];
+                            const horario = horaSplit.split(":")[0];
+                            const minuto = horaSplit.split(":")[1];
+
+                            return((
                                 <div key={index} id='wrapComentario'>
-                                    <p id="autorComentario">{item.autorComentario.nome}</p>
+                                    <div id='infosComentario'>
+                                        <p id="autorComentario">{item.autorComentario.nome}</p>
+                                        <div id='dataComentario'>
+                                            <p>{dataSplit[2]}/{dataSplit[1]}/{dataSplit[0]}</p>
+                                            <p>{horario}h{minuto}</p>
+                                        </div>
+                                    </div>
                                     <p id="textoComentario">{item.comentario}</p>
                                     <div id='wrapOpcoesComentario'>
                                         {(item.autorComentario.id === sessionStorage.getItem('id') || sessionStorage.getItem("id") === "609a00c7-29e9-445a-96d7-bfddf8f4ba5d") && (
@@ -108,6 +121,7 @@ export function DetalhesPost() {
                                     </div>
                                 </div>
                             ))
+                        })
                         }
 
                         {console.log(data)}

@@ -1,17 +1,17 @@
 package com.gabriel.blognoticias.models.dto;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class ComentarioDTO {
   private UUID id;
   private UsuarioResponseDTO autorComentario;
   private String comentario;
-  private Date dataComentario;
+  LocalDateTime dataComentario = LocalDateTime.now();
 
   public ComentarioDTO(){}
 
-  public ComentarioDTO(UUID id, PostDTO postagem_id, UsuarioResponseDTO autorComentario, String comentario, Date dataComentario) {
+  public ComentarioDTO(UUID id, PostDTO postagem_id, UsuarioResponseDTO autorComentario, String comentario, LocalDateTime dataComentario) {
     this.id = id;
     this.autorComentario = autorComentario;
     this.comentario = comentario;
@@ -42,11 +42,11 @@ public class ComentarioDTO {
     this.comentario = comentario;
   }
 
-  public Date getDataComentario() {
+  public LocalDateTime getDataComentario() {
     return dataComentario;
   }
 
-  public void setDataComentario(Date dataComentario) {
+  public void setDataComentario(LocalDateTime dataComentario) {
     this.dataComentario = dataComentario;
   }
 }
