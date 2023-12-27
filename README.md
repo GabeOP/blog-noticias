@@ -45,6 +45,14 @@ grátis do Render.com.
 </div>
 
 <div align="center">
+  <h3 align="center">Página do Post (Comentários)</h3>
+  <p>Essa é a parte da postagem que mostra a lista de comentários feitos. O usuário que criou o comentário e alguém com
+cargo de ADM possui a opção de excluí-lo.
+  </p>
+  <image src="https://github.com/GabeOP/blog-noticias/blob/main/imagens/comentarios.png?raw=true"/>
+</div>
+
+<div align="center">
   <h3 align="center"> Página para criar postagens</h3>
   <p>Apenas usuários com autorização podem acessar e criar postagens</p>
   <image  src="https://github.com/GabeOP/blog-noticias/blob/main/imagens/pagcriapost.png?raw=true"/>
