@@ -71,6 +71,12 @@ export function DetalhesPost() {
             console.error('Erro ao deletar comentário', error);
         }
     };
+    
+    const dataHora = (data.dataPostagem || "").split("T");
+    const dataSplit = (dataHora[0] || "").split("-");
+    const horaSplit = (dataHora[1] || "").split(".")[0];
+    const horario = (horaSplit || "").split(":")[0];
+    const minuto = (horaSplit || "").split(":")[1];
 
     return (
         <div id='container-detalhes-post'>
@@ -78,7 +84,10 @@ export function DetalhesPost() {
             <div id='wrap-detalhes-post'>
                 <div id="divTitulo-detalhes-post">
                     <h1 id='titulo-detalhes-post'>{data.titulo}</h1>
-                    <p id='autor-detalhes-post'>Por <b>{data.autor && data.autor.nome}</b></p>
+                    <div id='infos-detalhes-post'>
+                        <p id='autor-detalhes-post'>Por <span>{data.autor && data.autor.nome}</span></p>
+                        <p>{dataSplit[2]}/{dataSplit[1]}/{dataSplit[0]} {horario}h{minuto}</p>
+                    </div>
                 </div>
                 <div id="divMain-detalhes-post">
                     <img id='imagem-detalhes-post' src={data.linkImagem} alt="" />

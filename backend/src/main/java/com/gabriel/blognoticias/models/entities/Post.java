@@ -3,7 +3,9 @@ package com.gabriel.blognoticias.models.entities;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -26,6 +28,9 @@ public class Post {
   @NotBlank
   private String linkImagem;
 
+  @DateTimeFormat(pattern = "dd/MM/yyyy")
+  private LocalDateTime dataPostagem = LocalDateTime.now();
+
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "usuario_id", nullable = false)
   private Usuario autor;
@@ -36,13 +41,14 @@ public class Post {
 
   public Post() {}
 
-  public Post(UUID id, String titulo, String conteudo, String linkImagem, Usuario autor, List<Comentario> comentarioList) {
+  public Post(UUID id, String titulo, String conteudo, String linkImagem, Usuario autor, List<Comentario> comentarioList, LocalDateTime dataPostagem) {
     this.id = id;
     this.titulo = titulo;
     this.conteudo = conteudo;
     this.linkImagem = linkImagem;
     this.autor = autor;
     this.comentarioList = comentarioList;
+    this.dataPostagem = dataPostagem;
   }
 
   public UUID getId() {
@@ -91,5 +97,13 @@ public class Post {
 
   public void setComentarioList(List<Comentario> comentarioList) {
     this.comentarioList = comentarioList;
+  }
+
+  public LocalDateTime getDataPostagem() {
+    return dataPostagem;
+  }
+
+  public void setDataPostagem(LocalDateTime dataPostagem) {
+    this.dataPostagem = dataPostagem;
   }
 }
