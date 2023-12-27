@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -29,7 +30,7 @@ public class Post {
   private String linkImagem;
 
   @DateTimeFormat(pattern = "dd/MM/yyyy")
-  private LocalDateTime dataPostagem = LocalDateTime.now();
+  private LocalDateTime dataPostagem = LocalDateTime.now(ZoneId.of("America/Sao_Paulo"));
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "usuario_id", nullable = false)

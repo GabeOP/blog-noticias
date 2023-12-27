@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.UUID;
 
 @Entity
@@ -28,7 +29,7 @@ public class Comentario {
   private String comentario;
 
   @DateTimeFormat(pattern = "dd/MM/yyyy")
-  LocalDateTime dataComentario = LocalDateTime.now();
+  LocalDateTime dataComentario = LocalDateTime.now(ZoneId.of("America/Sao_Paulo"));
 
   public Comentario() {}
 
