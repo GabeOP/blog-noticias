@@ -22,6 +22,7 @@
 #post-imagem img {
     width: 100%;
     border-radius: 7px;
+    height: 245px;
 }
 
 #containerInfos {
