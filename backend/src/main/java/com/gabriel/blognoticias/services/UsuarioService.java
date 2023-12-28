@@ -6,7 +6,9 @@ import com.gabriel.blognoticias.models.entities.Usuario;
 import com.gabriel.blognoticias.models.exception.JaCadastradoException;
 import com.gabriel.blognoticias.models.exception.NaoEncontradoException;
 import com.gabriel.blognoticias.repositories.UsuarioRepository;
+import com.gabriel.blognoticias.email.services.EmailService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,9 +25,13 @@ public class UsuarioService implements UserDetailsService {
   private UsuarioRepository repository;
   private ModelMapper modelMapper;
 
-  public UsuarioService(UsuarioRepository repository, ModelMapper modelMapper) {
+  @Autowired
+  private EmailService emailService;
+
+  public UsuarioService(UsuarioRepository repository, ModelMapper modelMapper, EmailService emailService) {
     this.repository = repository;
     this.modelMapper = modelMapper;
+    this.emailService = emailService;
   }
 
   public List<UsuarioResponseDTO> getAll() {
@@ -48,6 +54,8 @@ public class UsuarioService implements UserDetailsService {
     try {
       usuariodto.setSenha(new BCryptPasswordEncoder().encode(usuariodto.getSenha()));
       repository.save(modelMapper.map(usuariodto, Usuario.class));
+
+      emailService.enviarEmail(usuariodto.getNome(), usuariodto.getEmail());
       return "Usuário cadastrado com sucesso";
     }catch(DataIntegrityViolationException ex) {
       throw new JaCadastradoException(ex.getMessage());

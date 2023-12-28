@@ -28,6 +28,7 @@ import static org.mockito.Mockito.when;
 public class UsuarioServiceTest {
   public static final UUID ID = UUID.randomUUID();
   public static final String NOME = "Gabriel";
+  public static final String EMAIL = "teste@gmail.com";
   public static final String SENHA = "123";
 
   @InjectMocks
@@ -109,8 +110,8 @@ public class UsuarioServiceTest {
 
 
   private void startUsuario() {
-    usuario = new Usuario(ID, NOME, SENHA);
-    usuarioDTO = new UsuarioDTO(ID, NOME, SENHA);
+    usuario = new Usuario(ID, NOME, EMAIL, SENHA);
+    usuarioDTO = new UsuarioDTO(ID, NOME, EMAIL, SENHA);
     usuarioResponseDTO = new UsuarioResponseDTO(ID, NOME);
 
     repository.save(usuario);

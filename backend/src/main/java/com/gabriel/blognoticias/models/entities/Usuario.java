@@ -25,6 +25,10 @@ import java.util.UUID;
   private String nome;
 
   @NotBlank
+  @Column(unique = true)
+  private String email;
+
+  @NotBlank
   private String senha;
 
   private Cargo cargo = Cargo.COMUM;
@@ -39,10 +43,11 @@ import java.util.UUID;
 
   public Usuario() {}
 
-  public Usuario(UUID id, String nome, String senha) {
+  public Usuario(UUID id, String nome, String senha, String email) {
     this.id = id;
     this.nome = nome;
     this.senha = senha;
+    this.email = email;
   }
 
   public UUID getId() {
@@ -59,6 +64,14 @@ import java.util.UUID;
 
   public void setNome(String nome) {
     this.nome = nome;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
   }
 
   public String getSenha() {
