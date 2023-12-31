@@ -3,11 +3,12 @@ package com.gabriel.blognoticias.models.dto;
 import com.gabriel.blognoticias.enums.Cargo;
 import com.gabriel.blognoticias.models.entities.Post;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class UsuarioDTO {
+public class UsuarioDTO implements Serializable {
 
   private UUID id;
   private String nome;

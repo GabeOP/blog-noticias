@@ -5,7 +5,9 @@ import com.gabriel.blognoticias.models.dto.LoginResponseDTO;
 import com.gabriel.blognoticias.models.dto.UsuarioDTO;
 import com.gabriel.blognoticias.models.dto.UsuarioResponseDTO;
 import com.gabriel.blognoticias.models.entities.Usuario;
+import com.gabriel.blognoticias.services.RabbitMQService;
 import com.gabriel.blognoticias.services.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,6 +24,9 @@ public class UsuarioController {
   private UsuarioService service;
   private AuthenticationManager authenticationManager;
   private TokenService tokenService;
+
+  @Autowired
+  private RabbitMQService rabbitMQService;
 
   public UsuarioController(UsuarioService service, AuthenticationManager authenticationManager, TokenService tokenService) {
     this.service = service;
@@ -44,6 +49,8 @@ public class UsuarioController {
   @PostMapping
   public ResponseEntity<String> criaUsuario(@RequestBody UsuarioDTO usuario) {
     String response = service.criaUsuario(usuario);
+
+    this.rabbitMQService.enviaMensagem("EMAIL", usuario);
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
 

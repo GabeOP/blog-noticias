@@ -3,11 +3,12 @@ package com.gabriel.blognoticias.email.models.entities;
 import com.gabriel.blognoticias.email.enums.StatusEmail;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-public class EmailModel {
+public class EmailModel implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID emailId;

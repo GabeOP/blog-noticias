@@ -55,7 +55,6 @@ public class UsuarioService implements UserDetailsService {
       usuariodto.setSenha(new BCryptPasswordEncoder().encode(usuariodto.getSenha()));
       repository.save(modelMapper.map(usuariodto, Usuario.class));
 
-      emailService.enviarEmail(usuariodto.getNome(), usuariodto.getEmail());
       return "Usuário cadastrado com sucesso";
     }catch(DataIntegrityViolationException ex) {
       throw new JaCadastradoException(ex.getMessage());
