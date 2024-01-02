@@ -42,14 +42,12 @@ public class Post {
 
   public Post() {}
 
-  public Post(UUID id, String titulo, String conteudo, String linkImagem, Usuario autor, List<Comentario> comentarioList, LocalDateTime dataPostagem) {
+  public Post(UUID id, String titulo, String conteudo, String linkImagem, Usuario autor) {
     this.id = id;
     this.titulo = titulo;
     this.conteudo = conteudo;
     this.linkImagem = linkImagem;
     this.autor = autor;
-    this.comentarioList = comentarioList;
-    this.dataPostagem = dataPostagem;
   }
 
   public UUID getId() {
