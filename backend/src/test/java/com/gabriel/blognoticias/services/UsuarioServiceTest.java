@@ -65,13 +65,13 @@ public class UsuarioServiceTest {
   }
 
   @Test
-  void whenFindByNomeThenReturnUsuarioDTO() {
+  void whenFindByNomeThenReturnUsuarioResponseDTO() {
     when(repository.findByNome(any())).thenReturn(usuario);
-    when(modelMapper.map(any(), any())).thenReturn(usuarioDTO);
+    when(modelMapper.map(any(), any())).thenReturn(usuarioResponseDTO);
 
     UsuarioResponseDTO response = service.findByNome(any());
 
-    assertEquals(response.getClass(), UsuarioDTO.class);
+    assertEquals(response.getClass(), UsuarioResponseDTO.class);
     assertEquals(response.getNome(), NOME);
     assertEquals(response.getCargo(), Cargo.COMUM);
   }
