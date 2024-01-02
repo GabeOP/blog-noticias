@@ -1,25 +1,36 @@
 ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)
 # Descrição
 Projeto fullstack de um blog com **autorização** e **autenticação** de usuário. Usando um perfil de ADM, é possível
-criar postagens para que todos os usuários cadastrados e autenticados possam visualizá-las e criar comentários.
+criar postagens para que todos os usuários cadastrados e autenticados possam visualizá-las e criar comentários. Um usuário
+ao se cadastrar, recebe uma mensagem no e-mail cadastrado.
 
-# Tecnologias
+A aplicação inteira está deployada em serviços grátis: **Render.com(Frontend, Backend, Banco de dados)** e **CloudAMQP (RabbitMQ)**
+
+# Tecnologias / Ferramentas
 - Java
 - ReactJS
-- Spring boot, Spring security
+- Spring boot, Spring security, EmailSender
+- RabbitMQ
 - Docker
 - PostgreSQL
 
 # Como executar
-O Front-end está configurado para consumir a API que está deployada. Caso desejar usar localmente, terá que alterar no arquivo "frontend/src/axios/config.jsx" para "baseURL: localhost:8080".
 
-Caso você use a API que já está configurada, pode ser que demore um pouco na primeira requisição pois o deploy é a opção
-grátis do Render.com.
+Há 2 maneiras que você pode fazer para utilizar a aplicação:
+
+**1ª** - Entrando na página com o sistema inteiro deployado
+(https://blog-noticias.onrender.com/login)
+
+**2ª** - Rodando a aplicação localmente com Docker.
+
+Caso prefira da 1ª maneira, pode acontecer de demorar um pouco pois a API está hospedada usando serviços gratuitos
+do Render.com e após 15 minutos de uso entra em inatividade e precisa iniciar novamente 
 
 ### Rodando a aplicação inteira localmente com Docker
 - Clone o repositório na sua máquina
-- Na pasta backend/src/main/resources, clique no arquivo "application.properties"
-- Retire os comentários das configurações do banco de dados local e comente as configurações do banco de dados do Render
+- Na pasta backend/src/main/resources, abra o arquivo "application.properties"
+- Retire os comentários das configurações do banco de dados local (linha 9) e comente as configurações do banco de dados do Render (linha 4)
+- Retire os comentários das configurações do RabbitMQ local (linha 40) e comente a linha de configuração do CloudAMQP (linha 38)
 - Abra o terminal, entre na pasta raiz do projeto onde está o arquivo docker-compose.yml
 - Digite o comando "docker-compose up"
 - Ainda no terminal, navegue para a pasta "frontend" e use o comando "npm install" e logo depois "npm run dev" para iniciar o Vite
