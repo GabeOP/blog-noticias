@@ -4,6 +4,7 @@ import com.gabriel.blognoticias.configs.security.TokenService;
 import com.gabriel.blognoticias.models.dto.UsuarioAuthDTO;
 import com.gabriel.blognoticias.models.dto.UsuarioDTO;
 import com.gabriel.blognoticias.models.dto.UsuarioResponseDTO;
+import com.gabriel.blognoticias.models.dto.UsuarioRolesUpdateDTO;
 import com.gabriel.blognoticias.models.entities.Permission;
 import com.gabriel.blognoticias.models.entities.Role;
 import com.gabriel.blognoticias.models.entities.Usuario;
@@ -25,6 +26,7 @@ import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -67,6 +69,20 @@ public class UsuarioController {
   public ResponseEntity editaCargoUsuario(@RequestBody UsuarioDTO usuario) {
     service.editaCargoUsuario(usuario);
     return ResponseEntity.status(HttpStatus.OK).body("Sucesso.");
+  }
+
+  @PutMapping("/{id}/roles")
+  public ResponseEntity<UsuarioResponseDTO> updateRoles(
+      @PathVariable UUID id,
+      @RequestBody UsuarioRolesUpdateDTO dto) {
+    UsuarioResponseDTO response = service.updateUserRoles(id, dto.getRoles());
+    return ResponseEntity.ok(response);
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> deleteUsuario(@PathVariable UUID id) {
+    service.deleteUsuario(id);
+    return ResponseEntity.noContent().build();
   }
 
   @PostMapping("/login")
