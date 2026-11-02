@@ -1,5 +1,6 @@
 package com.gabriel.blognoticias.configs;
 
+import com.gabriel.blognoticias.enums.Cargo;
 import com.gabriel.blognoticias.models.entities.Permission;
 import com.gabriel.blognoticias.models.entities.Role;
 import com.gabriel.blognoticias.models.entities.Usuario;
@@ -73,12 +74,24 @@ public class DataInitializer implements CommandLineRunner {
     roleComum.setPermissions(comumPermissions);
     roleRepository.save(roleComum);
 
-    // 3. Vincular usuários existentes aos roles
+    // 3. Garantir explicitamente que o usuário adm SEMPRE possua ROLE_ADMIN e Cargo.ADM
+    Usuario adm = (Usuario) usuarioRepository.findByNome("adm");
+    if (adm != null) {
+      if (adm.getRoles() == null) {
+        adm.setRoles(new HashSet<>());
+      }
+      adm.getRoles().add(roleAdmin);
+      adm.setCargo(Cargo.ADM);
+      usuarioRepository.save(adm);
+    }
+
+    // 4. Vincular demais usuários existentes sem role
     List<Usuario> usuarios = usuarioRepository.findAll();
     for (Usuario user : usuarios) {
       if (user.getRoles() == null || user.getRoles().isEmpty()) {
         if ("adm".equalsIgnoreCase(user.getNome())) {
           user.getRoles().add(roleAdmin);
+          user.setCargo(Cargo.ADM);
         } else {
           user.getRoles().add(roleComum);
         }
@@ -93,4 +106,3 @@ public class DataInitializer implements CommandLineRunner {
     );
   }
 }
-

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { userService } from '../../services/userService';
 import { roleService } from '../../services/roleService';
@@ -569,15 +569,26 @@ export const GerenciarUsuarios = () => {
               <div className="role-options-list">
                 {roles.map((r) => {
                   const isChecked = userRolesSelection.includes(r.nome);
+                  const isPrimaryAdminRole =
+                    selectedUserForRoles?.nome?.toLowerCase() === 'adm' && r.nome === 'ROLE_ADMIN';
+
                   return (
                     <label key={r.id} className="role-checkbox-item">
                       <input
                         type="checkbox"
-                        checked={isChecked}
-                        onChange={() => handleToggleUserRole(r.nome)}
+                        checked={isPrimaryAdminRole || isChecked}
+                        disabled={isPrimaryAdminRole}
+                        onChange={() => !isPrimaryAdminRole && handleToggleUserRole(r.nome)}
                       />
                       <div className="role-checkbox-info">
-                        <span className="role-checkbox-title">{r.nome}</span>
+                        <span className="role-checkbox-title">
+                          {r.nome}
+                          {isPrimaryAdminRole && (
+                            <span style={{ fontSize: '0.75rem', color: '#dc2626', marginLeft: 6 }}>
+                              (Obrigatório para o admin principal)
+                            </span>
+                          )}
+                        </span>
                         <span className="role-checkbox-desc">
                           {r.descricao || 'Sem descrição cadastrada.'}
                         </span>

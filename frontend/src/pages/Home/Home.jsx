@@ -6,7 +6,6 @@ import API from '../../axios/config';
 import {
   PenTool,
   Shield,
-  Info,
   ChevronLeft,
   ChevronRight,
   BookOpen
@@ -28,7 +27,7 @@ export function Home() {
       setLoading(true);
       setError(null);
       try {
-        const response = await API.get(`/post?page=${currentPage}&size=5`);
+        const response = await API.get(`/post?page=${currentPage}&size=5&sort=dataPostagem,desc`);
         setData(response.data || []);
       } catch (err) {
         setError(err.message);

@@ -8,7 +8,9 @@ import com.gabriel.blognoticias.repositories.PostRepository;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
 
@@ -26,9 +28,19 @@ public class PostService {
     this.modelMapper = modelMapper;
   }
 
-
   public Page<PostDTO> getAll(Pageable pageable) {
-    return repository.findAll(pageable)
+    // Ordenação cronológica garantida: do mais recente para o mais antigo (dataPostagem DESC)
+    Sort sort = pageable.getSort().isSorted()
+        ? pageable.getSort()
+        : Sort.by(Sort.Direction.DESC, "dataPostagem");
+
+    Pageable sortedPageable = PageRequest.of(
+        pageable.getPageNumber(),
+        pageable.getPageSize(),
+        sort
+    );
+
+    return repository.findAll(sortedPageable)
             .map(x -> modelMapper.map(x, PostDTO.class));
   }
 
