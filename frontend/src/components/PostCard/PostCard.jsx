@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Image, ArrowRight } from 'lucide-react';
+import { getImageUrl } from '../../utils/imageUrl';
 import './PostCard.css';
 
 export function PostCard({ id, titulo, imagem, conteudo, autor }) {
@@ -11,7 +12,7 @@ export function PostCard({ id, titulo, imagem, conteudo, autor }) {
       <div className="post-card-thumb">
         {imagem && !imageError ? (
           <img
-            src={imagem}
+            src={getImageUrl(imagem)}
             alt={titulo}
             onError={() => setImageError(true)}
             loading="lazy"
