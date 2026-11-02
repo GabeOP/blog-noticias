@@ -21,6 +21,85 @@
   gap: 20px;
 }
 
+/* Barra de Ferramentas / Filtros */
+.home-toolbar {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 14px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.home-search-box {
+  display: flex;
+  align-items: center;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  padding: 8px 12px;
+  gap: 8px;
+  flex: 1;
+  max-width: 420px;
+  transition: all 0.2s ease;
+}
+
+.home-search-box:focus-within {
+  background: #ffffff;
+  border-color: rgb(59, 89, 152);
+  box-shadow: 0 0 0 2px rgba(59, 89, 152, 0.12);
+}
+
+.home-search-box input {
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 100%;
+  font-size: 0.9rem;
+  color: #1e293b;
+  font-family: inherit;
+}
+
+.btn-clear-search {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  padding: 2px;
+}
+
+.btn-clear-search:hover {
+  color: #334155;
+}
+
+.btn-sort-toggle {
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  padding: 8px 14px;
+  border-radius: 4px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-sort-toggle:hover {
+  background-color: #f8fafc;
+  border-color: rgb(59, 89, 152);
+  color: rgb(59, 89, 152);
+}
+
 .home-empty,
 .home-loading {
   background-color: #ffffff;
@@ -38,7 +117,7 @@
   justify-content: center;
   align-items: center;
   gap: 12px;
-  margin-top: 20px;
+  margin-top: 10px;
   padding: 16px 0;
 }
 
@@ -152,5 +231,18 @@
 @media screen and (max-width: 600px) {
   .home-container {
     padding: 16px 10px;
+  }
+
+  .home-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .home-search-box {
+    max-width: 100%;
+  }
+
+  .btn-sort-toggle {
+    justify-content: center;
   }
 }

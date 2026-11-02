@@ -2,15 +2,19 @@ package com.gabriel.blognoticias.configs;
 
 import com.gabriel.blognoticias.enums.Cargo;
 import com.gabriel.blognoticias.models.entities.Permission;
+import com.gabriel.blognoticias.models.entities.Post;
 import com.gabriel.blognoticias.models.entities.Role;
 import com.gabriel.blognoticias.models.entities.Usuario;
 import com.gabriel.blognoticias.repositories.PermissionRepository;
+import com.gabriel.blognoticias.repositories.PostRepository;
 import com.gabriel.blognoticias.repositories.RoleRepository;
 import com.gabriel.blognoticias.repositories.UsuarioRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -22,13 +26,16 @@ public class DataInitializer implements CommandLineRunner {
   private final PermissionRepository permissionRepository;
   private final RoleRepository roleRepository;
   private final UsuarioRepository usuarioRepository;
+  private final PostRepository postRepository;
 
   public DataInitializer(PermissionRepository permissionRepository,
                          RoleRepository roleRepository,
-                         UsuarioRepository usuarioRepository) {
+                         UsuarioRepository usuarioRepository,
+                         PostRepository postRepository) {
     this.permissionRepository = permissionRepository;
     this.roleRepository = roleRepository;
     this.usuarioRepository = usuarioRepository;
+    this.postRepository = postRepository;
   }
 
   @Override
@@ -96,6 +103,15 @@ public class DataInitializer implements CommandLineRunner {
           user.getRoles().add(roleComum);
         }
         usuarioRepository.save(user);
+      }
+    }
+
+    // 5. Garantir que todas as postagens existentes possuam dataPostagem válida
+    List<Post> posts = postRepository.findAll();
+    for (Post post : posts) {
+      if (post.getDataPostagem() == null) {
+        post.setDataPostagem(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
+        postRepository.save(post);
       }
     }
   }

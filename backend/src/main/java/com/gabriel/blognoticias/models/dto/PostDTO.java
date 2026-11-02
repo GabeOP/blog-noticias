@@ -1,5 +1,6 @@
 package com.gabriel.blognoticias.models.dto;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class PostDTO {
@@ -7,15 +8,17 @@ public class PostDTO {
   private String titulo;
   private String conteudo;
   private String linkImagem;
+  private LocalDateTime dataPostagem;
   private UsuarioResponseDTO autor;
 
   public PostDTO() {}
 
-  public PostDTO(UUID id, String titulo, String conteudo, String linkImagem, UsuarioResponseDTO autor) {
+  public PostDTO(UUID id, String titulo, String conteudo, String linkImagem, LocalDateTime dataPostagem, UsuarioResponseDTO autor) {
     this.id = id;
     this.titulo = titulo;
     this.conteudo = conteudo;
     this.linkImagem = linkImagem;
+    this.dataPostagem = dataPostagem;
     this.autor = autor;
   }
 
@@ -49,6 +52,14 @@ public class PostDTO {
 
   public void setLinkImagem(String linkImagem) {
     this.linkImagem = linkImagem;
+  }
+
+  public LocalDateTime getDataPostagem() {
+    return dataPostagem;
+  }
+
+  public void setDataPostagem(LocalDateTime dataPostagem) {
+    this.dataPostagem = dataPostagem;
   }
 
   public UsuarioResponseDTO getAutor() {
