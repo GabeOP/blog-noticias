@@ -54,7 +54,7 @@ public class FileService {
     try {
       Path destinationFile = this.rootLocation.resolve(uniqueFilename).normalize();
 
-      // Proteção de segurança contra Path Traversal
+      // Proteção contra Path Traversal
       if (!destinationFile.getParent().equals(this.rootLocation)) {
         throw new SecurityException("Tentativa de salvar arquivo fora do diretório de destino.");
       }

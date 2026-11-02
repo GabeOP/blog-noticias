@@ -29,8 +29,11 @@ public class PostController {
   }
 
   @GetMapping
-  public ResponseEntity<List<PostDTO>> getAll(Pageable pageable) {
-    Page<PostDTO> response = service.getAll(pageable);
+  public ResponseEntity<List<PostDTO>> getAll(
+      @RequestParam(value = "search", required = false) String search,
+      @RequestParam(value = "direction", defaultValue = "DESC") String direction,
+      Pageable pageable) {
+    Page<PostDTO> response = service.getAll(search, direction, pageable);
     return ResponseEntity.status(HttpStatus.OK).body(response.getContent());
   }
 

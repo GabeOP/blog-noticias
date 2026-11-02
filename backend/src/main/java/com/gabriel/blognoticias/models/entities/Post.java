@@ -50,6 +50,13 @@ public class Post {
     this.autor = autor;
   }
 
+  @PrePersist
+  public void prePersist() {
+    if (this.dataPostagem == null) {
+      this.dataPostagem = LocalDateTime.now(ZoneId.of("America/Sao_Paulo"));
+    }
+  }
+
   public UUID getId() {
     return id;
   }

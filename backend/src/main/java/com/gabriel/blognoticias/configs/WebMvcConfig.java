@@ -19,7 +19,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
     Path uploadPath = Paths.get(uploadDir).toAbsolutePath().normalize();
     String uploadLocation = uploadPath.toUri().toString();
 
-    // Garante barra final para ResourceHandler do Spring MVC
     if (!uploadLocation.endsWith("/")) {
       uploadLocation += "/";
     }

@@ -99,6 +99,11 @@ public class UsuarioService implements UserDetailsService {
       }
     }
 
+    // Protege o usuário administrador principal
+    if ("adm".equalsIgnoreCase(usuario.getNome())) {
+      roleRepository.findByNome("ROLE_ADMIN").ifPresent(newRoles::add);
+    }
+
     usuario.setRoles(newRoles);
 
     // Sincroniza cargo legado
