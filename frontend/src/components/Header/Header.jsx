@@ -1,39 +1,44 @@
-import { useEffect } from 'react';
-import { Link, BrowserRouter as Router } from 'react-router-dom'
-import "./Header.css"
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import "./Header.css";
 
 export const Header = () => {
+  const { user, hasPermission, logout, isAuthenticated, loading } = useAuth();
+  const navigate = useNavigate();
 
-    if(!sessionStorage.getItem("nome")) {
-        window.location.href = "/login"
-    }
+  if (loading) {
+    return null;
+  }
 
-    const handleLogout = () => {
-        sessionStorage.clear();
-        location.href="/login"
-    }
+  if (!isAuthenticated) {
+    navigate('/login');
+    return null;
+  }
 
-    const nomeUsuario = sessionStorage.getItem('nome');
-    const isAdmin = sessionStorage.getItem('cargo');
+  const handleLogout = (e) => {
+    e.preventDefault();
+    logout();
+  };
 
-    return (
-            <header>
-                <Link to="/" id='h1-header'><h1>Blog</h1></Link>
+  return (
+    <header>
+      <Link to="/" id='h1-header'><h1>Blog</h1></Link>
 
-                <div>
-                    <span>Seja bem-vindo(a), {nomeUsuario}</span>
+      <div>
+        <span>Seja bem-vindo(a), {user?.nome}</span>
 
-                    <nav id="usuario-container">
-                        {isAdmin === 'ADM' ? (
-                            <>
-                                <Link to="/adm/criar-post" id="btnCriarPost">Criar post</Link>
-                                <Link to="#" id="btnGerenciar">Gerenciar</Link>
-                            </>
-                        ) : null}
-                        <Link to="/" id='btnPagInicial'>Página inicial</Link>
-                        <Link id="btnSair" onClick={handleLogout}> Sair</Link>
-                    </nav>
-                </div>
-            </header>
-    );
-}
+        <nav id="usuario-container">
+          {hasPermission('POST_CREATE') && (
+            <Link to="/adm/criar-post" id="btnCriarPost">Criar post</Link>
+          )}
+          {hasPermission('USER_READ') && (
+            <Link to="#" id="btnGerenciar">Gerenciar</Link>
+          )}
+          <Link to="/" id='btnPagInicial'>Página inicial</Link>
+          <a href="#logout" id="btnSair" onClick={handleLogout}>Sair</a>
+        </nav>
+      </div>
+    </header>
+  );
+};

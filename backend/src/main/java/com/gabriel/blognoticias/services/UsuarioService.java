@@ -1,10 +1,13 @@
 package com.gabriel.blognoticias.services;
 
+import com.gabriel.blognoticias.enums.Cargo;
 import com.gabriel.blognoticias.models.dto.UsuarioDTO;
 import com.gabriel.blognoticias.models.dto.UsuarioResponseDTO;
+import com.gabriel.blognoticias.models.entities.Role;
 import com.gabriel.blognoticias.models.entities.Usuario;
 import com.gabriel.blognoticias.models.exception.JaCadastradoException;
 import com.gabriel.blognoticias.models.exception.NaoEncontradoException;
+import com.gabriel.blognoticias.repositories.RoleRepository;
 import com.gabriel.blognoticias.repositories.UsuarioRepository;
 import com.gabriel.blognoticias.email.services.EmailService;
 import org.modelmapper.ModelMapper;
@@ -22,14 +25,16 @@ import java.util.stream.Collectors;
 @Service
 public class UsuarioService implements UserDetailsService {
 
-  private UsuarioRepository repository;
-  private ModelMapper modelMapper;
+  private final UsuarioRepository repository;
+  private final RoleRepository roleRepository;
+  private final ModelMapper modelMapper;
 
   @Autowired
   private EmailService emailService;
 
-  public UsuarioService(UsuarioRepository repository, ModelMapper modelMapper, EmailService emailService) {
+  public UsuarioService(UsuarioRepository repository, RoleRepository roleRepository, ModelMapper modelMapper, EmailService emailService) {
     this.repository = repository;
+    this.roleRepository = roleRepository;
     this.modelMapper = modelMapper;
     this.emailService = emailService;
   }
@@ -53,10 +58,14 @@ public class UsuarioService implements UserDetailsService {
   public String criaUsuario(UsuarioDTO usuariodto) {
     try {
       usuariodto.setSenha(new BCryptPasswordEncoder().encode(usuariodto.getSenha()));
-      repository.save(modelMapper.map(usuariodto, Usuario.class));
+      Usuario usuario = modelMapper.map(usuariodto, Usuario.class);
+
+      roleRepository.findByNome("ROLE_COMUM").ifPresent(usuario::addRole);
+
+      repository.save(usuario);
 
       return "Usuário cadastrado com sucesso";
-    }catch(DataIntegrityViolationException ex) {
+    } catch(DataIntegrityViolationException ex) {
       throw new JaCadastradoException(ex.getMessage());
     }
   }
@@ -65,6 +74,13 @@ public class UsuarioService implements UserDetailsService {
     Usuario response = (Usuario) repository.findByNome(usuario.getNome());
 
     response.setCargo(usuario.getCargo());
+
+    if (usuario.getCargo() == Cargo.ADM) {
+      roleRepository.findByNome("ROLE_ADMIN").ifPresent(response::addRole);
+    } else {
+      response.getRoles().removeIf(r -> "ROLE_ADMIN".equals(r.getNome()));
+      roleRepository.findByNome("ROLE_COMUM").ifPresent(response::addRole);
+    }
 
     repository.save(response);
   }

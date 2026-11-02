@@ -13,7 +13,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/comentario")
-@CrossOrigin(origins = "*")
 public class ComentarioController {
 
   @Autowired

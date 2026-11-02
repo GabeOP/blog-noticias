@@ -12,28 +12,22 @@ export function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
-        },
-      };
-
       try {
-        const response = await API.get(`/post?page=${pageNumber || 0}&size=5`, config);
+        const response = await API.get(`/post?page=${pageNumber || 0}&size=5`);
         setData(response.data);
-      } catch (error) {
-        setError(error.message);
-        alert("Sessão expirada.")
-        window.location.href = "/login"
+      } catch (err) {
+        setError(err.message);
+        if (err.response?.status === 401 || err.response?.status === 403) {
+          navigate("/login");
+        }
       }
     };
 
     fetchData();
-  }, [pageNumber]);
+  }, [pageNumber, navigate]);
 
   const handleShowMore = () => {
-    const nextPage = parseInt(pageNumber || 0) + 1;
+    const nextPage = parseInt(pageNumber || 0, 10) + 1;
     navigate(`/page/${nextPage}`);
   };
 
@@ -46,12 +40,10 @@ export function Home() {
             id={item.id}
             titulo={item.titulo}
             conteudo={item.conteudo}
-            autor={item.autor.nome}
+            autor={item.autor?.nome}
             imagem={item.linkImagem}
           />
         ))}
-
-        {console.log(data)}
 
         {data.length > 4 && (
           <button id="btnProxPag" onClick={handleShowMore}>Próxima página</button>

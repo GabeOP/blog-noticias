@@ -1,33 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formulario } from '../../components/FormularioUsuario/Formulario';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import API from '../../axios/config';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 export default function PaginaLogin() {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const [erro, setErro] = useState(null);
+
   const handleLoginSubmit = async (dados) => {
     try {
-
-      const headers = {
-        'Content-Type': 'application/json',
-      };
-
-      const config = {
-        headers: headers,
-      };
-
-      const response = await API.post('/usuario/login', dados, config);
-      console.log('Resposta do login:', response.data);
-
-      sessionStorage.setItem("id", response.data.id);
-      sessionStorage.setItem("nome", response.data.nome);
-      sessionStorage.setItem("cargo", response.data.cargo);
-      sessionStorage.setItem("token", response.data.token);
-
-      window.location.href="/";
-      
+      setErro(null);
+      await login(dados);
+      navigate('/');
     } catch (error) {
       console.error('Erro no login:', error);
+      setErro('Usuário ou senha incorretos.');
     }
   };
 
@@ -36,6 +24,11 @@ export default function PaginaLogin() {
       <div id='h2-form'>
         <h2>Login</h2>
       </div>
+      {erro && (
+        <div style={{ color: 'red', textAlign: 'center', marginBottom: '1rem' }}>
+          {erro}
+        </div>
+      )}
       <div>
         <Formulario onSubmit={handleLoginSubmit} buttonText="Login" />
       </div>
@@ -44,4 +37,4 @@ export default function PaginaLogin() {
       </div>
     </div>
   );
-};
+}
