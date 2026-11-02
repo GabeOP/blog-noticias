@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import "./Header.css";
@@ -7,12 +7,13 @@ export const Header = () => {
   const { user, hasPermission, logout, isAuthenticated, loading } = useAuth();
   const navigate = useNavigate();
 
-  if (loading) {
-    return null;
-  }
+  useEffect(() => {
+    if (!loading && !isAuthenticated) {
+      navigate('/login');
+    }
+  }, [loading, isAuthenticated, navigate]);
 
-  if (!isAuthenticated) {
-    navigate('/login');
+  if (loading || !isAuthenticated) {
     return null;
   }
 
@@ -33,7 +34,7 @@ export const Header = () => {
             <Link to="/adm/criar-post" id="btnCriarPost">Criar post</Link>
           )}
           {hasPermission('USER_READ') && (
-            <Link to="#" id="btnGerenciar">Gerenciar</Link>
+            <Link to="/adm/usuarios" id="btnGerenciar">Gerenciar</Link>
           )}
           <Link to="/" id='btnPagInicial'>Página inicial</Link>
           <a href="#logout" id="btnSair" onClick={handleLogout}>Sair</a>

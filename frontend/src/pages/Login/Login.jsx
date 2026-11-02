@@ -2,38 +2,52 @@ import React, { useState } from 'react';
 import { Formulario } from '../../components/FormularioUsuario/Formulario';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import '../Cadastro/Cadastro.css';
 
 export default function PaginaLogin() {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [erro, setErro] = useState(null);
 
   const handleLoginSubmit = async (dados) => {
+    setLoading(true);
+    setErro(null);
+
     try {
-      setErro(null);
       await login(dados);
       navigate('/');
     } catch (error) {
       console.error('Erro no login:', error);
       setErro('Usuário ou senha incorretos.');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div id='form-container'>
-      <div id='h2-form'>
-        <h2>Login</h2>
-      </div>
-      {erro && (
-        <div style={{ color: 'red', textAlign: 'center', marginBottom: '1rem' }}>
-          {erro}
+    <div className="auth-page-container">
+      <div className="auth-card">
+        <div className="auth-header">
+          <h2>Entrar no Blog</h2>
+          <p>Informe suas credenciais para continuar</p>
         </div>
-      )}
-      <div>
-        <Formulario onSubmit={handleLoginSubmit} buttonText="Login" />
-      </div>
-      <div>
-        <p>Não possui cadastro? <Link to="/cadastro">Registre-se aqui</Link></p>
+
+        <div className="auth-body">
+          {erro && <div className="auth-alert error">{erro}</div>}
+
+          <Formulario
+            onSubmit={handleLoginSubmit}
+            buttonText="Entrar"
+            loading={loading}
+          />
+        </div>
+
+        <div className="auth-footer">
+          <p>
+            Não possui cadastro? <Link to="/cadastro">Registre-se aqui</Link>
+          </p>
+        </div>
       </div>
     </div>
   );

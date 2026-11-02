@@ -1,38 +1,156 @@
-#wrap-home {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    padding: 50px;
+/* Home.css - Minimalista, estruturado e responsivo */
+
+.home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  box-sizing: border-box;
 }
 
-#container-lista-post {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    justify-items: center;
-    gap: 30px;
+.home-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 30px;
+  align-items: start;
 }
 
-#container-home-infos {
-    width: 300px;
-    height: 800px;
-    background-color:  rgb(217, 217, 217);
+/* Feed de Postagens */
+.home-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-#btnProxPag {
-    padding: 10px 26px;
-    font-size: 1.3rem;
-    border: none;
-    box-shadow: 0 0px 10px 1px rgba(0, 0, 0, 0.129);
-    background-color: rgb(255, 255, 255);
-    cursor: pointer;
+.home-empty,
+.home-loading {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 48px 24px;
+  text-align: center;
+  color: #64748b;
+  font-size: 1rem;
 }
 
-@media screen and (max-width: 1500px) {
-    #wrap-home {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 80px;
-    }
+/* Paginação */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+  padding: 16px 0;
+}
+
+.pagination-btn {
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: #f1f5f9;
+  border-color: #94a3b8;
+  color: rgb(59, 89, 152);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #f8fafc;
+}
+
+.pagination-indicator {
+  font-size: 0.9rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Sidebar Direita */
+.home-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sidebar-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.sidebar-card-header {
+  background-color: rgb(59, 89, 152);
+  color: #ffffff;
+  padding: 12px 16px;
+}
+
+.sidebar-card-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.sidebar-card-body {
+  padding: 16px;
+  color: #475569;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.sidebar-links-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar-links-list li a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #334155;
+  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 4px;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.sidebar-links-list li a:hover {
+  background-color: #e0e7ff;
+  color: rgb(59, 89, 152);
+  border-color: #c7d2fe;
+}
+
+/* Responsividade */
+@media screen and (max-width: 960px) {
+  .home-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .home-sidebar {
+    order: 2;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .home-container {
+    padding: 16px 10px;
+  }
 }

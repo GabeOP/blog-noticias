@@ -1,118 +1,238 @@
-#container-detalhes-post { 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 40px;
-    margin-bottom: 100px;
+/* DetalhesPost.css - Leitura limpa, tipografia confortável e 100% responsivo */
+
+.detalhes-post-container {
+  max-width: 860px;
+  margin: 30px auto;
+  padding: 0 16px;
+  box-sizing: border-box;
 }
 
-#wrap-detalhes-post {
-    max-width: 80%;
-    margin-top: 60px;
+.btn-voltar-feed {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgb(59, 89, 152);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  margin-bottom: 20px;
+  transition: color 0.15s;
 }
 
-#titulo-detalhes-post {
-    font-size: 4rem;
+.btn-voltar-feed:hover {
+  text-decoration: underline;
+  color: #1e293b;
 }
 
-#autor-detalhes-post {
-    font-size: 1.5rem;
+/* Cartão do Artigo */
+.artigo-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
 }
 
-#autor-detalhes-post span {
-    font-weight: bolder;
-    color: rgb(59, 89, 152);
+.artigo-titulo {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.25;
+  margin: 0 0 16px 0;
 }
 
-#divMain-detalhes-post {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
+.artigo-meta {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  color: #64748b;
+  font-size: 0.88rem;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f1f5f9;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
 }
 
-#divMain-detalhes-post img {
-    width: 700px;
-    max-height: 500px;
-    border-radius: 10px;
+.artigo-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
-#conteudo-detalhes-post {
-    font-size: 1.5rem;
-    color: #333;
+.artigo-autor-destaque {
+  color: rgb(59, 89, 152);
+  font-weight: 600;
 }
 
-#wrap-comentarios {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+.artigo-capa {
+  width: 100%;
+  max-height: 440px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 24px;
+  background-color: #f1f5f9;
 }
 
-#infosComentario {
-    display: flex;
-    justify-content: space-between;
+.artigo-corpo {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: #334155;
+  white-space: pre-line;
+  word-break: break-word;
 }
 
-#dataComentario {
-    display: flex;
-    gap: 10px;
-}
-#boxComentario {
-    width: 800px;
-    min-width: 300px;
-    max-width: 800px;
-    min-height: 120px;
-    max-height: 200px;
-    font-size: 1.4rem;
-    padding-inline: 10px;
+/* Seção de Comentários */
+.comentarios-secao {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 28px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-#wrapOpcoesComentario {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: flex-end;
-    margin-top: 10px;
+.comentarios-secao h3 {
+  margin: 0 0 16px 0;
+  font-size: 1.25rem;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-#btnComentar {
-    width: 80px;
-    height: 30px;
-    font-size: 1rem;
+.comentario-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
 }
 
-#btnDeletarComentario {
-    background-color: red;
-    border-radius: 3px;
-    border: none;
-    padding: 5px;
-    color: white;
-    justify-self: flex-start;
-    cursor: pointer;
+.comentario-textarea {
+  width: 100%;
+  min-height: 90px;
+  max-height: 180px;
+  resize: vertical;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  box-sizing: border-box;
 }
 
-#autorComentario {
-    font-size: 1.2rem;
-    font-weight: bold;
+.comentario-textarea:focus {
+  outline: none;
+  border-color: rgb(59, 89, 152);
+  box-shadow: 0 0 0 2px rgba(59, 89, 152, 0.15);
 }
 
-#textoComentario {
+.comentario-form-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-enviar-comentario {
+  background-color: rgb(59, 89, 152);
+  color: #ffffff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-enviar-comentario:hover:not(:disabled) {
+  background-color: #2b4170;
+}
+
+.btn-enviar-comentario:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+}
+
+/* Lista de Comentários */
+.comentarios-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.comentario-item {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 14px 16px;
+}
+
+.comentario-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.comentario-autor {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 0.92rem;
+}
+
+.comentario-data {
+  color: #64748b;
+  font-size: 0.8rem;
+}
+
+.comentario-texto {
+  color: #334155;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  margin: 0 0 8px 0;
+  word-break: break-word;
+}
+
+.comentario-acoes {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-deletar-comentario {
+  background: none;
+  border: none;
+  color: #dc2626;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  border-radius: 2px;
+}
+
+.btn-deletar-comentario:hover {
+  background-color: #fee2e2;
+}
+
+.comentarios-vazio {
+  text-align: center;
+  color: #64748b;
+  padding: 24px;
+  font-size: 0.92rem;
+}
+
+/* Responsividade Mobile */
+@media screen and (max-width: 640px) {
+  .artigo-card {
+    padding: 20px 16px;
+  }
+
+  .artigo-titulo {
     font-size: 1.6rem;
-}
+  }
 
-#listaComentario {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    min-width: 50%;
-}
-
-#wrapComentario {
-    background-color: rgb(220, 220, 220);
-    width: 50%;
-    padding: 10px;
-    border-radius: 10px;
-    overflow-wrap: break-word;
+  .comentarios-secao {
+    padding: 20px 16px;
+  }
 }

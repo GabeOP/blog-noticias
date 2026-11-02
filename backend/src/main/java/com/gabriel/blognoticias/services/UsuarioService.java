@@ -18,8 +18,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,9 +41,10 @@ public class UsuarioService implements UserDetailsService {
   }
 
   public List<UsuarioResponseDTO> getAll() {
-    List<UsuarioResponseDTO> response = repository.findAll()
-            .stream().map(x -> modelMapper.map(x, UsuarioResponseDTO.class)).collect(Collectors.toList());
-    return response;
+    return repository.findAll()
+            .stream()
+            .map(this::toResponseDTO)
+            .collect(Collectors.toList());
   }
 
   public UsuarioResponseDTO findByNome(String nome) {
@@ -52,7 +54,7 @@ public class UsuarioService implements UserDetailsService {
       throw new NaoEncontradoException("Usuário não encontrado");
     }
 
-    return modelMapper.map(response, UsuarioResponseDTO.class);
+    return toResponseDTO((Usuario) response);
   }
 
   public String criaUsuario(UsuarioDTO usuariodto) {
@@ -83,6 +85,51 @@ public class UsuarioService implements UserDetailsService {
     }
 
     repository.save(response);
+  }
+
+  @Transactional
+  public UsuarioResponseDTO updateUserRoles(UUID usuarioId, Set<String> roleNames) {
+    Usuario usuario = repository.findById(usuarioId)
+        .orElseThrow(() -> new NaoEncontradoException("Usuário não encontrado"));
+
+    Set<Role> newRoles = new HashSet<>();
+    if (roleNames != null) {
+      for (String rName : roleNames) {
+        roleRepository.findByNome(rName).ifPresent(newRoles::add);
+      }
+    }
+
+    usuario.setRoles(newRoles);
+
+    // Sincroniza cargo legado
+    if (newRoles.stream().anyMatch(r -> "ROLE_ADMIN".equalsIgnoreCase(r.getNome()))) {
+      usuario.setCargo(Cargo.ADM);
+    } else {
+      usuario.setCargo(Cargo.COMUM);
+    }
+
+    Usuario saved = repository.save(usuario);
+    return toResponseDTO(saved);
+  }
+
+  @Transactional
+  public void deleteUsuario(UUID usuarioId) {
+    Usuario usuario = repository.findById(usuarioId)
+        .orElseThrow(() -> new NaoEncontradoException("Usuário não encontrado"));
+
+    if ("adm".equalsIgnoreCase(usuario.getNome())) {
+      throw new IllegalArgumentException("O usuário administrador principal não pode ser excluído.");
+    }
+
+    repository.delete(usuario);
+  }
+
+  private UsuarioResponseDTO toResponseDTO(Usuario u) {
+    Set<String> roles = u.getRoles() != null
+        ? u.getRoles().stream().map(Role::getNome).collect(Collectors.toSet())
+        : Collections.emptySet();
+
+    return new UsuarioResponseDTO(u.getId(), u.getNome(), u.getEmail(), u.getCargo(), roles);
   }
 
   @Override

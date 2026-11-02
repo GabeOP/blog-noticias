@@ -2,19 +2,30 @@ package com.gabriel.blognoticias.models.dto;
 
 import com.gabriel.blognoticias.enums.Cargo;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 public class UsuarioResponseDTO {
   private UUID id;
   private String nome;
+  private String email;
   private Cargo cargo = Cargo.COMUM;
-  //private List<PostUserDTO> postList = new ArrayList<>();
+  private Set<String> roles = new HashSet<>();
 
   public UsuarioResponseDTO() {}
 
   public UsuarioResponseDTO(UUID id, String nome) {
     this.id = id;
     this.nome = nome;
+  }
+
+  public UsuarioResponseDTO(UUID id, String nome, String email, Cargo cargo, Set<String> roles) {
+    this.id = id;
+    this.nome = nome;
+    this.email = email;
+    this.cargo = cargo;
+    this.roles = roles;
   }
 
   public UUID getId() {
@@ -33,13 +44,13 @@ public class UsuarioResponseDTO {
     this.nome = nome;
   }
 
-  //public List<PostUserDTO> getPostList() {
-//    return postList;
-//  }
+  public String getEmail() {
+    return email;
+  }
 
-//  public void setPostList(List<PostUserDTO> postList) {
-//    this.postList = postList;
-//  }
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
   public Cargo getCargo() {
     return cargo;
@@ -47,5 +58,13 @@ public class UsuarioResponseDTO {
 
   public void setCargo(Cargo cargo) {
     this.cargo = cargo;
+  }
+
+  public Set<String> getRoles() {
+    return roles;
+  }
+
+  public void setRoles(Set<String> roles) {
+    this.roles = roles;
   }
 }
