@@ -1,12 +1,11 @@
-version: '3'
-services:      
+services:
   banco_blog:
     image: postgres
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=123
       - POSTGRES_DB=banco_blog
-    ports: 
+    ports:
       - "5433:5432"
 
   springboot:
@@ -19,6 +18,16 @@ services:
       - "8080:8080"
     depends_on:
       - "banco_blog"
+      - "rabbitmq"
+    restart: on-failure
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://banco_blog:5432/banco_blog
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=123
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=admin
+      - SPRING_RABBITMQ_PASSWORD=123456
 
   rabbitmq:
     image: rabbitmq:3-management
