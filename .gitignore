@@ -1,0 +1,6 @@
+uploads/
+backend/target/
+frontend/dist/
+frontend/node_modules/
+.idea/
+
