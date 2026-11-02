@@ -15,7 +15,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/post")
-@CrossOrigin(origins = "*")
 public class PostController {
 
   private PostService service;
