@@ -1,45 +1,67 @@
 import React, { useState } from 'react';
 
-export function Formulario({ onSubmit, buttonText }) {
+export function Formulario({ onSubmit, buttonText, loading }) {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
+  const isCadastro = buttonText === 'Cadastrar';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      await onSubmit({ nome, email, senha });
-      setNome('');
-      setEmail('');
-      setSenha('');
-    } catch (error) {
-      console.error('Erro ao enviar formulário:', error);
+    if (!nome.trim() || !senha.trim() || (isCadastro && !email.trim())) {
+      return;
     }
+
+    await onSubmit({ nome, email, senha });
   };
 
   return (
-    <form id="form-usuario" onSubmit={handleSubmit}>
-      <label>
-        Nome do usuário
-        <input placeholder='Digite o nome de usuário' type="nome" value={nome} onChange={(e) => setNome(e.target.value)} />
-      </label>
-      
-      {buttonText === "Cadastrar" ? (
-        <>
-          <label>
-          E-mail
-          <input placeholder='Digite o seu e-mail' type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
-          </label>
-        </>
-      ) : null}
-      
-      <label>
-        Senha
-        <input placeholder='Digite a sua senha' type="password" value={senha} onChange={(e) => setSenha(e.target.value)} />
-      </label>
-      <button id='btnForm' type="submit">{buttonText}</button>
+    <form className="auth-form" onSubmit={handleSubmit}>
+      <div className="auth-field">
+        <label htmlFor="auth-nome">Nome de usuário</label>
+        <input
+          id="auth-nome"
+          type="text"
+          placeholder="Digite seu nome de usuário"
+          value={nome}
+          onChange={(e) => setNome(e.target.value)}
+          required
+          autoComplete="username"
+        />
+      </div>
+
+      {isCadastro && (
+        <div className="auth-field">
+          <label htmlFor="auth-email">E-mail</label>
+          <input
+            id="auth-email"
+            type="email"
+            placeholder="Digite seu e-mail"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            autoComplete="email"
+          />
+        </div>
+      )}
+
+      <div className="auth-field">
+        <label htmlFor="auth-senha">Senha</label>
+        <input
+          id="auth-senha"
+          type="password"
+          placeholder="Digite sua senha"
+          value={senha}
+          onChange={(e) => setSenha(e.target.value)}
+          required
+          autoComplete={isCadastro ? 'new-password' : 'current-password'}
+        />
+      </div>
+
+      <button className="auth-submit-btn" type="submit" disabled={loading}>
+        {loading ? 'Processando...' : buttonText}
+      </button>
     </form>
   );
-};
+}

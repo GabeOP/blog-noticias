@@ -1,53 +1,107 @@
+/* Header.css - Estilo minimalista clássico */
+
 header {
-    background-color: rgb(59, 89, 152);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding-block: 20px;
-    color: white;
+  background-color: rgb(59, 89, 152);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 24px;
+  color: white;
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 header div {
-    display: flex;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
 }
 
 #h1-header {
-    color: white;
+  color: white;
+  text-decoration: none;
+}
+
+#h1-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 #usuario-container {
-    display: flex;
-    gap: 10px;
-    margin-left: 10px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 #btnCriarPost, #btnGerenciar {
-    background-color: rgb(94, 185, 64);
-    text-transform: uppercase;
+  background-color: rgb(94, 185, 64);
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+}
+
+#btnCriarPost:hover, #btnGerenciar:hover {
+  background-color: #4ea535;
 }
 
 #btnPagInicial {
-    background-color: rgb(130, 145, 182);
+  background-color: rgb(130, 145, 182);
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+#btnPagInicial:hover {
+  background-color: #6b7c9f;
 }
 
 #btnSair {
-    background-color: rgb(231, 0, 0);
+  background-color: rgb(220, 38, 38);
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+#btnSair:hover {
+  background-color: #b91c1c;
 }
 
 #btnCriarPost, #btnGerenciar, #btnSair, #btnPagInicial {
-    cursor: pointer;
-    color: white;
-    border: none;
-    padding: 2px 16px;
-    border-radius: 2px;
+  cursor: pointer;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 3px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: background-color 0.15s ease;
 }
 
-#titulo {
-    font-size: 2rem;
-}
+@media screen and (max-width: 640px) {
+  header {
+    padding: 12px 14px;
+    justify-content: center;
+  }
 
-@media screen and (max-width: 642px) {
-    #h1-header, header div span {
-        display: none;
-    }
+  header div {
+    justify-content: center;
+    width: 100%;
+  }
+
+  header div span {
+    width: 100%;
+    text-align: center;
+    font-size: 0.88rem;
+  }
+
+  #usuario-container {
+    justify-content: center;
+    width: 100%;
+  }
 }
