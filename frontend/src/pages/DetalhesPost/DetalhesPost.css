@@ -80,6 +80,43 @@
   color: #334155;
   white-space: pre-line;
   word-break: break-word;
+  margin-bottom: 24px;
+}
+
+/* Rodapé do artigo com Upvote */
+.artigo-rodape {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 18px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.btn-post-upvote {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #f8fafc;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-post-upvote:hover {
+  background-color: #f1f5f9;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+.btn-post-upvote.active {
+  background-color: #eff6ff;
+  border-color: #3b5998;
+  color: #3b5998;
 }
 
 /* Seção de Comentários */
@@ -91,13 +128,31 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.comentarios-secao h3 {
-  margin: 0 0 16px 0;
+.comentarios-secao-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.comentarios-secao-header h3 {
+  margin: 0;
   font-size: 1.25rem;
   color: #0f172a;
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.comentarios-ordem-aviso {
+  font-size: 0.8rem;
+  color: #64748b;
+  background-color: #f1f5f9;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-weight: 500;
 }
 
 .comentario-form {
@@ -188,13 +243,44 @@
   color: #334155;
   font-size: 0.92rem;
   line-height: 1.5;
-  margin: 0 0 8px 0;
+  margin: 0 0 10px 0;
   word-break: break-word;
 }
 
-.comentario-acoes {
+.comentario-footer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 6px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.btn-comentario-upvote {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  line-height: 1;
+}
+
+.btn-comentario-upvote:hover {
+  background-color: #f1f5f9;
+  border-color: #94a3b8;
+  color: #1e293b;
+}
+
+.btn-comentario-upvote.active {
+  background-color: #eff6ff;
+  border-color: #3b5998;
+  color: #3b5998;
 }
 
 .btn-deletar-comentario {

@@ -7,6 +7,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -29,7 +31,12 @@ public class Comentario {
   private String comentario;
 
   @DateTimeFormat(pattern = "dd/MM/yyyy")
-  LocalDateTime dataComentario = LocalDateTime.now(ZoneId.of("America/Sao_Paulo"));
+  private LocalDateTime dataComentario = LocalDateTime.now(ZoneId.of("America/Sao_Paulo"));
+
+  @ElementCollection(fetch = FetchType.EAGER)
+  @CollectionTable(name = "comentario_upvotes", joinColumns = @JoinColumn(name = "comentario_id"))
+  @Column(name = "usuario_id")
+  private Set<UUID> upvotes = new HashSet<>();
 
   public Comentario() {}
 
@@ -78,5 +85,20 @@ public class Comentario {
 
   public void setDataComentario(LocalDateTime dataComentario) {
     this.dataComentario = dataComentario;
+  }
+
+  public Set<UUID> getUpvotes() {
+    if (this.upvotes == null) {
+      this.upvotes = new HashSet<>();
+    }
+    return upvotes;
+  }
+
+  public void setUpvotes(Set<UUID> upvotes) {
+    this.upvotes = upvotes != null ? upvotes : new HashSet<>();
+  }
+
+  public int getUpCount() {
+    return this.upvotes != null ? this.upvotes.size() : 0;
   }
 }

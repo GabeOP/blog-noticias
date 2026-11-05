@@ -1,23 +1,29 @@
 package com.gabriel.blognoticias.services;
 
+import com.gabriel.blognoticias.models.dto.ComentarioDTO;
 import com.gabriel.blognoticias.models.dto.PostDTO;
 import com.gabriel.blognoticias.models.dto.PostDetailsDTO;
 import com.gabriel.blognoticias.models.entities.Post;
+import com.gabriel.blognoticias.models.entities.Usuario;
 import com.gabriel.blognoticias.models.exception.CampoNaoPreenchidoException;
+import com.gabriel.blognoticias.models.exception.NaoEncontradoException;
 import com.gabriel.blognoticias.repositories.PostRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.TransactionSystemException;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PostService {
@@ -49,13 +55,47 @@ public class PostService {
     String querySearch = (search != null && !search.trim().isEmpty()) ? search.trim() : null;
     Page<Post> page = repository.searchPosts(querySearch, sortedPageable);
 
-    return page.map(x -> modelMapper.map(x, PostDTO.class));
+    return page.map(x -> {
+      PostDTO dto = modelMapper.map(x, PostDTO.class);
+      dto.setUpvotes(x.getUpvotes());
+      dto.setUpCount(x.getUpCount());
+      return dto;
+    });
   }
 
   @Transactional(readOnly = true)
   public PostDetailsDTO getById(UUID id) {
-    Optional<Post> response = repository.findById(id);
-    return modelMapper.map(response.get(), PostDetailsDTO.class);
+    Post post = repository.findById(id)
+        .orElseThrow(() -> new NaoEncontradoException("Postagem não encontrada"));
+
+    PostDetailsDTO dto = modelMapper.map(post, PostDetailsDTO.class);
+    dto.setUpvotes(post.getUpvotes());
+    dto.setUpCount(post.getUpCount());
+
+    // Ordena os comentários com mais "up" no topo (critério de desempate: data do comentário)
+    if (post.getComentarioList() != null) {
+      List<ComentarioDTO> comentariosDTO = post.getComentarioList().stream()
+          .map(c -> {
+            ComentarioDTO cdto = modelMapper.map(c, ComentarioDTO.class);
+            cdto.setUpvotes(c.getUpvotes());
+            cdto.setUpCount(c.getUpCount());
+            return cdto;
+          })
+          .sorted((c1, c2) -> {
+            int cmp = Integer.compare(c2.getUpCount(), c1.getUpCount());
+            if (cmp != 0) {
+              return cmp;
+            }
+            if (c2.getDataComentario() != null && c1.getDataComentario() != null) {
+              return c2.getDataComentario().compareTo(c1.getDataComentario());
+            }
+            return 0;
+          })
+          .collect(Collectors.toList());
+      dto.setComentarioList(comentariosDTO);
+    }
+
+    return dto;
   }
 
   @Transactional
@@ -69,5 +109,35 @@ public class PostService {
     } catch(TransactionSystemException ex) {
       throw new CampoNaoPreenchidoException(ex.getMessage());
     }
+  }
+
+  @Transactional
+  public Map<String, Object> toggleUpvote(UUID id) {
+    Post post = repository.findById(id)
+        .orElseThrow(() -> new NaoEncontradoException("Postagem não encontrada"));
+
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    if (auth == null || !auth.isAuthenticated() || "anonymousUser".equals(auth.getPrincipal())) {
+      throw new AccessDeniedException("Usuário não autenticado.");
+    }
+
+    Usuario usuarioAtual = (Usuario) auth.getPrincipal();
+    UUID usuarioId = usuarioAtual.getId();
+
+    boolean upvoted;
+    if (post.getUpvotes().contains(usuarioId)) {
+      post.getUpvotes().remove(usuarioId);
+      upvoted = false;
+    } else {
+      post.getUpvotes().add(usuarioId);
+      upvoted = true;
+    }
+
+    repository.save(post);
+
+    Map<String, Object> response = new HashMap<>();
+    response.put("upCount", post.getUpCount());
+    response.put("upvoted", upvoted);
+    return response;
   }
 }

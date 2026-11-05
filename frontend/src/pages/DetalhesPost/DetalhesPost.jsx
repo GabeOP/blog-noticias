@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useSearchParams, Link, useNavigate } from 'react-router-dom';
 import API from '../../axios/config';
 import { useAuth } from '../../context/AuthContext';
@@ -8,13 +8,14 @@ import {
   User,
   MessageSquare,
   Trash2,
-  AlertCircle
+  AlertCircle,
+  ChevronsUp
 } from 'lucide-react';
 import { getImageUrl } from '../../utils/imageUrl';
 import './DetalhesPost.css';
 
 export function DetalhesPost() {
-  const { user, hasPermission } = useAuth();
+  const { user, hasPermission, hasRole } = useAuth();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const postagem_id = searchParams.get('id');
@@ -25,10 +26,25 @@ export function DetalhesPost() {
   const [comentario, setComentario] = useState('');
   const [enviandoComentario, setEnviandoComentario] = useState(false);
   const [feedback, setFeedback] = useState(null);
+  const [upvotingPost, setUpvotingPost] = useState(false);
 
   const showFeedback = (msg) => {
     setFeedback(msg);
     setTimeout(() => setFeedback(null), 4000);
+  };
+
+  const sortComments = (comments) => {
+    if (!comments || !Array.isArray(comments)) return [];
+    return [...comments].sort((a, b) => {
+      const upsA = a.upCount != null ? a.upCount : (a.upvotes ? a.upvotes.length : 0);
+      const upsB = b.upCount != null ? b.upCount : (b.upvotes ? b.upvotes.length : 0);
+      if (upsB !== upsA) {
+        return upsB - upsA; // Mais "up" sempre no topo
+      }
+      const timeA = new Date(a.dataComentario).getTime() || 0;
+      const timeB = new Date(b.dataComentario).getTime() || 0;
+      return timeB - timeA;
+    });
   };
 
   const fetchPost = async () => {
@@ -40,7 +56,11 @@ export function DetalhesPost() {
 
     try {
       const response = await API.get(`/post/${postagem_id}`);
-      setData(response.data);
+      const postData = response.data;
+      if (postData && postData.comentarioList) {
+        postData.comentarioList = sortComments(postData.comentarioList);
+      }
+      setData(postData);
     } catch (err) {
       setError(err.response?.data?.message || 'Erro ao carregar a postagem.');
     } finally {
@@ -51,6 +71,122 @@ export function DetalhesPost() {
   useEffect(() => {
     fetchPost();
   }, [postagem_id]);
+
+  const handleUpvotePost = async () => {
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+
+    if (upvotingPost || !data) return;
+
+    const previouslyUpvoted = Boolean(
+      data.upvotes && Array.isArray(data.upvotes) && data.upvotes.includes(user.id)
+    );
+    const prevCount = data.upCount || 0;
+
+    // Otimista
+    const newUpvoted = !previouslyUpvoted;
+    const newCount = previouslyUpvoted ? Math.max(0, prevCount - 1) : prevCount + 1;
+    const newUpvotes = newUpvoted
+      ? [...(data.upvotes || []), user.id]
+      : (data.upvotes || []).filter((uid) => uid !== user.id);
+
+    setData((prev) => ({
+      ...prev,
+      upCount: newCount,
+      upvotes: newUpvotes,
+    }));
+    setUpvotingPost(true);
+
+    try {
+      const res = await API.post(`/post/${postagem_id}/up`);
+      if (res.data) {
+        setData((prev) => ({
+          ...prev,
+          upCount: res.data.upCount,
+          upvotes: res.data.upvoted
+            ? [...(prev.upvotes || []).filter((uid) => uid !== user.id), user.id]
+            : (prev.upvotes || []).filter((uid) => uid !== user.id),
+        }));
+      }
+    } catch (err) {
+      console.error('Erro ao avaliar publicação:', err);
+      // Reverter
+      setData((prev) => ({
+        ...prev,
+        upCount: prevCount,
+        upvotes: data.upvotes,
+      }));
+    } finally {
+      setUpvotingPost(false);
+    }
+  };
+
+  const handleUpvoteComentario = async (comentarioId) => {
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+
+    if (!data || !data.comentarioList) return;
+
+    // Atualização otimista imediata na lista de comentários
+    const updatedList = data.comentarioList.map((c) => {
+      if (c.id === comentarioId) {
+        const hasUp = Boolean(c.upvotes && c.upvotes.includes(user.id));
+        const newUp = !hasUp;
+        const currentCount = c.upCount || 0;
+        const newCount = hasUp ? Math.max(0, currentCount - 1) : currentCount + 1;
+        const newUpvotes = newUp
+          ? [...(c.upvotes || []), user.id]
+          : (c.upvotes || []).filter((uid) => uid !== user.id);
+
+        return {
+          ...c,
+          upCount: newCount,
+          upvotes: newUpvotes,
+        };
+      }
+      return c;
+    });
+
+    // Reordena para que o comentário com mais up suba imediatamente
+    setData((prev) => ({
+      ...prev,
+      comentarioList: sortComments(updatedList),
+    }));
+
+    try {
+      const res = await API.post(`/comentario/${comentarioId}/up`);
+      if (res.data) {
+        setData((prev) => {
+          const syncedList = (prev.comentarioList || []).map((c) => {
+            if (c.id === comentarioId) {
+              const newUpvotes = res.data.upvoted
+                ? [...(c.upvotes || []).filter((uid) => uid !== user.id), user.id]
+                : (c.upvotes || []).filter((uid) => uid !== user.id);
+
+              return {
+                ...c,
+                upCount: res.data.upCount,
+                upvotes: newUpvotes,
+              };
+            }
+            return c;
+          });
+          return {
+            ...prev,
+            comentarioList: sortComments(syncedList),
+          };
+        });
+      }
+    } catch (err) {
+      console.error('Erro ao avaliar comentário:', err);
+      // Re-sincroniza do servidor em caso de falha
+      fetchPost();
+    }
+  };
 
   const handleComentSubmit = async (e) => {
     e.preventDefault();
@@ -107,6 +243,10 @@ export function DetalhesPost() {
       return dataStr;
     }
   };
+
+  const userHasUpvotedPost = Boolean(
+    user && data?.upvotes && Array.isArray(data.upvotes) && data.upvotes.includes(user.id)
+  );
 
   if (loading) {
     return (
@@ -184,14 +324,33 @@ export function DetalhesPost() {
         )}
 
         <div className="artigo-corpo">{data.conteudo}</div>
+
+        {/* Rodapé da Postagem com Upvote */}
+        <div className="artigo-rodape">
+          <button
+            type="button"
+            className={`btn-post-upvote ${userHasUpvotedPost ? 'active' : ''}`}
+            onClick={handleUpvotePost}
+            disabled={upvotingPost}
+            title={userHasUpvotedPost ? 'Remover up' : 'Dar up nesta publicação'}
+          >
+            <ChevronsUp size={18} />
+            <span>{data.upCount || 0}</span>
+          </button>
+        </div>
       </article>
 
       {/* Seção de Comentários */}
       <section className="comentarios-secao">
-        <h3>
-          <MessageSquare size={18} color="rgb(59, 89, 152)" />
-          Comentários ({data.comentarioList?.length || 0})
-        </h3>
+        <div className="comentarios-secao-header">
+          <h3>
+            <MessageSquare size={18} color="rgb(59, 89, 152)" />
+            Comentários ({data.comentarioList?.length || 0})
+          </h3>
+          <span className="comentarios-ordem-aviso">
+            Comentários com mais "up" ficam no topo
+          </span>
+        </div>
 
         {/* Formulário para novo comentário */}
         <form className="comentario-form" onSubmit={handleComentSubmit}>
@@ -221,9 +380,16 @@ export function DetalhesPost() {
             </p>
           ) : (
             data.comentarioList.map((item, index) => {
-              const podeExcluir =
+              const isAutor =
                 user &&
-                (item.autorComentario?.id === user?.id || hasPermission('COMMENT_DELETE'));
+                item.autorComentario &&
+                (item.autorComentario.id === user.id || item.autorComentario.nome === user.nome);
+
+              const isModerador = Boolean(hasPermission('COMMENT_DELETE') || (hasRole && hasRole('ROLE_ADMIN')));
+              const podeExcluir = isAutor || isModerador;
+              const hasUpvotedComment = Boolean(
+                user && item.upvotes && Array.isArray(item.upvotes) && item.upvotes.includes(user.id)
+              );
 
               return (
                 <div key={item.id || index} className="comentario-item">
@@ -238,16 +404,26 @@ export function DetalhesPost() {
 
                   <p className="comentario-texto">{item.comentario}</p>
 
-                  {podeExcluir && (
-                    <div className="comentario-acoes">
+                  <div className="comentario-footer">
+                    <button
+                      type="button"
+                      className={`btn-comentario-upvote ${hasUpvotedComment ? 'active' : ''}`}
+                      onClick={() => handleUpvoteComentario(item.id)}
+                      title={hasUpvotedComment ? 'Remover up' : 'Dar up neste comentário'}
+                    >
+                      <ChevronsUp size={15} />
+                      <span>{item.upCount || 0}</span>
+                    </button>
+
+                    {podeExcluir && (
                       <button
                         className="btn-deletar-comentario"
                         onClick={() => deletarComentario(item.id)}
                       >
                         <Trash2 size={13} /> Deletar
                       </button>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               );
             })

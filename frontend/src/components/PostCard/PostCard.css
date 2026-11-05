@@ -107,8 +107,37 @@
 .post-card-meta {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   flex-wrap: wrap;
+}
+
+/* Botão de Up no card */
+.btn-card-upvote {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background-color: #f8fafc;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  line-height: 1;
+}
+
+.btn-card-upvote:hover {
+  background-color: #e2e8f0;
+  border-color: #94a3b8;
+  color: #1e293b;
+}
+
+.btn-card-upvote.active {
+  background-color: #eff6ff;
+  border-color: #3b5998;
+  color: #3b5998;
 }
 
 .post-card-author {

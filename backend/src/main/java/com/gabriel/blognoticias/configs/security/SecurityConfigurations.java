@@ -7,7 +7,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -24,11 +23,10 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfigurations {
 
   @Autowired
-  private SecurityFilter securityFilter;
+  SecurityFilter securityFilter;
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -51,10 +49,11 @@ public class SecurityConfigurations {
                     .requestMatchers(HttpMethod.DELETE, "/roles/**").hasAuthority("ROLE_MANAGE")
                     .requestMatchers(HttpMethod.GET, "/uploads/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "/post", "/post/**").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/post/*/up", "/post/{id}/up").authenticated()
                     .requestMatchers(HttpMethod.POST, "/post", "/post/**").hasAuthority("POST_CREATE")
                     .requestMatchers(HttpMethod.DELETE, "/post/**").hasAuthority("POST_DELETE")
-                    .requestMatchers(HttpMethod.POST, "/comentario").authenticated()
-                    .requestMatchers(HttpMethod.DELETE, "/comentario/**").hasAuthority("COMMENT_DELETE")
+                    .requestMatchers(HttpMethod.POST, "/comentario", "/comentario/**").authenticated()
+                    .requestMatchers(HttpMethod.DELETE, "/comentario/**").authenticated()
                     .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                     .anyRequest().authenticated()
             )
@@ -68,13 +67,12 @@ public class SecurityConfigurations {
     configuration.setAllowedOriginPatterns(Arrays.asList(
         "http://localhost:[*]",
         "http://127.0.0.1:[*]",
-        "https://*.onrender.com",
-        "https://blog-noticias.onrender.com"
+        "https://*.onrender.com"
     ));
     configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
     configuration.setAllowedHeaders(List.of("*"));
     configuration.setAllowCredentials(true);
-    configuration.setMaxAge(3600L);
+    configuration.setExposedHeaders(Arrays.asList("Authorization", "Content-Disposition"));
 
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", configuration);

@@ -48,7 +48,7 @@ public class DataInitializer implements CommandLineRunner {
     Permission postDelete = getOrCreatePermission("POST_DELETE", "Permissão para deletar postagens");
 
     Permission commentCreate = getOrCreatePermission("COMMENT_CREATE", "Permissão para comentar em postagens");
-    Permission commentDelete = getOrCreatePermission("COMMENT_DELETE", "Permissão para deletar comentários");
+    Permission commentDelete = getOrCreatePermission("COMMENT_DELETE", "Permissão administrativa para deletar comentários de qualquer usuário");
 
     Permission userRead = getOrCreatePermission("USER_READ", "Permissão para listar usuários");
     Permission userUpdate = getOrCreatePermission("USER_UPDATE", "Permissão para editar cargos de usuários");
@@ -75,8 +75,9 @@ public class DataInitializer implements CommandLineRunner {
     roleAdmin.setPermissions(adminPermissions);
     roleRepository.save(roleAdmin);
 
+    // ROLE_COMUM NÃO possui COMMENT_DELETE geral (apenas moderadores/admins podem deletar de outros)
     Set<Permission> comumPermissions = new HashSet<>(Arrays.asList(
-        postRead, commentCreate, commentDelete
+        postRead, commentCreate
     ));
     roleComum.setPermissions(comumPermissions);
     roleRepository.save(roleComum);

@@ -1,6 +1,8 @@
 package com.gabriel.blognoticias.models.dto;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 public class PostDTO {
@@ -10,6 +12,8 @@ public class PostDTO {
   private String linkImagem;
   private LocalDateTime dataPostagem;
   private UsuarioResponseDTO autor;
+  private int upCount;
+  private Set<UUID> upvotes = new HashSet<>();
 
   public PostDTO() {}
 
@@ -68,5 +72,25 @@ public class PostDTO {
 
   public void setAutor(UsuarioResponseDTO autor) {
     this.autor = autor;
+  }
+
+  public int getUpCount() {
+    return upCount;
+  }
+
+  public void setUpCount(int upCount) {
+    this.upCount = upCount;
+  }
+
+  public Set<UUID> getUpvotes() {
+    if (this.upvotes == null) {
+      this.upvotes = new HashSet<>();
+    }
+    return upvotes;
+  }
+
+  public void setUpvotes(Set<UUID> upvotes) {
+    this.upvotes = upvotes != null ? upvotes : new HashSet<>();
+    this.upCount = this.upvotes.size();
   }
 }

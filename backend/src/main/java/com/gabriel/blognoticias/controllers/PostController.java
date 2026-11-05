@@ -49,6 +49,12 @@ public class PostController {
     return ResponseEntity.status(HttpStatus.CREATED).body("Postagem criada");
   }
 
+  @PostMapping("/{id}/up")
+  public ResponseEntity<Map<String, Object>> upvotePost(@PathVariable UUID id) {
+    Map<String, Object> response = service.toggleUpvote(id);
+    return ResponseEntity.ok(response);
+  }
+
   @PostMapping("/upload")
   public ResponseEntity<Map<String, String>> uploadImagem(@RequestParam("file") MultipartFile file) {
     String fileUrl = fileService.store(file);

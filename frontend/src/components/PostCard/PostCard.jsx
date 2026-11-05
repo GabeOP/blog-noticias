@@ -1,11 +1,74 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Image, ArrowRight, Calendar } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Image, ArrowRight, Calendar, ChevronsUp } from 'lucide-react';
 import { getImageUrl } from '../../utils/imageUrl';
+import { useAuth } from '../../context/AuthContext';
+import API from '../../axios/config';
 import './PostCard.css';
 
-export function PostCard({ id, titulo, imagem, conteudo, autor, dataPostagem }) {
+export function PostCard({
+  id,
+  titulo,
+  imagem,
+  conteudo,
+  autor,
+  dataPostagem,
+  upCount = 0,
+  upvotes = [],
+}) {
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [imageError, setImageError] = useState(false);
+  const [count, setCount] = useState(upCount || 0);
+  const [hasUpvoted, setHasUpvoted] = useState(false);
+  const [loadingUpvote, setLoadingUpvote] = useState(false);
+
+  useEffect(() => {
+    setCount(upCount || 0);
+  }, [upCount]);
+
+  useEffect(() => {
+    if (user && upvotes && Array.isArray(upvotes)) {
+      setHasUpvoted(upvotes.includes(user.id));
+    } else {
+      setHasUpvoted(false);
+    }
+  }, [user, upvotes]);
+
+  const handleUpvote = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+
+    if (loadingUpvote) return;
+
+    const previousHasUpvoted = hasUpvoted;
+    const previousCount = count;
+
+    // Atualização otimista imediata
+    setHasUpvoted(!previousHasUpvoted);
+    setCount(prev => (previousHasUpvoted ? Math.max(0, prev - 1) : prev + 1));
+    setLoadingUpvote(true);
+
+    try {
+      const response = await API.post(`/post/${id}/up`);
+      if (response.data) {
+        setCount(response.data.upCount);
+        setHasUpvoted(response.data.upvoted);
+      }
+    } catch (err) {
+      console.error('Erro ao avaliar publicação:', err);
+      // Reverte em caso de erro
+      setHasUpvoted(previousHasUpvoted);
+      setCount(previousCount);
+    } finally {
+      setLoadingUpvote(false);
+    }
+  };
 
   const formatarData = (dataVal) => {
     if (!dataVal) return null;
@@ -65,6 +128,16 @@ export function PostCard({ id, titulo, imagem, conteudo, autor, dataPostagem }) 
 
         <div className="post-card-footer">
           <div className="post-card-meta">
+            <button
+              type="button"
+              className={`btn-card-upvote ${hasUpvoted ? 'active' : ''}`}
+              onClick={handleUpvote}
+              title={hasUpvoted ? 'Remover up' : 'Dar up nesta publicação'}
+            >
+              <ChevronsUp size={15} />
+              <span>{count}</span>
+            </button>
+
             <span className="post-card-author">
               Por <strong>{autor || 'Autor desconhecido'}</strong>
             </span>
