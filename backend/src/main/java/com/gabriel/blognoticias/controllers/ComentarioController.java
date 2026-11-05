@@ -3,20 +3,23 @@ package com.gabriel.blognoticias.controllers;
 import com.gabriel.blognoticias.models.dto.ComentarioDTO;
 import com.gabriel.blognoticias.models.entities.Comentario;
 import com.gabriel.blognoticias.services.ComentarioService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/comentario")
 public class ComentarioController {
 
-  @Autowired
-  private ComentarioService service;
+  private final ComentarioService service;
+
+  public ComentarioController(ComentarioService service) {
+    this.service = service;
+  }
 
   @GetMapping
   public ResponseEntity<List<ComentarioDTO>> getAll() {
@@ -34,6 +37,12 @@ public class ComentarioController {
   public ResponseEntity<String> criarComentario(@RequestBody Comentario comentario) {
     service.criarComentario(comentario);
     return ResponseEntity.status(HttpStatus.CREATED).body("Comentário criado com sucesso");
+  }
+
+  @PostMapping("/{id}/up")
+  public ResponseEntity<Map<String, Object>> upvoteComentario(@PathVariable UUID id) {
+    Map<String, Object> response = service.toggleUpvote(id);
+    return ResponseEntity.ok(response);
   }
 
   @DeleteMapping("/{id}")

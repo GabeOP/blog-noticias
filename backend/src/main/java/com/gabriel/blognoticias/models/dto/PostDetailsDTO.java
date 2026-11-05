@@ -1,7 +1,10 @@
 package com.gabriel.blognoticias.models.dto;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public class PostDetailsDTO {
@@ -11,8 +14,10 @@ public class PostDetailsDTO {
   private String conteudo;
   private String linkImagem;
   private UsuarioResponseDTO autor;
-  LocalDateTime dataPostagem = LocalDateTime.now();
-  private List<ComentarioDTO> comentarioList;
+  private LocalDateTime dataPostagem = LocalDateTime.now();
+  private List<ComentarioDTO> comentarioList = new ArrayList<>();
+  private int upCount;
+  private Set<UUID> upvotes = new HashSet<>();
 
   public PostDetailsDTO() {}
 
@@ -22,7 +27,7 @@ public class PostDetailsDTO {
     this.conteudo = conteudo;
     this.linkImagem = linkImagem;
     this.autor = autor;
-    this.comentarioList = comentarioList;
+    this.comentarioList = comentarioList != null ? comentarioList : new ArrayList<>();
     this.dataPostagem = dataPostagem;
   }
 
@@ -71,7 +76,7 @@ public class PostDetailsDTO {
   }
 
   public void setComentarioList(List<ComentarioDTO> comentarioList) {
-    this.comentarioList = comentarioList;
+    this.comentarioList = comentarioList != null ? comentarioList : new ArrayList<>();
   }
 
   public LocalDateTime getDataPostagem() {
@@ -80,5 +85,25 @@ public class PostDetailsDTO {
 
   public void setDataPostagem(LocalDateTime dataPostagem) {
     this.dataPostagem = dataPostagem;
+  }
+
+  public int getUpCount() {
+    return upCount;
+  }
+
+  public void setUpCount(int upCount) {
+    this.upCount = upCount;
+  }
+
+  public Set<UUID> getUpvotes() {
+    if (this.upvotes == null) {
+      this.upvotes = new HashSet<>();
+    }
+    return upvotes;
+  }
+
+  public void setUpvotes(Set<UUID> upvotes) {
+    this.upvotes = upvotes != null ? upvotes : new HashSet<>();
+    this.upCount = this.upvotes.size();
   }
 }

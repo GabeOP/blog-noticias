@@ -8,7 +8,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -39,6 +41,11 @@ public class Post {
   @JsonManagedReference
   @OneToMany(mappedBy = "postagem_id")
   private List<Comentario> comentarioList = new ArrayList<>();
+
+  @ElementCollection(fetch = FetchType.EAGER)
+  @CollectionTable(name = "post_upvotes", joinColumns = @JoinColumn(name = "post_id"))
+  @Column(name = "usuario_id")
+  private Set<UUID> upvotes = new HashSet<>();
 
   public Post() {}
 
@@ -111,5 +118,20 @@ public class Post {
 
   public void setDataPostagem(LocalDateTime dataPostagem) {
     this.dataPostagem = dataPostagem;
+  }
+
+  public Set<UUID> getUpvotes() {
+    if (this.upvotes == null) {
+      this.upvotes = new HashSet<>();
+    }
+    return upvotes;
+  }
+
+  public void setUpvotes(Set<UUID> upvotes) {
+    this.upvotes = upvotes != null ? upvotes : new HashSet<>();
+  }
+
+  public int getUpCount() {
+    return this.upvotes != null ? this.upvotes.size() : 0;
   }
 }

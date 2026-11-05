@@ -213,6 +213,8 @@ export function Home() {
                 autor={item.autor?.nome}
                 imagem={item.linkImagem}
                 dataPostagem={item.dataPostagem}
+                upCount={item.upCount}
+                upvotes={item.upvotes}
               />
             ))
           )}
