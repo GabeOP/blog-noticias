@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Formulario } from '../../components/FormularioUsuario/Formulario';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { InfoProjeto } from '../../components/InfoProjeto/InfoProjeto';
 import '../Cadastro/Cadastro.css';
 
 export default function PaginaLogin() {
@@ -49,6 +50,8 @@ export default function PaginaLogin() {
           </p>
         </div>
       </div>
+
+      <InfoProjeto />
     </div>
   );
 }

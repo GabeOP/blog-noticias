@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Formulario } from '../../components/FormularioUsuario/Formulario';
 import { Link, useNavigate } from 'react-router-dom';
 import API from '../../axios/config';
+import { InfoProjeto } from '../../components/InfoProjeto/InfoProjeto';
 import './Cadastro.css';
 
 export function PaginaCadastro() {
@@ -57,6 +58,8 @@ export function PaginaCadastro() {
           </p>
         </div>
       </div>
+
+      <InfoProjeto />
     </div>
   );
 }
