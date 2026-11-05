@@ -5,6 +5,7 @@ import { PaginaCadastro } from './pages/Cadastro/Cadastro.jsx';
 import PaginaLogin from './pages/Login/Login.jsx';
 import { DetalhesPost } from './pages/DetalhesPost/DetalhesPost.jsx';
 import { CriarPost } from './pages/CriarPost/CriarPost.jsx';
+import { EditarPost } from './pages/EditarPost/EditarPost.jsx';
 import { GerenciarUsuarios } from './pages/GerenciarUsuarios/GerenciarUsuarios.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
 import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute.jsx';
@@ -23,6 +24,14 @@ function AppLayout() {
         <Route path="/login" element={<PaginaLogin />} />
         <Route path="/cadastro" element={<PaginaCadastro />} />
         <Route path="/post" element={<DetalhesPost />} />
+        <Route
+          path="/post/editar"
+          element={
+            <ProtectedRoute>
+              <EditarPost />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/adm/criar-post"
           element={

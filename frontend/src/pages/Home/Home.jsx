@@ -117,6 +117,10 @@ export function Home() {
     }
   };
 
+  const handleDeletePost = (deletedId) => {
+    setData((prev) => prev.filter((p) => p.id !== deletedId));
+  };
+
   const handlePrevPage = () => {
     if (currentPage > 0) {
       const prev = currentPage - 1;
@@ -210,11 +214,12 @@ export function Home() {
                 id={item.id}
                 titulo={item.titulo}
                 conteudo={item.conteudo}
-                autor={item.autor?.nome}
+                autor={item.autor}
                 imagem={item.linkImagem}
                 dataPostagem={item.dataPostagem}
                 upCount={item.upCount}
                 upvotes={item.upvotes}
+                onDelete={handleDeletePost}
               />
             ))
           )}
@@ -252,9 +257,11 @@ export function Home() {
               <h3>Sobre a Plataforma</h3>
             </div>
             <div className="sidebar-card-body">
-              <p>
-                Bem-vindo ao Blog de Notícias. Aqui você encontra as principais atualizações,
-                artigos e novidades da nossa comunidade com controle de acesso e moderação.
+              <p style={{ marginBottom: 12 }}>
+                Este blog é um projeto pessoal criado como <strong>portfólio e ambiente de estudos</strong>. As postagens documentam aprendizados práticos, anotações técnicas e conceitos sobre desenvolvimento de software.
+              </p>
+              <p style={{ margin: 0, fontSize: '0.84rem', color: '#64748b', lineHeight: 1.45 }}>
+                🔒 <strong>Privacidade & Segurança:</strong> Senhas são armazenadas de forma criptografada (hash seguro) e e-mails cadastrados não recebem propagandas nem spam, sendo utilizados unicamente para demonstrar o fluxo de disparo inicial com mensageria.
               </p>
             </div>
           </div>

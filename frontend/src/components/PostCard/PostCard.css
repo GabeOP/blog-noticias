@@ -156,6 +156,44 @@
   font-size: 0.82rem;
 }
 
+.post-card-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.post-card-author-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-card-action {
+  background: none;
+  border: 1px solid #e2e8f0;
+  border-radius: 3px;
+  padding: 3px 6px;
+  font-size: 0.78rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  transition: all 0.15s ease;
+}
+
+.btn-card-action.edit:hover {
+  background-color: #eff6ff;
+  border-color: #3b5998;
+  color: #3b5998;
+}
+
+.btn-card-action.delete:hover {
+  background-color: #fee2e2;
+  border-color: #fca5a5;
+  color: #dc2626;
+}
+
 .post-card-readmore {
   color: rgb(59, 89, 152);
   font-weight: 600;

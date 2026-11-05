@@ -49,6 +49,18 @@ public class PostController {
     return ResponseEntity.status(HttpStatus.CREATED).body("Postagem criada");
   }
 
+  @PutMapping("/{id}")
+  public ResponseEntity<String> editarPost(@PathVariable UUID id, @RequestBody PostDTO post) {
+    service.editarPost(id, post);
+    return ResponseEntity.ok("Postagem atualizada com sucesso");
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<String> excluirPost(@PathVariable UUID id) {
+    service.excluirPost(id);
+    return ResponseEntity.ok("Postagem excluída com sucesso");
+  }
+
   @PostMapping("/{id}/up")
   public ResponseEntity<Map<String, Object>> upvotePost(@PathVariable UUID id) {
     Map<String, Object> response = service.toggleUpvote(id);

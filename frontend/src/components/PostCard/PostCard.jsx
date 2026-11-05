@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Image, ArrowRight, Calendar, ChevronsUp } from 'lucide-react';
+import { Image, ArrowRight, Calendar, ChevronsUp, Edit3, Trash2 } from 'lucide-react';
 import { getImageUrl } from '../../utils/imageUrl';
 import { useAuth } from '../../context/AuthContext';
+import { ConfirmPopover } from '../ConfirmPopover/ConfirmPopover';
 import API from '../../axios/config';
 import './PostCard.css';
 
@@ -15,13 +16,18 @@ export function PostCard({
   dataPostagem,
   upCount = 0,
   upvotes = [],
+  onDelete,
 }) {
-  const { user } = useAuth();
+  const { user, hasPermission, hasRole } = useAuth();
   const navigate = useNavigate();
   const [imageError, setImageError] = useState(false);
   const [count, setCount] = useState(upCount || 0);
   const [hasUpvoted, setHasUpvoted] = useState(false);
   const [loadingUpvote, setLoadingUpvote] = useState(false);
+
+  // Confirmação de exclusão sem alert nativo
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     setCount(upCount || 0);
@@ -51,7 +57,7 @@ export function PostCard({
 
     // Atualização otimista imediata
     setHasUpvoted(!previousHasUpvoted);
-    setCount(prev => (previousHasUpvoted ? Math.max(0, prev - 1) : prev + 1));
+    setCount((prev) => (previousHasUpvoted ? Math.max(0, prev - 1) : prev + 1));
     setLoadingUpvote(true);
 
     try {
@@ -67,6 +73,23 @@ export function PostCard({
       setCount(previousCount);
     } finally {
       setLoadingUpvote(false);
+    }
+  };
+
+  const handleDeleteConfirm = async () => {
+    setIsDeleting(true);
+    try {
+      await API.delete(`/post/${id}`);
+      setShowConfirmDelete(false);
+      if (onDelete) {
+        onDelete(id);
+      }
+    } catch (err) {
+      console.error('Erro ao excluir postagem:', err);
+      alert('Você não tem permissão para excluir esta postagem.');
+      setShowConfirmDelete(false);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -99,6 +122,17 @@ export function PostCard({
   };
 
   const dataFormatada = formatarData(dataPostagem);
+
+  const autorObj = typeof autor === 'object' && autor !== null ? autor : null;
+  const autorNome = autorObj ? autorObj.nome : (typeof autor === 'string' ? autor : null);
+
+  const isAutor = Boolean(
+    user &&
+    ((autorObj?.id && user.id === autorObj.id) ||
+     (autorNome && user.nome?.toLowerCase() === autorNome.toLowerCase()))
+  );
+  const podeEditar = isAutor || hasPermission('POST_UPDATE') || (hasRole && hasRole('ROLE_ADMIN'));
+  const podeExcluir = isAutor || hasPermission('POST_DELETE') || (hasRole && hasRole('ROLE_ADMIN'));
 
   return (
     <article className="post-card">
@@ -139,7 +173,7 @@ export function PostCard({
             </button>
 
             <span className="post-card-author">
-              Por <strong>{autor || 'Autor desconhecido'}</strong>
+              Por <strong>{autorNome || 'Autor desconhecido'}</strong>
             </span>
 
             {dataFormatada && (
@@ -150,9 +184,53 @@ export function PostCard({
             )}
           </div>
 
-          <Link to={`/post?id=${id}`} className="post-card-readmore">
-            Ler mais <ArrowRight size={14} />
-          </Link>
+          <div className="post-card-right">
+            {(podeEditar || podeExcluir) && (
+              <div className="post-card-author-actions">
+                {podeEditar && (
+                  <Link
+                    to={`/post/editar?id=${id}`}
+                    className="btn-card-action edit"
+                    title="Editar postagem"
+                  >
+                    <Edit3 size={13} />
+                  </Link>
+                )}
+                {podeExcluir && (
+                  <div style={{ position: 'relative', display: 'inline-flex' }}>
+                    <button
+                      type="button"
+                      className="btn-card-action delete"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setShowConfirmDelete(!showConfirmDelete);
+                      }}
+                      title="Excluir postagem"
+                    >
+                      <Trash2 size={13} />
+                    </button>
+
+                    <ConfirmPopover
+                      isOpen={showConfirmDelete}
+                      onClose={() => setShowConfirmDelete(false)}
+                      onConfirm={handleDeleteConfirm}
+                      loading={isDeleting}
+                      title="Excluir postagem?"
+                      description="A publicação será excluída permanentemente."
+                      confirmText="Sim, excluir"
+                      cancelText="Cancelar"
+                      align="top-right"
+                    />
+                  </div>
+                )}
+              </div>
+            )}
+
+            <Link to={`/post?id=${id}`} className="post-card-readmore">
+              Ler mais <ArrowRight size={14} />
+            </Link>
+          </div>
         </div>
       </div>
     </article>

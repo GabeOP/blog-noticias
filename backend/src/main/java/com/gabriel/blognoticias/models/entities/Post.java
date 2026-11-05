@@ -39,7 +39,7 @@ public class Post {
   private Usuario autor;
 
   @JsonManagedReference
-  @OneToMany(mappedBy = "postagem_id")
+  @OneToMany(mappedBy = "postagem_id", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Comentario> comentarioList = new ArrayList<>();
 
   @ElementCollection(fetch = FetchType.EAGER)

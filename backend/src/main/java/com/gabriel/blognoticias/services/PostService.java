@@ -112,6 +112,70 @@ public class PostService {
   }
 
   @Transactional
+  public void editarPost(UUID id, PostDTO dto) {
+    Post post = repository.findById(id)
+        .orElseThrow(() -> new NaoEncontradoException("Postagem não encontrada"));
+
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    if (auth == null || !auth.isAuthenticated() || "anonymousUser".equals(auth.getPrincipal())) {
+      throw new AccessDeniedException("Usuário não autenticado.");
+    }
+
+    Usuario usuarioAtual = (Usuario) auth.getPrincipal();
+
+    boolean isAutor = post.getAutor() != null && (
+        (post.getAutor().getId() != null && post.getAutor().getId().equals(usuarioAtual.getId())) ||
+        (post.getAutor().getNome() != null && post.getAutor().getNome().equalsIgnoreCase(usuarioAtual.getNome()))
+    );
+
+    boolean canEditByPermission = auth.getAuthorities().stream()
+        .anyMatch(a -> "POST_UPDATE".equals(a.getAuthority()) || "ROLE_ADMIN".equals(a.getAuthority()));
+
+    if (!isAutor && !canEditByPermission) {
+      throw new AccessDeniedException("Você só tem permissão para editar suas próprias postagens.");
+    }
+
+    if (dto.getTitulo() != null && !dto.getTitulo().trim().isEmpty()) {
+      post.setTitulo(dto.getTitulo().trim());
+    }
+    if (dto.getConteudo() != null && !dto.getConteudo().trim().isEmpty()) {
+      post.setConteudo(dto.getConteudo().trim());
+    }
+    if (dto.getLinkImagem() != null && !dto.getLinkImagem().trim().isEmpty()) {
+      post.setLinkImagem(dto.getLinkImagem().trim());
+    }
+
+    repository.save(post);
+  }
+
+  @Transactional
+  public void excluirPost(UUID id) {
+    Post post = repository.findById(id)
+        .orElseThrow(() -> new NaoEncontradoException("Postagem não encontrada"));
+
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    if (auth == null || !auth.isAuthenticated() || "anonymousUser".equals(auth.getPrincipal())) {
+      throw new AccessDeniedException("Usuário não autenticado.");
+    }
+
+    Usuario usuarioAtual = (Usuario) auth.getPrincipal();
+
+    boolean isAutor = post.getAutor() != null && (
+        (post.getAutor().getId() != null && post.getAutor().getId().equals(usuarioAtual.getId())) ||
+        (post.getAutor().getNome() != null && post.getAutor().getNome().equalsIgnoreCase(usuarioAtual.getNome()))
+    );
+
+    boolean canDeleteByPermission = auth.getAuthorities().stream()
+        .anyMatch(a -> "POST_DELETE".equals(a.getAuthority()) || "ROLE_ADMIN".equals(a.getAuthority()));
+
+    if (!isAutor && !canDeleteByPermission) {
+      throw new AccessDeniedException("Você só tem permissão para excluir suas próprias postagens.");
+    }
+
+    repository.delete(post);
+  }
+
+  @Transactional
   public Map<String, Object> toggleUpvote(UUID id) {
     Post post = repository.findById(id)
         .orElseThrow(() -> new NaoEncontradoException("Postagem não encontrada"));

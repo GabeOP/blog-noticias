@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSearchParams, Link, useNavigate } from 'react-router-dom';
 import API from '../../axios/config';
 import { useAuth } from '../../context/AuthContext';
@@ -8,10 +8,12 @@ import {
   User,
   MessageSquare,
   Trash2,
+  Edit3,
   AlertCircle,
   ChevronsUp
 } from 'lucide-react';
 import { getImageUrl } from '../../utils/imageUrl';
+import { ConfirmPopover } from '../../components/ConfirmPopover/ConfirmPopover';
 import './DetalhesPost.css';
 
 export function DetalhesPost() {
@@ -27,6 +29,11 @@ export function DetalhesPost() {
   const [enviandoComentario, setEnviandoComentario] = useState(false);
   const [feedback, setFeedback] = useState(null);
   const [upvotingPost, setUpvotingPost] = useState(false);
+
+  // Estados de confirmação de exclusão sem alert nativo
+  const [showDeletePostConfirm, setShowDeletePostConfirm] = useState(false);
+  const [deletandoPost, setDeletandoPost] = useState(false);
+  const [confirmDeleteCommentId, setConfirmDeleteCommentId] = useState(null);
 
   const showFeedback = (msg) => {
     setFeedback(msg);
@@ -123,6 +130,22 @@ export function DetalhesPost() {
     }
   };
 
+  const handleExcluirPost = async () => {
+    setDeletandoPost(true);
+
+    try {
+      await API.delete(`/post/${postagem_id}`);
+      setShowDeletePostConfirm(false);
+      navigate('/');
+    } catch (err) {
+      console.error('Erro ao excluir postagem:', err);
+      showFeedback('Você não tem permissão para excluir esta postagem.');
+      setShowDeletePostConfirm(false);
+    } finally {
+      setDeletandoPost(false);
+    }
+  };
+
   const handleUpvoteComentario = async (comentarioId) => {
     if (!user) {
       navigate('/login');
@@ -183,7 +206,6 @@ export function DetalhesPost() {
       }
     } catch (err) {
       console.error('Erro ao avaliar comentário:', err);
-      // Re-sincroniza do servidor em caso de falha
       fetchPost();
     }
   };
@@ -219,11 +241,13 @@ export function DetalhesPost() {
   const deletarComentario = async (comentarioId) => {
     try {
       await API.delete(`/comentario/${comentarioId}`);
+      setConfirmDeleteCommentId(null);
       showFeedback('Comentário removido.');
       await fetchPost();
     } catch (err) {
       console.error('Erro ao deletar comentário', err);
       showFeedback('Você não tem permissão para excluir este comentário.');
+      setConfirmDeleteCommentId(null);
     }
   };
 
@@ -247,6 +271,15 @@ export function DetalhesPost() {
   const userHasUpvotedPost = Boolean(
     user && data?.upvotes && Array.isArray(data.upvotes) && data.upvotes.includes(user.id)
   );
+
+  // Permissões do Post: Autor OU POST_UPDATE / POST_DELETE OU ROLE_ADMIN
+  const isAutorPost = Boolean(
+    user &&
+    data?.autor &&
+    (user.id === data.autor.id || user.nome?.toLowerCase() === data.autor.nome?.toLowerCase())
+  );
+  const podeEditarPost = isAutorPost || hasPermission('POST_UPDATE') || (hasRole && hasRole('ROLE_ADMIN'));
+  const podeExcluirPost = isAutorPost || hasPermission('POST_DELETE') || (hasRole && hasRole('ROLE_ADMIN'));
 
   if (loading) {
     return (
@@ -296,7 +329,50 @@ export function DetalhesPost() {
 
       {/* Artigo Principal */}
       <article className="artigo-card">
-        <h1 className="artigo-titulo">{data.titulo}</h1>
+        <div className="artigo-cabecalho-linha">
+          <h1 className="artigo-titulo">{data.titulo}</h1>
+
+          {/* Botões de Ação do Post (Editar / Excluir com Popover) */}
+          {(podeEditarPost || podeExcluirPost) && (
+            <div className="artigo-acoes-topo">
+              {podeEditarPost && (
+                <button
+                  type="button"
+                  className="btn-artigo-acao btn-artigo-editar"
+                  onClick={() => navigate(`/post/editar?id=${data.id}`)}
+                  title="Editar postagem"
+                >
+                  <Edit3 size={14} /> Editar
+                </button>
+              )}
+
+              {podeExcluirPost && (
+                <div style={{ position: 'relative', display: 'inline-block' }}>
+                  <button
+                    type="button"
+                    className="btn-artigo-acao btn-artigo-excluir"
+                    onClick={() => setShowDeletePostConfirm(!showDeletePostConfirm)}
+                    title="Excluir postagem"
+                  >
+                    <Trash2 size={14} /> Excluir
+                  </button>
+
+                  <ConfirmPopover
+                    isOpen={showDeletePostConfirm}
+                    onClose={() => setShowDeletePostConfirm(false)}
+                    onConfirm={handleExcluirPost}
+                    loading={deletandoPost}
+                    title="Excluir esta publicação?"
+                    description="Todos os comentários vinculados também serão removidos permanentemente."
+                    confirmText="Sim, excluir"
+                    cancelText="Cancelar"
+                    align="right"
+                  />
+                </div>
+              )}
+            </div>
+          )}
+        </div>
 
         <div className="artigo-meta">
           <span className="artigo-meta-item">
@@ -416,12 +492,26 @@ export function DetalhesPost() {
                     </button>
 
                     {podeExcluir && (
-                      <button
-                        className="btn-deletar-comentario"
-                        onClick={() => deletarComentario(item.id)}
-                      >
-                        <Trash2 size={13} /> Deletar
-                      </button>
+                      <div style={{ position: 'relative', display: 'inline-block' }}>
+                        <button
+                          type="button"
+                          className="btn-deletar-comentario"
+                          onClick={() => setConfirmDeleteCommentId(item.id)}
+                        >
+                          <Trash2 size={13} /> Deletar
+                        </button>
+
+                        <ConfirmPopover
+                          isOpen={confirmDeleteCommentId === item.id}
+                          onClose={() => setConfirmDeleteCommentId(null)}
+                          onConfirm={() => deletarComentario(item.id)}
+                          title="Excluir comentário?"
+                          description="Este comentário será removido permanentemente."
+                          confirmText="Sim, excluir"
+                          cancelText="Cancelar"
+                          align="top-right"
+                        />
+                      </div>
                     )}
                   </div>
                 </div>
