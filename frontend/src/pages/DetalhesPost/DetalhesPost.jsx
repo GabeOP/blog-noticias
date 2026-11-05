@@ -13,7 +13,7 @@ import {
 import './DetalhesPost.css';
 
 export function DetalhesPost() {
-  const { user, hasPermission } = useAuth();
+  const { user, hasPermission, hasRole } = useAuth();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const postagem_id = searchParams.get('id');
@@ -220,9 +220,13 @@ export function DetalhesPost() {
             </p>
           ) : (
             data.comentarioList.map((item, index) => {
-              const podeExcluir =
+              const isAutor =
                 user &&
-                (item.autorComentario?.id === user?.id || hasPermission('COMMENT_DELETE'));
+                item.autorComentario &&
+                (item.autorComentario.id === user.id || item.autorComentario.nome === user.nome);
+
+              const isModerador = Boolean(hasPermission('COMMENT_DELETE') || (hasRole && hasRole('ROLE_ADMIN')));
+              const podeExcluir = isAutor || isModerador;
 
               return (
                 <div key={item.id || index} className="comentario-item">
