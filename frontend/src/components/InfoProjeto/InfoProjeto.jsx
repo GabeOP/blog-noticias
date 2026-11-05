@@ -10,7 +10,6 @@ export function InfoProjeto() {
           <Info size={18} className="auth-info-title-icon" />
           <h3>Sobre o Projeto & Privacidade</h3>
         </div>
-        <span className="auth-info-badge">Portfólio</span>
       </div>
 
       <div className="auth-info-content">
