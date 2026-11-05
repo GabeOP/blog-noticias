@@ -11,6 +11,7 @@ import {
   AlertCircle,
   ChevronsUp
 } from 'lucide-react';
+import { getImageUrl } from '../../utils/imageUrl';
 import './DetalhesPost.css';
 
 export function DetalhesPost() {
@@ -314,7 +315,7 @@ export function DetalhesPost() {
         {data.linkImagem && (
           <img
             className="artigo-capa"
-            src={data.linkImagem}
+            src={getImageUrl(data.linkImagem)}
             alt={data.titulo}
             onError={(e) => {
               e.target.style.display = 'none';
