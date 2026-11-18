@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Image, ArrowRight, Calendar, ChevronsUp, Edit3, Trash2 } from 'lucide-react';
 import { getImageUrl } from '../../utils/imageUrl';
+import { stripMarkdown } from '../../utils/markdown';
 import { useAuth } from '../../context/AuthContext';
 import { ConfirmPopover } from '../ConfirmPopover/ConfirmPopover';
 import API from '../../axios/config';
@@ -157,7 +158,7 @@ export function PostCard({
           <h2 className="post-card-title">
             <Link to={`/post?id=${id}`}>{titulo}</Link>
           </h2>
-          <p className="post-card-snippet">{conteudo}</p>
+          <p className="post-card-snippet">{stripMarkdown(conteudo)}</p>
         </div>
 
         <div className="post-card-footer">

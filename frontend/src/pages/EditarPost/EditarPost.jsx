@@ -11,6 +11,7 @@ import {
   Link as LinkIcon,
   AlertCircle
 } from 'lucide-react';
+import { MarkdownEditor } from '../../components/MarkdownEditor/MarkdownEditor';
 import '../CriarPost/CriarPost.css';
 
 export function EditarPost() {
@@ -450,11 +451,11 @@ export function EditarPost() {
 
             <div className="form-field">
               <label htmlFor="conteudo">Conteúdo da Postagem *</label>
-              <textarea
+              <MarkdownEditor
                 id="conteudo"
-                placeholder="Escreva o texto completo da postagem aqui..."
+                placeholder="Escreva o conteúdo completo da postagem aqui..."
                 value={conteudo}
-                onChange={(e) => setConteudo(e.target.value)}
+                onChange={setConteudo}
                 required
               />
             </div>

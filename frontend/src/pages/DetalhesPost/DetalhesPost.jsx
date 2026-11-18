@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { getImageUrl } from '../../utils/imageUrl';
 import { ConfirmPopover } from '../../components/ConfirmPopover/ConfirmPopover';
+import { MarkdownContent } from '../../components/MarkdownContent/MarkdownContent';
 import './DetalhesPost.css';
 
 export function DetalhesPost() {
@@ -399,7 +400,9 @@ export function DetalhesPost() {
           />
         )}
 
-        <div className="artigo-corpo">{data.conteudo}</div>
+        <div className="artigo-corpo">
+          <MarkdownContent content={data.conteudo} />
+        </div>
 
         {/* Rodapé da Postagem com Upvote */}
         <div className="artigo-rodape">

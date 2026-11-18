@@ -9,6 +9,7 @@ import {
   RefreshCw,
   Link as LinkIcon
 } from 'lucide-react';
+import { MarkdownEditor } from '../../components/MarkdownEditor/MarkdownEditor';
 import './CriarPost.css';
 
 export function CriarPost() {
@@ -333,11 +334,11 @@ export function CriarPost() {
 
             <div className="form-field">
               <label htmlFor="conteudo">Conteúdo da Postagem *</label>
-              <textarea
+              <MarkdownEditor
                 id="conteudo"
-                placeholder="Escreva o texto completo da postagem aqui..."
+                placeholder="Escreva o conteúdo completo da postagem aqui... Use a barra acima para formatar títulos, negrito, listas, citações, links e blocos de código."
                 value={conteudo}
-                onChange={(e) => setConteudo(e.target.value)}
+                onChange={setConteudo}
                 required
               />
             </div>
