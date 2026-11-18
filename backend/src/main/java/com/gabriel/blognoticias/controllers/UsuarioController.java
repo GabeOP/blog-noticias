@@ -93,13 +93,13 @@ public class UsuarioController {
 
     String token = tokenService.generateToken(usuario);
 
-    // Injeta HttpOnly Cookie com o token JWT
+    // Injeta HttpOnly Cookie com o token JWT compatível com Cross-Origin (Pages -> Render)
     ResponseCookie cookie = ResponseCookie.from("token", token)
             .httpOnly(true)
-            .secure(false) // HTTP localmente (em prod HTTPS pode ser true)
+            .secure(true) // Obrigatorio para SameSite=None e HTTPS em producao
             .path("/")
             .maxAge(Duration.ofHours(2))
-            .sameSite("Lax")
+            .sameSite("None") // Permite envio cross-site entre Cloudflare e Render
             .build();
     response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
@@ -122,10 +122,10 @@ public class UsuarioController {
   public ResponseEntity<String> logout(HttpServletResponse response) {
     ResponseCookie cookie = ResponseCookie.from("token", "")
             .httpOnly(true)
-            .secure(false)
+            .secure(true)
             .path("/")
             .maxAge(0)
-            .sameSite("Lax")
+            .sameSite("None")
             .build();
     response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
     return ResponseEntity.ok().body("Logout realizado com sucesso");
