@@ -35,6 +35,7 @@ public class SecurityConfigurations {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authorize -> authorize
+                    .requestMatchers(HttpMethod.GET, "/ping").permitAll()
                     .requestMatchers(HttpMethod.POST, "/usuario/login").permitAll()
                     .requestMatchers(HttpMethod.POST, "/usuario/logout").permitAll()
                     .requestMatchers(HttpMethod.GET, "/usuario/me").permitAll()
@@ -69,7 +70,9 @@ public class SecurityConfigurations {
     configuration.setAllowedOriginPatterns(Arrays.asList(
         "http://localhost:[*]",
         "http://127.0.0.1:[*]",
-        "https://*.onrender.com"
+        "https://*.pages.dev",
+        "https://*.onrender.com",
+        "https://*.vercel.app"
     ));
     configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
     configuration.setAllowedHeaders(List.of("*"));
