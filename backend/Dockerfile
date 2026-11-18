@@ -1,26 +1,19 @@
-FROM ubuntu:latest AS build
+# Estágio 1: Build da aplicação com Maven e Eclipse Temurin 17
+FROM maven:3.9.6-eclipse-temurin-17 AS build
+WORKDIR /app
+COPY pom.xml .
+# Baixa dependências para cache
+RUN mvn dependency:go-offline -B
+COPY src ./src
+RUN mvn clean package -DskipTests
 
-RUN apt-get update
-RUN apt-get install openjdk-17-jdk -y 
-COPY . .
-
-RUN apt-get install maven -y
-RUN mvn install -DskipTests
-
-FROM openjdk:17-jdk-slim
-
-# Instalação do RabbitMQ
-RUN apt-get update && apt-get install -y \
-    rabbitmq-server
-
-# Exposição das portas do RabbitMQ
-EXPOSE 5672 15672
-
-# Configuração do RabbitMQ
-ENV SPRING_RABBITMQ_USERNAME=admin
-ENV SPRING_RABBITMQ_PASSWORD=123456
+# Estágio 2: Imagem final leve para execução
+FROM eclipse-temurin:17-jre-jammy
+WORKDIR /app
 
 EXPOSE 8080
 
-COPY --from=build /target/blognoticias-0.0.1-SNAPSHOT.jar app.jar
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+COPY --from=build /app/target/*.jar app.jar
+
+# Configuração de memória otimizada para o plano Free do Render
+ENTRYPOINT ["java", "-Xmx350m", "-Xms200m", "-jar", "app.jar"]
